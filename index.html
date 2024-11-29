@@ -18,7 +18,7 @@
             overflow: hidden;
             text-align: center;
             position: relative;
-            padding-top: 20px; /* Mengurangi ruang kosong di atas */
+            padding-top: 10px; /* Pangkas padding atas agar lebih rapat */
         }
 
         .container {
@@ -29,7 +29,7 @@
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
             text-align: center;
             z-index: 2;
-            width: 100%; /* Memastikan container menyesuaikan lebar */
+            width: 100%;
         }
 
         h1 {
@@ -37,6 +37,7 @@
             font-size: 2em;
             margin-bottom: 15px;
             text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00; /* Efek neon */
+            margin-top: 0;  /* Mengurangi margin atas pada h1 */
         }
 
         input, button, textarea {
@@ -144,13 +145,13 @@
 
 <div class="container">
     <h1>RUMBU RUMBU TAG TEAM</h1>
-    <input type="text" id="inputBox1" placeholder="Masukkan 4 angka (contoh: 1234)" maxlength="4">
+    <input type="text" id="inputBox1" placeholder="" maxlength="4">
     <textarea id="outputBox3" class="result-box" readonly></textarea>
     <div class="total-result" id="totalResult">Total Kombinasi: 0</div>
     <button onclick="generate()">Generate</button>
     
     <!-- Gabungkan Hapus Simetris dan Tiga Angka Sama -->
-    <button onclick="hapusSimetrisDanTigaAngka()">Sttttt! lemme cook</button>
+    <button onclick="hapusSimetrisDanTigaAngka()">Sttttt! Lemme Cook</button>
 
     <button onclick="copyToClipboard()">Copy</button>
 </div>
