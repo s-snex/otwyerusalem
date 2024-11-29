@@ -28,6 +28,7 @@
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
             text-align: center;
             z-index: 2;
+            width: 90%; /* Menyesuaikan dengan layar kecil */
         }
 
         h1 {
@@ -39,13 +40,13 @@
 
         input, button, textarea {
             width: 100%;
-            padding: 10px; /* Ukuran padding lebih kecil untuk tombol dan input */
-            margin: 8px 0; /* Margin lebih kecil */
+            padding: 10px;
+            margin: 8px 0;
             border-radius: 5px;
             border: 2px solid #00bcd4;
             background-color: #333;
             color: #fff;
-            font-size: 1em; /* Ukuran font lebih kecil */
+            font-size: 1em;
             box-sizing: border-box;
         }
 
@@ -53,6 +54,7 @@
             background-color: #00bcd4;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 15px;
         }
 
         button:hover {
@@ -110,6 +112,31 @@
             }
             to {
                 background-position: 100% 100%;
+            }
+        }
+
+        /* Menyesuaikan tampilan untuk perangkat dengan layar kecil (mobile) */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.8em; /* Mengurangi ukuran font judul pada perangkat kecil */
+            }
+
+            input, button, textarea {
+                font-size: 0.9em; /* Mengurangi ukuran font input dan tombol */
+                padding: 8px;
+            }
+
+            .result-box {
+                font-size: 0.9em;
+            }
+
+            .total-result, #totalResult {
+                font-size: 1em; /* Ukuran font total lebih kecil */
             }
         }
 
