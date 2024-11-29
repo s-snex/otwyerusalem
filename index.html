@@ -3,83 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POLTAR SAKTI BY TRBB</title>
+    <title>OTW YERUSALEM BY TRBB</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Courier New', monospace;
+            margin: 0;
             padding: 0;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
         }
-        textarea, input, button, select {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+
         .container {
             max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            text-align: center;
+            z-index: 2;
         }
-        .nav-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            margin: 5px 0;
+
+        h1 {
+            color: #00ff00;  /* Warna hijau neon */
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00; /* Efek neon */
+        }
+
+        input, button, textarea {
             width: 100%;
+            padding: 10px; /* Ukuran padding lebih kecil untuk tombol dan input */
+            margin: 8px 0; /* Margin lebih kecil */
+            border-radius: 5px;
+            border: 2px solid #00bcd4;
+            background-color: #333;
+            color: #fff;
+            font-size: 1em; /* Ukuran font lebih kecil */
+            box-sizing: border-box;
         }
-        .nav-btn:hover {
-            background-color: #45a049;
+
+        button {
+            background-color: #00bcd4;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .hidden {
-            display: none;
+
+        button:hover {
+            background-color: #00ff00;
+            transform: scale(1.05);
         }
-        textarea, .result-box {
-            height: 100px; /* Membuat tinggi tetap */
+
+        .result-box {
+            background-color: #111;
+            color: #00bcd4;
+            font-family: monospace;
+            height: 150px;
             overflow-y: auto;
-            resize: none; /* Tidak bisa di-resize */
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px solid #00bcd4;
+            border-radius: 5px;
             white-space: pre-wrap;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
+            word-wrap: break-word;
         }
+
+        .total-result {
+            font-size: 1.2em;
+            color: #ff5733;
+            margin-top: 20px;
+        }
+
+        #totalResult {
+            font-size: 1.3em;
+            color: #ff5733;
+            margin-top: 20px;
+        }
+
+        #totalResult, .total-result {
+            text-shadow: 0 0 10px #ff5733;
+        }
+
+        /* Background untuk efek hacker */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.wallpaperup.com/uploads/wallpapers/2018/09/01/1225080/ebd5b29d35556d063fbdde3cbefcc3b7.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+            animation: moveBackground 10s infinite linear;
+        }
+
+        /* Efek animasi latar belakang */
+        @keyframes moveBackground {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <button class="nav-btn" onclick="showPage('page4')">Gabung dan Filter</button>
-</div>
+<div class="background"></div> <!-- Latar belakang gambar seperti hacker -->
 
-<!-- Page 4: Gabung dan Filter -->
-<div id="page4" class="page container">
-    <h2>Gabung dan Filter Angka</h2>
-    <textarea id="tabelA" rows="2" placeholder="Masukkan angka dengan pemisah *"></textarea>
-    <textarea id="tabelB" rows="2" placeholder="Masukkan angka dengan pemisah *"></textarea>
-    <button onclick="gabungAngka()">Gabung</button>
-    <button onclick="filterSemua()">Hapus Simetris</button>
-    <button onclick="hapusTigaAngkaSamaBerurutan()">Hapus Tiga Angka Sama</button>
-    <div id="output" class="content-editable result-box" contenteditable="true"></div>
-    <div id="total"></div>
+<div class="container">
+    <h1>RUMBU RUMBU TAG TEAM</h1>
+    <input type="text" id="inputBox1" placeholder="Masukkan 4 angka (contoh: 1234)" maxlength="4">
+    <textarea id="outputBox3" class="result-box" readonly></textarea>
+    <div class="total-result" id="totalResult">Total Kombinasi: 0</div>
+    <button onclick="generate()">Generate</button>
+    
+    <!-- Gabungkan Hapus Simetris dan Tiga Angka Sama -->
+    <button onclick="hapusSimetrisDanTigaAngka()">Sttttt! lemme cook</button>
+
+    <button onclick="copyToClipboard()">Copy</button>
 </div>
 
 <script>
-    // Fungsi Gabung Angka
-    function gabungAngka() {
-        const tabelA = document.getElementById('tabelA').value.split('*');
-        const tabelB = document.getElementById('tabelB').value.split('*');
-        const gabungan = Array.from(new Set([...tabelA, ...tabelB])).join('*');
-        document.getElementById('output').textContent = gabungan;
-        document.getElementById('total').textContent = `Total: ${gabungan.split('*').length}`;
+    // Fungsi untuk menghasilkan hasil di Box 3 dan total kombinasi
+    function generate() {
+        const input = document.getElementById('inputBox1').value;
+        if (input.length === 4) {
+            // String dasar
+            const baseString = "1234567890";
+
+            // Menentukan kombinasi a, b, c, dan d berdasarkan input
+            let a = baseString.replace(input[0], ''); // Menghapus angka input pertama dari string base
+            let b = baseString.replace(input[1], ''); // Menghapus angka input kedua dari string base
+            let c = baseString.replace(input[2], ''); // Menghapus angka input ketiga dari string base
+            let d = baseString.replace(input[3], ''); // Menghapus angka input keempat dari string base
+
+            // Mengekstrak nilai a, b, c, d dari hasil yang dihitung
+            const aDigits = a.split('');
+            const bDigits = b.split('');
+            const cDigits = c.split('');
+            const dDigits = d.split('');
+
+            // Menyusun kombinasi 4 digit yang benar untuk Box 3
+            const results = [];
+            aDigits.forEach(num1 => {
+                bDigits.forEach(num2 => {
+                    cDigits.forEach(num3 => {
+                        dDigits.forEach(num4 => {
+                            results.push(num1 + num2 + num3 + num4);
+                        });
+                    });
+                });
+            });
+
+            // Menampilkan hasil kombinasi ke Box 3
+            document.getElementById('outputBox3').textContent = results.join('*');
+
+            // Menampilkan total hasil di luar Box 3
+            document.getElementById('totalResult').textContent = `Total Kombinasi: ${results.length}`;
+        } else {
+            alert("Masukkan 4 angka!");
+        }
     }
 
-    // Fungsi Gabungan: Hapus Simetris, Berkesinambungan, dan Berurutan
-    function filterSemua() {
-        filterAngka(num => {
+    // Fungsi untuk menghapus Simetris & Tiga Angka Sama secara bersamaan
+    function hapusSimetrisDanTigaAngka() {
+        const angkaArray = document.getElementById('outputBox3').textContent.split('*');
+        const hasil = angkaArray.filter(num => {
+            // Hapus Simetris
             const pasanganSimetris = num[0] === num[1] && num[2] === num[3];
             const palindromik = num[0] === num[3] && num[1] === num[2];
             const berkesinambungan = num.slice(0, 2) === num.slice(2, 4) ||
@@ -87,43 +186,25 @@
             const ascending = '123456789';
             const descending = '987654321';
             const angkaBerurutan = ascending.includes(num) || descending.includes(num);
-            return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
-        });
-    }
 
-    // Fungsi Baru: Hapus Tiga Angka Sama Berurutan
-    function hapusTigaAngkaSamaBerurutan() {
-        filterAngka(num => {
-            // Cek apakah ada tiga angka yang sama berurutan di mana saja dalam string angka
+            // Hapus Tiga Angka Sama Berurutan
             for (let i = 0; i < num.length - 2; i++) {
                 if (num[i] === num[i + 1] && num[i] === num[i + 2]) {
-                    return false; // Hapus jika ditemukan
+                    return false; // Hapus jika ditemukan tiga angka yang sama berurutan
                 }
             }
-            return true; // Simpan jika tidak ada tiga angka yang sama berurutan
+
+            return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
         });
+        document.getElementById('outputBox3').textContent = hasil.join('*');
+        document.getElementById('totalResult').textContent = `Total Kombinasi: ${hasil.length}`;
     }
 
-    // Fungsi Filter Angka
-    function filterAngka(predicate) {
-        const angkaArray = document.getElementById('output').textContent.split('*');
-        const hasil = angkaArray.filter(num => predicate(num));
-        document.getElementById('output').textContent = hasil.join('*');
-        document.getElementById('total').textContent = `Total: ${hasil.length}`;
-    }
-
-    // Navigasi Halaman
-    function showPage(page) {
-        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-        document.getElementById(page).classList.remove('hidden');
-    }
-    document.addEventListener('DOMContentLoaded', () => showPage('page4'));
-
-    // Fungsi Copy
-    function copyToClipboard(id) {
-        const content = document.getElementById(id);
+    // Fungsi untuk menyalin hasil ke clipboard
+    function copyToClipboard() {
+        const content = document.getElementById('outputBox3');
         navigator.clipboard.writeText(content.value || content.textContent).then(() => {
-            alert('Copied to clipboard!');
+            alert('Hasil telah disalin ke clipboard!');
         });
     }
 </script>
