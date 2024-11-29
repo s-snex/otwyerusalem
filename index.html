@@ -34,7 +34,7 @@
 
         h1 {
             color: #00ff00;  /* Warna hijau neon */
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 15px;
             text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00; /* Efek neon */
             margin-top: 0;  /* Mengurangi margin atas pada h1 */
@@ -117,26 +117,8 @@
             }
         }
 
-        /* Responsif untuk perangkat mobile */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8em;
-            }
-
-            input, button, textarea {
-                font-size: 0.9em; /* Ukuran font yang lebih kecil pada perangkat kecil */
-            }
-
-            .container {
-                padding: 15px; /* Padding lebih kecil */
-                max-width: 95%; /* Menyesuaikan lebar container */
-            }
-
-            .result-box {
-                height: 100px;
-            }
-        }
-
+        /* Hapus Responsif untuk perangkat mobile */
+        /* Tidak ada media query di sini, berarti hanya untuk versi desktop */
     </style>
 </head>
 <body>
@@ -145,13 +127,13 @@
 
 <div class="container">
     <h1>RUMBU RUMBU TAG TEAM</h1>
-    <input type="text" id="inputBox1" placeholder="" maxlength="4">
+    <input type="text" id="inputBox1" placeholder="Masukkan 4 angka (contoh: 1234)" maxlength="4">
     <textarea id="outputBox3" class="result-box" readonly></textarea>
     <div class="total-result" id="totalResult">Total Kombinasi: 0</div>
     <button onclick="generate()">Generate</button>
     
     <!-- Gabungkan Hapus Simetris dan Tiga Angka Sama -->
-    <button onclick="hapusSimetrisDanTigaAngka()">Sttttt! Lemme Cook</button>
+    <button onclick="hapusSimetrisDanTigaAngka()">Sttttt! lemme cook</button>
 
     <button onclick="copyToClipboard()">Copy</button>
 </div>
