@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLTAR SAKTI BY TRBB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        textarea, input, button, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .nav-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+        }
+        .nav-btn:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+        textarea, .result-box {
+            height: 100px; /* Membuat tinggi tetap */
+            overflow-y: auto;
+            resize: none; /* Tidak bisa di-resize */
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button class="nav-btn" onclick="showPage('page4')">Gabung dan Filter</button>
+</div>
+
+<!-- Page 4: Gabung dan Filter -->
+<div id="page4" class="page container">
+    <h2>Gabung dan Filter Angka</h2>
+    <textarea id="tabelA" rows="2" placeholder="Masukkan angka dengan pemisah *"></textarea>
+    <textarea id="tabelB" rows="2" placeholder="Masukkan angka dengan pemisah *"></textarea>
+    <button onclick="gabungAngka()">Gabung</button>
+    <button onclick="filterSemua()">Hapus Simetris</button>
+    <button onclick="hapusTigaAngkaSamaBerurutan()">Hapus Tiga Angka Sama</button>
+    <div id="output" class="content-editable result-box" contenteditable="true"></div>
+    <div id="total"></div>
+</div>
+
+<script>
+    // Fungsi Gabung Angka
+    function gabungAngka() {
+        const tabelA = document.getElementById('tabelA').value.split('*');
+        const tabelB = document.getElementById('tabelB').value.split('*');
+        const gabungan = Array.from(new Set([...tabelA, ...tabelB])).join('*');
+        document.getElementById('output').textContent = gabungan;
+        document.getElementById('total').textContent = `Total: ${gabungan.split('*').length}`;
+    }
+
+    // Fungsi Gabungan: Hapus Simetris, Berkesinambungan, dan Berurutan
+    function filterSemua() {
+        filterAngka(num => {
+            const pasanganSimetris = num[0] === num[1] && num[2] === num[3];
+            const palindromik = num[0] === num[3] && num[1] === num[2];
+            const berkesinambungan = num.slice(0, 2) === num.slice(2, 4) ||
+                                     (num[0] === num[2] && num[1] === num[3]);
+            const ascending = '123456789';
+            const descending = '987654321';
+            const angkaBerurutan = ascending.includes(num) || descending.includes(num);
+            return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
+        });
+    }
+
+    // Fungsi Baru: Hapus Tiga Angka Sama Berurutan
+    function hapusTigaAngkaSamaBerurutan() {
+        filterAngka(num => {
+            // Cek apakah ada tiga angka yang sama berurutan di mana saja dalam string angka
+            for (let i = 0; i < num.length - 2; i++) {
+                if (num[i] === num[i + 1] && num[i] === num[i + 2]) {
+                    return false; // Hapus jika ditemukan
+                }
+            }
+            return true; // Simpan jika tidak ada tiga angka yang sama berurutan
+        });
+    }
+
+    // Fungsi Filter Angka
+    function filterAngka(predicate) {
+        const angkaArray = document.getElementById('output').textContent.split('*');
+        const hasil = angkaArray.filter(num => predicate(num));
+        document.getElementById('output').textContent = hasil.join('*');
+        document.getElementById('total').textContent = `Total: ${hasil.length}`;
+    }
+
+    // Navigasi Halaman
+    function showPage(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById(page).classList.remove('hidden');
+    }
+    document.addEventListener('DOMContentLoaded', () => showPage('page4'));
+
+    // Fungsi Copy
+    function copyToClipboard(id) {
+        const content = document.getElementById(id);
+        navigator.clipboard.writeText(content.value || content.textContent).then(() => {
+            alert('Copied to clipboard!');
+        });
+    }
+</script>
+
+</body>
+</html>
