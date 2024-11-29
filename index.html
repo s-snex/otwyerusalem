@@ -23,30 +23,31 @@
         .container {
             max-width: 600px;
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
             text-align: center;
             z-index: 2;
-            width: 90%; /* Menyesuaikan dengan layar kecil */
+            width: 90%;
+            overflow-y: auto; /* Memastikan konten bisa digulirkan pada perangkat kecil */
         }
 
         h1 {
             color: #00ff00;  /* Warna hijau neon */
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00; /* Efek neon */
+            font-size: 1.8em;  /* Mengurangi ukuran font judul */
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Efek neon */
         }
 
         input, button, textarea {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
+            padding: 8px;
+            margin: 6px 0;
             border-radius: 5px;
             border: 2px solid #00bcd4;
             background-color: #333;
             color: #fff;
-            font-size: 1em;
+            font-size: 0.9em; /* Ukuran font lebih kecil untuk perangkat kecil */
             box-sizing: border-box;
         }
 
@@ -54,7 +55,7 @@
             background-color: #00bcd4;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         button:hover {
@@ -66,26 +67,27 @@
             background-color: #111;
             color: #00bcd4;
             font-family: monospace;
-            height: 150px;
+            height: 120px;
             overflow-y: auto;
-            margin: 15px 0;
-            padding: 15px;
+            margin: 10px 0;
+            padding: 10px;
             border: 2px solid #00bcd4;
             border-radius: 5px;
             white-space: pre-wrap;
             word-wrap: break-word;
+            font-size: 0.9em; /* Mengurangi ukuran font pada hasil */
         }
 
         .total-result {
-            font-size: 1.2em;
+            font-size: 1em;
             color: #ff5733;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         #totalResult {
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: #ff5733;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         #totalResult, .total-result {
@@ -118,25 +120,25 @@
         /* Menyesuaikan tampilan untuk perangkat dengan layar kecil (mobile) */
         @media (max-width: 600px) {
             .container {
-                padding: 20px;
+                padding: 15px;
                 width: 95%;
             }
 
             h1 {
-                font-size: 1.8em; /* Mengurangi ukuran font judul pada perangkat kecil */
+                font-size: 1.5em; /* Ukuran font judul lebih kecil */
             }
 
             input, button, textarea {
-                font-size: 0.9em; /* Mengurangi ukuran font input dan tombol */
-                padding: 8px;
+                font-size: 0.8em; /* Ukuran font input dan tombol lebih kecil */
+                padding: 6px;
             }
 
             .result-box {
-                font-size: 0.9em;
+                font-size: 0.8em; /* Mengurangi ukuran font pada hasil */
             }
 
             .total-result, #totalResult {
-                font-size: 1em; /* Ukuran font total lebih kecil */
+                font-size: 0.9em; /* Ukuran font total lebih kecil */
             }
         }
 
