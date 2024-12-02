@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024, initial-scale=1.0, user-scalable=no">
     <title>OTW YERUSALEM BY TRBB</title>
     <style>
         /* Umum: Mengatur body dan elemen dasar */
@@ -39,14 +39,14 @@
             to { background-position: 100% 100%; }
         }
 
-        /* Kontainer utama dengan lebar 300px dan margin top 40px */
+        /* Kontainer utama dengan lebar tetap 300px dan margin top 40px */
         .container {
-            width: 300px; /* Lebar kontainer diatur menjadi 300px */
+            width: 500px; /* Lebar kontainer tetap 300px untuk desktop */
             background-color: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin: 40px 20px 10px auto; /* Jarak top 40px, bottom 10px, kiri auto, kanan 20px */
+            margin: 40px auto 10px auto; /* Jarak top 40px, bottom 10px, kiri-kanan auto */
             overflow-y: auto; /* Aktifkan scroll vertikal jika konten meluap */
             min-height: 250px; /* Pastikan kontainer tetap cukup tinggi */
             display: block;
@@ -54,7 +54,7 @@
 
         /* Kontainer Poltar dengan margin 20px ke kiri */
         .poltar-container {
-            width: 300px; /* Lebar kontainer diatur menjadi 300px */
+            width: 500px; /* Lebar kontainer tetap 300px */
             background-color: rgba(0, 0, 0, 0.7);
             padding: 15px;
             border-radius: 10px;
@@ -127,30 +127,28 @@
             text-shadow: 0 0 10px #ff5733;
         }
 
-        /* Responsivitas: Menyesuaikan ukuran layar pada perangkat kecil */
+        /* Membuat tampilan desktop tetap pada perangkat mobile */
         @media (max-width: 768px) {
-            h1, .poltar-container h2 {
-                font-size: 1.8em;
+            body {
+                overflow-x: hidden; /* Menonaktifkan overflow horizontal */
             }
 
+            /* Mengatur kontainer agar tetap memiliki lebar tetap dan tidak responsif */
             .container, .poltar-container {
-                padding: 10px;
+                width: 300px; /* Lebar tetap di desktop */
+                margin: 40px auto; /* Margin agar tetap terpusat */
+                padding: 15px;
             }
 
             input, button, textarea, select {
-                font-size: 0.8em;
+                font-size: 0.9em; /* Menyesuaikan ukuran font */
             }
 
-            .result-box {
-                height: 80px;
-                font-size: 0.75em;
-            }
-
-            .poltar-container h2 {
-                font-size: 1.8em;
+            /* Mengurangi ukuran font agar lebih cocok di perangkat kecil */
+            h1, .poltar-container h2 {
+                font-size: 2em; /* Ukuran tetap */
             }
         }
-
     </style>
 </head>
 <body>
