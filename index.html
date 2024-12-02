@@ -14,11 +14,12 @@
             color: #fff;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
+            height: auto;
+            overflow-y: auto;
             text-align: center;
             position: relative;
-            overflow-y: auto;
         }
 
         /* Latar belakang gambar bergerak */
@@ -45,13 +46,17 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            max-width: 600px;
             width: 90%;
-            background-color: rgba(0, 0, 0, 0.8);
+            max-width: 600px;
+            background-color: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin: 1cm 0;
+            margin-top: 1cm;
+            margin-bottom: 1cm;
+            overflow-y: auto;
+            max-height: 90vh;
+            min-height: 250px; /* Pastikan kontainer memiliki minimal tinggi */
         }
 
         /* Judul */
@@ -114,6 +119,10 @@
             margin-top: 15px;
         }
 
+        #totalResult, .total-result {
+            text-shadow: 0 0 10px #ff5733;
+        }
+
         /* Responsivitas: Menyesuaikan ukuran layar */
         @media (max-width: 768px) {
             h1 {
@@ -140,13 +149,15 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            max-width: 600px;
             width: 90%;
+            max-width: 600px;
             margin-top: 30px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            margin-top: 1cm;
+            margin-bottom: 1cm;
         }
 
         .poltar-container h2 {
