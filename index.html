@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -39,41 +39,40 @@
             to { background-position: 100% 100%; }
         }
 
-        /* Flexbox layout untuk kontainer utama */
+        /* Flexbox untuk kontainer utama */
         .container {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            max-width: 600px;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Latar belakang transparan */
-            padding: 20px;
+            width: 90%;
+            max-width: 500px; /* Ukuran lebih kecil */
+            background-color: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin-top: 20px;
-            margin-bottom: 20px;
-            min-height: 300px;
+            margin: 10px 0;
             overflow-y: auto;
+            min-height: 250px; /* Pastikan kontainer tetap cukup tinggi */
         }
 
         h1 {
             color: #00ff00;
-            font-size: 2.5em;
-            margin-top: 10px;
-            margin-bottom: 15px;
+            font-size: 2em; /* Ukuran font lebih kecil */
+            margin: 5px 0;
             text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00;
         }
 
+        /* Elemen Input, Button, Textarea, Select */
         input, button, textarea, select {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             margin: 5px 0;
             border-radius: 5px;
             border: 2px solid #00bcd4;
             background-color: #333;
             color: #fff;
-            font-size: 1em;
+            font-size: 0.9em; /* Ukuran font lebih kecil */
             box-sizing: border-box;
         }
 
@@ -92,7 +91,7 @@
             background-color: #111;
             color: #00bcd4;
             font-family: monospace;
-            height: 120px;
+            height: 100px;
             overflow-y: auto;
             margin: 10px 0;
             padding: 10px;
@@ -100,44 +99,43 @@
             border-radius: 5px;
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 0.9em;
+            font-size: 0.8em;
         }
 
         .total-result {
-            font-size: 1.1em;
+            font-size: 1em;
             color: #ff5733;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         #totalResult {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #ff5733;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         #totalResult, .total-result {
             text-shadow: 0 0 10px #ff5733;
         }
 
-        /* Poltar container dengan responsivitas */
+        /* Flexbox untuk Poltar Container */
         .poltar-container {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            width: 100%;
-            max-width: 600px;
-            margin-top: 30px;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin-bottom: 1cm;
         }
 
         .poltar-container h2 {
             color: #00ff00;
-            font-size: 2.5em;
+            font-size: 2em;
             margin-top: 1px;
             margin-bottom: 15px;
             text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00;
@@ -156,24 +154,24 @@
         /* Responsivitas: Menyesuaikan ukuran layar pada perangkat kecil */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             .container, .poltar-container {
-                padding: 15px;
+                padding: 10px;
             }
 
             input, button, textarea, select {
-                font-size: 0.9em;
-            }
-
-            .result-box {
-                height: 100px;
                 font-size: 0.8em;
             }
 
+            .result-box {
+                height: 80px;
+                font-size: 0.75em;
+            }
+
             .poltar-container h2 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
         }
 
