@@ -14,11 +14,11 @@
             color: #fff;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Sejajarkan kontainer dengan atas halaman */
             height: 100vh;
             text-align: center;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto; /* Mengizinkan scroll vertikal jika konten lebih dari layar */
         }
 
         /* Latar belakang gambar bergerak */
@@ -39,24 +39,33 @@
             to { background-position: 100% 100%; }
         }
 
-        /* Flexbox untuk kontainer utama */
+        /* Kontainer utama dengan lebar 400px dan margin top 40px */
         .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 90%;
-            max-width: 500px; /* Ukuran lebih kecil */
+            width: 400px; /* Lebar kontainer diatur menjadi 400px */
             background-color: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin: 10px 0;
-            overflow-y: auto;
+            margin: 40px 20px 10px auto; /* Jarak top 40px, bottom 10px, kiri auto, kanan 20px */
+            overflow-y: auto; /* Aktifkan scroll vertikal jika konten meluap */
             min-height: 250px; /* Pastikan kontainer tetap cukup tinggi */
+            display: block;
         }
 
-        h1 {
+        /* Kontainer Poltar dengan margin 20px ke kiri */
+        .poltar-container {
+            width: 400px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            margin: 40px auto 10px 20px; /* Jarak top 40px, bottom 10px, kiri 20px, kanan auto */
+            overflow-y: auto;
+            min-height: 250px;
+            display: block;
+        }
+
+        h1, .poltar-container h2 {
             color: #00ff00;
             font-size: 2em; /* Ukuran font lebih kecil */
             margin: 5px 0;
@@ -118,42 +127,9 @@
             text-shadow: 0 0 10px #ff5733;
         }
 
-        /* Flexbox untuk Poltar Container */
-        .poltar-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 90%;
-            max-width: 500px;
-            margin-top: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-        }
-
-        .poltar-container h2 {
-            color: #00ff00;
-            font-size: 2em;
-            margin-top: 1px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 50px #00ff00;
-        }
-
-        .result-box-container button {
-            font-size: 8px;
-            padding: 3px 6px;
-        }
-
-        .result-box-container .copy-btn {
-            font-size: 8px;
-            padding: 3px 6px;
-        }
-
         /* Responsivitas: Menyesuaikan ukuran layar pada perangkat kecil */
         @media (max-width: 768px) {
-            h1 {
+            h1, .poltar-container h2 {
                 font-size: 1.8em;
             }
 
