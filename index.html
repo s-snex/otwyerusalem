@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <title>OTW YERUSALEM BY TRBB</title>
     <style>
-        /* Skema Warna: Merah, Hitam, dan Putih */
+        /* Tema Monochrome: abu-abu, hitam, putih */
 
         body {
             font-family: 'Courier New', monospace;
             margin: 0;
             padding: 0;
-            background-color: #000;  /* latar belakang hitam */
-            color: #fff;            /* teks putih */
-            display: flex;          /* Layout horizontal */
+            background-color: #333;  /* Warna abu-abu gelap */
+            color: #ccc;            /* Teks abu-abu terang */
+            display: flex;          
             justify-content: flex-start;
             align-items: flex-start;
             flex-direction: row;    /* Kontainer disusun secara horizontal */
@@ -29,78 +29,82 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhvNGNsMjY0bndpMzRsZzh0Z3NxdDJpMGtyOTdkM2c0cmZza2FmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TmyxoW4ruLLWM/giphy.webp') no-repeat center center fixed;
+            /* Contoh latar belakang GIF (monochrome bisa tetap dicapai dengan opacity) */
+            background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhvNGNsMjY0bndpMzRsZzh0Z3NxdDJpMGtyOTdkM2c0cmZza2FmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TmyxoW4ruLLWM/giphy.webp')
+                        no-repeat center center fixed;
             background-size: cover;
             z-index: -1;
-            opacity: 0.2; /* Transparansi agar dominan hitam */
+            opacity: 0.5; /* Semakin kecil, semakin dominan warna #333 */
         }
 
-        /* Kontainer tombol toggle di paling kiri */
+        /* Kontainer toggle button di paling kiri */
         .toggle-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            margin: 35px 0 0 20px;
+            margin: 40px 0 0 20px;
         }
 
-        /* Tombol toggle dibuat persegi (width & height sama) */
+        /* Tombol toggle persegi */
         .toggle-container button {
-            background-color: #900;   /* Merah gelap */
-            border: 2px solid #900;
-            color: #fff;
-            font-size: 0.8em;         /* Ukuran font lebih kecil agar pas di persegi */
+            background-color: #555;   /* Abu-abu medium */
+            border: 2px solid #555;
+            color: #ddd;
+            font-size: 0.8em;         /* Teks lebih kecil agar muat */
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
 
-            width: 20px;  /* Lebar sama dengan tinggi */
-            height: 20px; /* Tombol persegi 60x60 px */
+            width: 20px;    /* Lebar sama dengan tinggi */
+            height: 20px;
 
             margin-bottom: 15px;
 
-            display: flex;           /* Untuk memusatkan teks */
+            display: flex;  /* Untuk memusatkan teks */
             align-items: center;
             justify-content: center;
         }
 
         .toggle-container button:hover {
-            background-color: #c00;
+            background-color: #666;   /* Abu-abu sedikit lebih terang */
             transform: scale(1.05);
         }
 
+        /* Widget */
         .widget-container {
             display: none; /* Tersembunyi di awal */
             width: 300px; 
-            background-color: #111; /* Hitam keabu-abuan */
-            border: 2px solid #c00;
+            background-color: rgba(50, 50, 50, 0.5);
+            border: 2px solid #555;
             border-radius: 10px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
-            padding: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            padding: 0px;
         }
 
         h2.widget-title {
             margin-top: 0;
-            text-shadow: 0 0 10px #f00;
+            color: #eee; /* Abu-abu sangat terang */
+            text-shadow: 0 0 10px #aaa; 
         }
 
+        /* Kontainer SimetrisBytrbb & SigarBytrbb */
         .container, .poltar-container {
             width: 500px;
-            background-color: #111; /* Warna hitam keabuan */
+            background-color: rgba(50, 50, 50, 0.5); /* Abu-abu transparan */
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); /* Bayangan merah */
-            margin: 40px 20px 10px auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            margin: 30px 20px 10px auto;
             overflow-y: auto;
             min-height: 250px;
-            border: 2px solid #c00; /* Border merah */
         }
 
         h1, h2 {
-            color: #fff; /* Putih */
+            color: #eee; /* Abu-abu sangat terang */
             font-size: 2em;
             margin: 10px 0;
-            text-shadow: 0 0 10px #f00; /* Efek cahaya merah */
+            text-shadow: 0 0 10px #aaa; /* Efek cahaya abu-abu */
         }
 
         textarea, select, button, input {
@@ -108,33 +112,34 @@
             padding: 8px;
             margin: 5px 0;
             border-radius: 5px;
-            border: 2px solid #900; /* Merah gelap */
-            background-color: #000; /* Hitam */
-            color: #fff;
+            border: 2px solid #555; /* Warna abu-abu medium */
+            background-color: #444; /* Warna abu-abu gelap */
+            color: #ddd;            /* Teks abu-abu terang */
             font-size: 0.9em;
             box-sizing: border-box;
         }
 
+        /* Tombol umum (selain toggle) */
         button {
-            background-color: #900;   /* Merah gelap */
+            background-color: #555; 
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #c00; /* Merah lebih terang */
+            background-color: #666; 
             transform: scale(1.05);
         }
 
         .result-box {
-            background-color: #000;
-            color: #fff;
+            background-color: #222; /* Abu-abu sangat gelap */
+            color: #ccc;           /* Teks abu-abu terang */
             font-family: monospace;
             height: 100px;
             overflow-y: auto;
             margin: 10px 0;
             padding: 10px;
-            border: 2px solid #900;
+            border: 2px solid #555;
             border-radius: 5px;
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -254,7 +259,7 @@
             }
         }
 
-        // Fungsi untuk menghapus Simetris & Tiga Angka Sama
+        // Fungsi hapus simetris & tiga angka sama
         function hapusSimetrisDanTigaAngka() {
             const angkaArray = document.getElementById('outputBox3').textContent.split('*');
             const hasil = angkaArray.filter(num => {
