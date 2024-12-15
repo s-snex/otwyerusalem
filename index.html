@@ -51,7 +51,7 @@
             background-color: #555;   /* Abu-abu medium */
             border: 2px solid #555;
             color: #ddd;
-            font-size: 0.8em;         /* Teks lebih kecil agar muat */
+            font-size: 0.8em;         
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -214,6 +214,13 @@
             <option value="12">12 Bagian</option>
         </select>
         <button onclick="splitAndShuffleNumbers()">Pisahkan dan Acak</button>
+
+        <!-- Tombol baru untuk menghilangkan spasi di hasil -->
+        <button onclick="removeSpaces()">Hilangkan Spasi</button>
+		
+		<!-- box untuk tambahan angka/tanda (misalnya #700) -->
+        <input type="text" id="suffixBox" placeholder="">
+
         <div id="total-string"></div>
         <div id="result-container" class="result-container"></div>
     </div>
@@ -229,7 +236,7 @@
             }
         }
 
-        // Fungsi generate
+        // Fungsi generate (SimetrisBytrbb)
         function generate() {
             const input = document.getElementById('inputBox1').value;
             if (input.length === 4) {
@@ -259,7 +266,7 @@
             }
         }
 
-        // Fungsi hapus simetris & tiga angka sama
+        // Fungsi hapus simetris & tiga angka sama (Simetris)
         function hapusSimetrisDanTigaAngka() {
             const angkaArray = document.getElementById('outputBox3').textContent.split('*');
             const hasil = angkaArray.filter(num => {
@@ -283,7 +290,7 @@
             document.getElementById('totalResult').textContent = `Total Kombinasi: ${hasil.length}`;
         }
 
-        // Fungsi salin ke clipboard
+        // Fungsi salin ke clipboard (Simetris)
         function copyToClipboard() {
             const content = document.getElementById('outputBox3');
             navigator.clipboard.writeText(content.value || content.textContent).then(() => {
@@ -295,18 +302,23 @@
         function splitAndShuffleNumbers() {
             const numbers = document.getElementById('numbers').value.trim().split('*');
             const parts = parseInt(document.getElementById('parts').value);
+            const suffix = document.getElementById('suffixBox').value.trim(); // Suffix/tambahan (mis. #700)
+
             const shuffledNumbers = shuffleArray(numbers);
             document.getElementById('total-string').textContent = `Total String: ${shuffledNumbers.length}`;
+
             const chunked = chunkArray(shuffledNumbers, parts);
             const resultContainer = document.getElementById('result-container');
             resultContainer.innerHTML = '';
+
             chunked.forEach((chunk, index) => {
                 const resultBox = document.createElement('div');
                 resultBox.classList.add('result-box-container');
 
                 const textArea = document.createElement('textarea');
                 textArea.classList.add('result-box');
-                textArea.value = chunk.join('*');
+                // Menambahkan suffix di akhir chunk (misal: "1234*1278#700")
+                textArea.value = chunk.join('*') + suffix;
                 textArea.setAttribute('readonly', true);
 
                 const copyButton = document.createElement('button');
@@ -325,6 +337,18 @@
                 resultBox.appendChild(totalBox);
                 resultContainer.appendChild(resultBox);
             });
+        }
+
+        // Tambahkan tombol untuk menghilangkan spasi hasil di result-container
+        function removeSpaces() {
+            const resultContainer = document.getElementById('result-container');
+            // Ambil semua textarea di dalam result-container
+            const textAreas = resultContainer.querySelectorAll('textarea.result-box');
+            textAreas.forEach(ta => {
+                // Hapus semua spasi (termasuk newline) dari hasil
+                ta.value = ta.value.replace(/\s+/g, '');
+            });
+            alert('Spasi di seluruh hasil telah dihilangkan!');
         }
 
         // Fungsi acak array
@@ -351,7 +375,7 @@
             return result;
         }
 
-        // Overload copyToClipboard agar bisa salin dari textarea manapun
+        // Overload copyToClipboard agar bisa salin dari textarea manapun (Poltar)
         function copyToClipboard(textAreaElement) {
             if (!textAreaElement) {
                 textAreaElement = document.getElementById('outputBox3');
