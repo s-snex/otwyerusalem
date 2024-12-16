@@ -2,34 +2,31 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>OTW YERUSALEM BY TRBB</title>
+    <title>MultiPage Horizontal - Page1 & Page2</title>
     <style>
-        /* Tema Monochrome: abu-abu, hitam, putih */
+        /* --- THEME UMUM (monochrome + background GIF) --- */
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; 
+            width: 100%;
+        }
 
         body {
             font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #333;  /* Warna abu-abu gelap */
-            color: #ccc;            /* Teks abu-abu terang */
-            display: flex;          
-            justify-content: flex-start;
-            align-items: flex-start;
-            flex-direction: row;    /* Kontainer disusun secara horizontal */
-            height: 100vh;
-            text-align: center;
+            background-color: #333;      /* Warna abu-abu gelap */
+            color: #ccc;                /* Teks abu-abu terang */
+            display: flex;             
+            flex-direction: column;     /* Secara default, atur kolom (untuk Nav di atas) */
+            overflow: hidden;           /* Agar background image fixed rapi */
             position: relative;
-            overflow-y: auto;
-            gap: 20px;
         }
 
         .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Contoh latar belakang GIF (monochrome bisa tetap dicapai dengan opacity) */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhvNGNsMjY0bndpMzRsZzh0Z3NxdDJpMGtyOTdkM2c0cmZza2FmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TmyxoW4ruLLWM/giphy.webp')
                         no-repeat center center fixed;
             background-size: cover;
@@ -37,41 +34,75 @@
             opacity: 0.5; /* Semakin kecil, semakin dominan warna #333 */
         }
 
-        /* Kontainer toggle button di paling kiri */
+        /* Tombol Navigasi */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: #444;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .nav-buttons button {
+            background-color: #555; 
+            border: 2px solid #555;
+            color: #ddd;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .nav-buttons button:hover {
+            background-color: #666;
+            transform: scale(1.05);
+        }
+
+        /* Page-container: default ter-hidden */
+        .page-container {
+            display: none; 
+            flex: 1;         /* Agar page-container memenuhi sisa ruang body */
+            overflow-y: auto;
+        }
+        .visible {
+            display: flex;   /* Tampilkan page-container */
+        }
+
+        /* --- PAGE 1 STYLING: LAYOUT HORIZONTAL --- */
+        #page1 {
+            /* Biar konten di page1 tersusun horizontal */
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Tombol toggle widget di sisi kiri (page1) */
         .toggle-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            margin: 40px 0 0 20px;
+            margin: 20px 0;
         }
-
-        /* Tombol toggle persegi */
         .toggle-container button {
-            background-color: #555;   /* Abu-abu medium */
+            background-color: #555; 
             border: 2px solid #555;
             color: #ddd;
-            font-size: 0.8em;         
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-
-            width: 20px;    /* Lebar sama dengan tinggi */
+            width: 20px;    /* persegi */
             height: 20px;
-
             margin-bottom: 15px;
-
-            display: flex;  /* Untuk memusatkan teks */
+            display: flex;  
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
         }
-
         .toggle-container button:hover {
-            background-color: #666;   /* Abu-abu sedikit lebih terang */
+            background-color: #666;   
             transform: scale(1.05);
         }
 
-        /* Widget */
         .widget-container {
             display: none; /* Tersembunyi di awal */
             width: 300px; 
@@ -81,59 +112,52 @@
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
             padding: 0px;
         }
-
         h2.widget-title {
             margin-top: 0;
-            color: #eee; /* Abu-abu sangat terang */
+            color: #eee; 
             text-shadow: 0 0 10px #aaa; 
         }
 
-        /* Kontainer SimetrisBytrbb & SigarBytrbb */
-        .container, .poltar-container {
+        /* Container SIMETRIS / SIGAR / FILTER di page1 */
+        .container, .poltar-container, .filter-container {
             width: 500px;
-            background-color: rgba(50, 50, 50, 0.5); /* Abu-abu transparan */
+            background-color: rgba(50, 50, 50, 0.5); 
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            margin: 30px 20px 10px auto;
+            min-height: 300px;
             overflow-y: auto;
-            min-height: 250px;
         }
 
         h1, h2 {
-            color: #eee; /* Abu-abu sangat terang */
-            font-size: 2em;
+            color: #eee; 
+            text-shadow: 0 0 10px #aaa; 
             margin: 10px 0;
-            text-shadow: 0 0 10px #aaa; /* Efek cahaya abu-abu */
         }
-
         textarea, select, button, input {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
             border-radius: 5px;
-            border: 2px solid #555; /* Warna abu-abu medium */
-            background-color: #444; /* Warna abu-abu gelap */
-            color: #ddd;            /* Teks abu-abu terang */
+            border: 2px solid #555; 
+            background-color: #444; 
+            color: #ddd;            
             font-size: 0.9em;
             box-sizing: border-box;
         }
-
-        /* Tombol umum (selain toggle) */
         button {
             background-color: #555; 
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         button:hover {
             background-color: #666; 
             transform: scale(1.05);
         }
 
         .result-box {
-            background-color: #222; /* Abu-abu sangat gelap */
-            color: #ccc;           /* Teks abu-abu terang */
+            background-color: #222; 
+            color: #ccc;           
             font-family: monospace;
             height: 100px;
             overflow-y: auto;
@@ -146,42 +170,67 @@
             font-size: 0.8em;
         }
 
+        /* ---- PAGE 2 STYLING: TEMA SAMA ---- */
+        #page2 {
+            flex-direction: column; /* Page2 default kolom, tapi sama warna/theme */
+            padding: 20px;
+            gap: 20px;
+        }
+        #container1, #container2 {
+            background-color: rgba(50,50,50,0.5);
+            border: 2px solid #555;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        }
+        /* Iframe style */
+        #container1 iframe {
+            width: 100%;
+            height: 400px; /* atur sesuai kebutuhan */
+            border: none; 
+        }
+        /* Hasil pencarian */
+        #hasilPengecekan p {
+            margin: 5px 0;
+        }
+
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-                gap: 0;
+            #page1 {
+                flex-direction: column; /* Responsif: tumpuk ke vertikal */
             }
-            .toggle-container {
-                margin: 20px auto;
-            }
-            .container, .poltar-container {
+            .container, .poltar-container, .filter-container {
                 width: 300px;
-                margin: 20px auto;
-            }
-            h1, h2 {
-                font-size: 1.8em;
             }
         }
+
     </style>
 </head>
 <body>
-    <div class="background"></div> <!-- Latar belakang GIF -->
 
-    <!-- Tombol Toggle di paling kiri -->
+  <!-- Latar Belakang GIF -->
+  <div class="background"></div>
+
+  <!-- Tombol Navigasi Page1 & Page2 -->
+  <div class="nav-buttons">
+    <button onclick="showPage('page1')">Page 1</button>
+    <button onclick="showPage('page2')">Page 2</button>
+  </div>
+
+  <!-- ===================== PAGE 1 ===================== -->
+  <div id="page1" class="page-container visible">
+    <!-- Bagian Kiri: Tombol Widget & Iframe Toggle -->
     <div class="toggle-container">
-        <!-- Tombol persegi -->
-        <button onclick="toggleWidget()"></button>
-        <!-- Widget ditempatkan di dalam div yang tersembunyi awalnya -->
-        <div class="widget-container" id="widgetDiv">
-            <h2 class="widget-title"></h2>
-            <iframe
-                src="https://widgets.vegasnet.info/result.php?show_id=89,77,111,72,84,88,98bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"
-                width="300"
-                height="250"
-                scrolling="no"
-                style="border:0;">
-            </iframe>
-        </div>
+      <button onclick="toggleWidget()"></button>
+      <div class="widget-container" id="widgetDiv">
+        <h2 class="widget-title"></h2>
+        <iframe
+            src="https://widgets.vegasnet.info/result.php?show_id=89,77,111,72,84,88,98bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"
+            width="300"
+            height="250"
+            scrolling="no"
+            style="border:0;">
+        </iframe>
+      </div>
     </div>
 
     <!-- Kontainer SimetrisBytrbb -->
@@ -214,176 +263,289 @@
             <option value="12">12 Bagian</option>
         </select>
         <button onclick="splitAndShuffleNumbers()">Pisahkan dan Acak</button>
+        <!-- Tombol Hilangkan Spasi telah DIHAPUS -->
+        
+        <!-- Tambahkan tombol Hapus Ganjil/Genap -->
+        <button onclick="hapusGanjilGenapPoltar()">Hapus Ganjil Semua / Genap Semua</button>
 
-        <!-- Tombol baru untuk menghilangkan spasi di hasil -->
-        <button onclick="removeSpaces()">Hilangkan Spasi</button>
-		
-		<!-- box untuk tambahan angka/tanda (misalnya #700) -->
-        <input type="text" id="suffixBox" placeholder="">
+        <button onclick="hapusSimetrisDanTigaAngkaPoltar()">Sttttt! Lemme Cook</button>
 
+        <input type="text" id="suffixBox" placeholder="Tambahan, mis. #700">
         <div id="total-string"></div>
         <div id="result-container" class="result-container"></div>
     </div>
 
-    <script>
-        // Fungsi toggle tampilan widget
-        function toggleWidget() {
-            const widgetDiv = document.getElementById('widgetDiv');
-            if (widgetDiv.style.display === 'none' || widgetDiv.style.display === '') {
-                widgetDiv.style.display = 'block';
-            } else {
-                widgetDiv.style.display = 'none';
-            }
-        }
+    <!-- Kontainer Filter pertama (range 0000-9999) -->
+    <div class="filter-container">
+        <h2>PembalikBytrbb</h2>
+        <textarea id="filterNumbers" placeholder="Masukkan angka dipisahkan * (mis. 1234*9874*2190)"></textarea>
+        <button onclick="filterNumbers()">Generate</button>
+        <textarea id="filterResult" class="result-box" readonly></textarea>
+        <div id="filterTotal"></div>
+        <button onclick="copyFilterResult()">Copy</button>
+    </div>
+  </div>
+  <!-- /page1 -->
 
-        // Fungsi generate (SimetrisBytrbb)
-        function generate() {
-            const input = document.getElementById('inputBox1').value;
-            if (input.length === 4) {
-                const baseString = "1234567890";
-                let a = baseString.replace(input[0], '');
-                let b = baseString.replace(input[1], '');
-                let c = baseString.replace(input[2], '');
-                let d = baseString.replace(input[3], '');
-                const aDigits = a.split('');
-                const bDigits = b.split('');
-                const cDigits = c.split('');
-                const dDigits = d.split('');
-                const results = [];
-                aDigits.forEach(num1 => {
-                    bDigits.forEach(num2 => {
-                        cDigits.forEach(num3 => {
-                            dDigits.forEach(num4 => {
-                                results.push(num1 + num2 + num3 + num4);
-                            });
-                        });
-                    });
-                });
-                document.getElementById('outputBox3').textContent = results.join('*');
-                document.getElementById('totalResult').textContent = `Total Kombinasi: ${results.length}`;
-            } else {
-                alert("Masukkan 4 angka!");
-            }
-        }
+  <!-- ===================== PAGE 2 ===================== -->
+  <div id="page2" class="page-container">
+    <h2 style="text-shadow: 0 0 10px #aaa;"></h2>
+    
+    <!-- Kontainer 1: Widget (iframe) -->
+    <div id="container1">
+      <h2></h2>
+      <iframe id="widgetIframe"
+        src="https://widgets.vegasnet.info/result.php?show_id=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC">
+      </iframe>
+    </div>
 
-        // Fungsi hapus simetris & tiga angka sama (Simetris)
-        function hapusSimetrisDanTigaAngka() {
-            const angkaArray = document.getElementById('outputBox3').textContent.split('*');
-            const hasil = angkaArray.filter(num => {
-                const pasanganSimetris = num[0] === num[1] && num[2] === num[3];
-                const palindromik = num[0] === num[3] && num[1] === num[2];
-                const berkesinambungan = num.slice(0, 2) === num.slice(2, 4) ||
-                                         (num[0] === num[2] && num[1] === num[3]);
-                const ascending = '123456789';
-                const descending = '987654321';
-                const angkaBerurutan = ascending.includes(num) || descending.includes(num);
+  </div>
+  <!-- /page2 -->
 
-                // Cek tiga angka sama berurutan
-                for (let i = 0; i < num.length - 2; i++) {
-                    if (num[i] === num[i + 1] && num[i] === num[i + 2]) {
-                        return false;
-                    }
-                }
-                return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
-            });
-            document.getElementById('outputBox3').textContent = hasil.join('*');
-            document.getElementById('totalResult').textContent = `Total Kombinasi: ${hasil.length}`;
-        }
+  <script>
+    /* NAVIGASI ANTAR PAGE */
+    function showPage(pageId){
+      // Sembunyikan dua page
+      document.getElementById('page1').classList.remove('visible');
+      document.getElementById('page1').style.display = 'none';
+      document.getElementById('page2').classList.remove('visible');
+      document.getElementById('page2').style.display = 'none';
 
-        // Fungsi salin ke clipboard (Simetris)
-        function copyToClipboard() {
-            const content = document.getElementById('outputBox3');
-            navigator.clipboard.writeText(content.value || content.textContent).then(() => {
-                alert('Hasil telah disalin ke clipboard!');
-            });
-        }
+      // Tampilkan target page
+      const target = document.getElementById(pageId);
+      target.classList.add('visible');
+      target.style.display = 'flex';
+    }
 
-        // Fungsi Pisah & Acak (Poltar Sakti)
-        function splitAndShuffleNumbers() {
-            const numbers = document.getElementById('numbers').value.trim().split('*');
-            const parts = parseInt(document.getElementById('parts').value);
-            const suffix = document.getElementById('suffixBox').value.trim(); // Suffix/tambahan (mis. #700)
+    // TOGGLE Widget
+    function toggleWidget() {
+      const widgetDiv = document.getElementById('widgetDiv');
+      if (widgetDiv.style.display === 'none' || widgetDiv.style.display === '') {
+          widgetDiv.style.display = 'block';
+      } else {
+          widgetDiv.style.display = 'none';
+      }
+    }
 
-            const shuffledNumbers = shuffleArray(numbers);
-            document.getElementById('total-string').textContent = `Total String: ${shuffledNumbers.length}`;
+    // ================== PAGE 1 LOGIC ===================
+    // SimetrisBytrbb
+    function generate() {
+      const input = document.getElementById('inputBox1').value;
+      if (input.length === 4) {
+          const baseString = "1234567890";
+          let a = baseString.replace(input[0], '');
+          let b = baseString.replace(input[1], '');
+          let c = baseString.replace(input[2], '');
+          let d = baseString.replace(input[3], '');
+          const aDigits = a.split('');
+          const bDigits = b.split('');
+          const cDigits = c.split('');
+          const dDigits = d.split('');
+          const results = [];
+          aDigits.forEach(num1 => {
+              bDigits.forEach(num2 => {
+                  cDigits.forEach(num3 => {
+                      dDigits.forEach(num4 => {
+                          results.push(num1 + num2 + num3 + num4);
+                      });
+                  });
+              });
+          });
+          document.getElementById('outputBox3').textContent = results.join('*');
+          document.getElementById('totalResult').textContent = `Total Kombinasi: ${results.length}`;
+      } else {
+          alert("Masukkan 4 angka!");
+      }
+    }
 
-            const chunked = chunkArray(shuffledNumbers, parts);
-            const resultContainer = document.getElementById('result-container');
-            resultContainer.innerHTML = '';
+    function hapusSimetrisDanTigaAngka() {
+      const angkaArray = document.getElementById('outputBox3').textContent.split('*');
+      const hasil = angkaArray.filter(num => {
+          if(num.length !== 4) return false;
+          const pasanganSimetris = (num[0] === num[1] && num[2] === num[3]);
+          const palindromik = (num[0] === num[3] && num[1] === num[2]);
+          const berkesinambungan = (num.slice(0, 2) === num.slice(2, 4)) ||
+                                   (num[0] === num[2] && num[1] === num[3]);
+          const ascending = '123456789';
+          const descending = '987654321';
+          const angkaBerurutan = ascending.includes(num) || descending.includes(num);
 
-            chunked.forEach((chunk, index) => {
-                const resultBox = document.createElement('div');
-                resultBox.classList.add('result-box-container');
+          // cek tiga angka sama berurutan
+          for (let i = 0; i < num.length - 2; i++) {
+              if (num[i] === num[i+1] && num[i] === num[i+2]) {
+                  return false;
+              }
+          }
+          return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
+      });
+      document.getElementById('outputBox3').textContent = hasil.join('*');
+      document.getElementById('totalResult').textContent = `Total Kombinasi: ${hasil.length}`;
+    }
 
-                const textArea = document.createElement('textarea');
-                textArea.classList.add('result-box');
-                // Menambahkan suffix di akhir chunk (misal: "1234*1278#700")
-                textArea.value = chunk.join('*') + suffix;
-                textArea.setAttribute('readonly', true);
+    function copyToClipboard(element) {
+      if (!element) {
+          element = document.getElementById('outputBox3');
+      }
+      navigator.clipboard.writeText(element.value || element.textContent).then(() => {
+          alert('Hasil telah disalin ke clipboard!');
+      });
+    }
 
-                const copyButton = document.createElement('button');
-                copyButton.classList.add('copy-btn');
-                copyButton.textContent = `Copy ${index + 1}`;
-                copyButton.onclick = function() {
-                    copyToClipboard(textArea);
-                };
+    // SigarBytrbb
+    function splitAndShuffleNumbers() {
+      const numbers = document.getElementById('numbers').value.trim().split('*');
+      const parts = parseInt(document.getElementById('parts').value);
+      const suffix = document.getElementById('suffixBox').value.trim();
 
-                const totalBox = document.createElement('div');
-                totalBox.classList.add('total-box');
-                totalBox.textContent = `Total: ${chunk.length}`;
+      const shuffledNumbers = shuffleArray(numbers);
+      document.getElementById('total-string').textContent = `Total String: ${shuffledNumbers.length}`;
 
-                resultBox.appendChild(textArea);
-                resultBox.appendChild(copyButton);
-                resultBox.appendChild(totalBox);
-                resultContainer.appendChild(resultBox);
-            });
-        }
+      const chunked = chunkArray(shuffledNumbers, parts);
+      const resultContainer = document.getElementById('result-container');
+      resultContainer.innerHTML = '';
 
-        // Tambahkan tombol untuk menghilangkan spasi hasil di result-container
-        function removeSpaces() {
-            const resultContainer = document.getElementById('result-container');
-            // Ambil semua textarea di dalam result-container
-            const textAreas = resultContainer.querySelectorAll('textarea.result-box');
-            textAreas.forEach(ta => {
-                // Hapus semua spasi (termasuk newline) dari hasil
-                ta.value = ta.value.replace(/\s+/g, '');
-            });
-            alert('Spasi di seluruh hasil telah dihilangkan!');
-        }
+      chunked.forEach((chunk, index) => {
+          const resultBox = document.createElement('div');
+          resultBox.classList.add('result-box-container');
 
-        // Fungsi acak array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+          const textArea = document.createElement('textarea');
+          textArea.classList.add('result-box');
+          textArea.value = chunk.join('*') + suffix;
+          textArea.setAttribute('readonly', true);
 
-        // Fungsi bagi array secara merata
-        function chunkArray(array, size) {
-            const result = [];
-            const chunkSize = Math.floor(array.length / size);
-            let remainder = array.length % size;
+          const copyButton = document.createElement('button');
+          copyButton.classList.add('copy-btn');
+          copyButton.textContent = `Copy ${index + 1}`;
+          copyButton.onclick = function() {
+              copyToClipboard(textArea);
+          };
 
-            for (let i = 0; i < size; i++) {
-                const start = i * chunkSize;
-                const end = start + chunkSize + (remainder > 0 ? 1 : 0);
-                result.push(array.slice(start, end));
-                remainder--;
-            }
-            return result;
-        }
+          const totalBox = document.createElement('div');
+          totalBox.classList.add('total-box');
+          totalBox.textContent = `Total: ${chunk.length}`;
 
-        // Overload copyToClipboard agar bisa salin dari textarea manapun (Poltar)
-        function copyToClipboard(textAreaElement) {
-            if (!textAreaElement) {
-                textAreaElement = document.getElementById('outputBox3');
-            }
-            navigator.clipboard.writeText(textAreaElement.value || textAreaElement.textContent).then(() => {
-                alert('Hasil telah disalin ke clipboard!');
-            });
-        }
-    </script>
+          resultBox.appendChild(textArea);
+          resultBox.appendChild(copyButton);
+          resultBox.appendChild(totalBox);
+          resultContainer.appendChild(resultBox);
+      });
+    }
+
+    // Fungsi BARU: Hapus kombinasi 4 digit yang semuanya ganjil ATAU semuanya genap
+    function hapusGanjilGenapPoltar(){
+      const resultContainer = document.getElementById('result-container');
+      const textAreas = resultContainer.querySelectorAll('textarea.result-box');
+      let overallCount = 0; 
+
+      textAreas.forEach(ta => {
+          const splitted = ta.value.split('*');
+          const filtered = splitted.filter(num => {
+              if (num.length !== 4) return false;
+
+              // Cek apakah semua digit ganjil atau semua digit genap
+              let allOdd = true;
+              let allEven = true;
+              for (let digit of num) {
+                  const d = parseInt(digit, 10);
+                  if (d % 2 === 0) {
+                      // Jika ketemu genap, berarti tidak semua ganjil
+                      allOdd = false;
+                  } else {
+                      // Jika ketemu ganjil, berarti tidak semua genap
+                      allEven = false;
+                  }
+              }
+              // Jika allOdd atau allEven true, maka kita TIDAK keep (hapus)
+              return !(allOdd || allEven);
+          });
+
+          ta.value = filtered.join('*');
+          overallCount += filtered.length;
+      });
+      document.getElementById('total-string').textContent = `Total String: ${overallCount}`;
+      alert("Proses hapus ganjil semua / genap semua selesai!");
+    }
+
+    function hapusSimetrisDanTigaAngkaPoltar(){
+      const resultContainer = document.getElementById('result-container');
+      const textAreas = resultContainer.querySelectorAll('textarea.result-box');
+      let overallCount = 0; 
+
+      textAreas.forEach(ta => {
+          const splitted = ta.value.split('*');
+          const filtered = splitted.filter(num => {
+              if(num.length !== 4) return false;
+
+              const pasanganSimetris = (num[0] === num[1] && num[2] === num[3]);
+              const palindromik = (num[0] === num[3] && num[1] === num[2]);
+              const berkesinambungan = (num.slice(0,2) === num.slice(2,4)) ||
+                                       (num[0] === num[2] && num[1] === num[3]);
+              const ascending = '123456789';
+              const descending = '987654321';
+              const angkaBerurutan = ascending.includes(num) || descending.includes(num);
+
+              for (let i = 0; i < num.length - 2; i++) {
+                  if (num[i] === num[i+1] && num[i] === num[i+2]) {
+                      return false;
+                  }
+              }
+              return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
+          });
+          ta.value = filtered.join('*');
+          overallCount += filtered.length;
+      });
+      document.getElementById('total-string').textContent = `Total String: ${overallCount}`;
+      alert("Proses Cook selesai untuk Poltar!");
+    }
+
+    // FilterBytrbb
+    function filterNumbers() {
+      const allNumbers = [];
+      for(let i = 0; i < 10000; i++){
+          const padded = String(i).padStart(4,'0');
+          allNumbers.push(padded);
+      }
+      const userInput = document.getElementById('filterNumbers').value.trim();
+      if(!userInput){
+          alert("Masukkan angka yang ingin difilter, misal: 1234*9874*2190");
+          return;
+      }
+      const excludeList = userInput.split('*');
+      const filteredResult = allNumbers.filter(num => !excludeList.includes(num));
+
+      document.getElementById('filterResult').value = filteredResult.join('*');
+      document.getElementById('filterTotal').textContent = `Total: ${filteredResult.length}`;
+    }
+
+    function copyFilterResult(){
+      const filterResult = document.getElementById('filterResult');
+      navigator.clipboard.writeText(filterResult.value || filterResult.textContent).then(()=>{
+          alert('Hasil filter telah disalin ke clipboard!');
+      });
+    }
+
+    // Utility
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    function chunkArray(array, size) {
+      const result = [];
+      const chunkSize = Math.floor(array.length / size);
+      let remainder = array.length % size;
+
+      for (let i = 0; i < size; i++){
+          const start = i * chunkSize;
+          const end = start + chunkSize + (remainder > 0 ? 1 : 0);
+          result.push(array.slice(start, end));
+          remainder--;
+      }
+      return result;
+    }
+
+  </script>
 </body>
 </html>
