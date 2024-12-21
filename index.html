@@ -2,21 +2,38 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>MultiPage Horizontal - Page1 & Page2</title>
+    <title>OTW YERUSALEM</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap" rel="stylesheet">
     <style>
-        /* --- THEME UMUM (monochrome + background GIF) --- */
+        /* --- THEME UMUM MONOCHROME ABU-ABU & HITAM --- */
+        :root {
+            --background-color: #1c1c1c; /* Abu-abu Sangat Gelap */
+            --text-color: #f0f0f0;       /* Abu-abu Terang */
+            --accent-color: #d3d3d3;     /* Abu-abu Cerah */
+            --button-color: #2c2c2c;     /* Abu-abu Gelap untuk tombol */
+            --button-hover-color: #4c4c4c; /* Abu-abu Lebih Terang saat hover */
+            --input-background: #2c2c2c; /* Abu-abu Gelap untuk input */
+            --input-border: #d3d3d3;     /* Abu-abu Cerah untuk border */
+            --container-background: rgba(28, 28, 28, 0.5); /* Abu-abu Sangat Gelap dengan Opacity */
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            --border-radius: 10px;
+            --transition-speed: 0.3s;
+            --heading-font-size: 1.8em; /* Lebih Besar untuk Judul */
+            --container-width: 300px;
+        }
 
         html, body {
             margin: 0;
             padding: 0;
             height: 100%; 
             width: 100%;
+            font-family: 'Courier New', monospace;
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background-color: #333;      /* Warna abu-abu gelap */
-            color: #ccc;                /* Teks abu-abu terang */
+            background-color: var(--background-color); /* Warna Abu-abu Sangat Gelap */
+            color: var(--text-color);                /* Teks Abu-abu Terang */
             display: flex;             
             flex-direction: column;     /* Secara default, atur kolom (untuk Nav di atas) */
             overflow: hidden;           /* Agar background image fixed rapi */
@@ -27,33 +44,50 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhvNGNsMjY0bndpMzRsZzh0Z3NxdDJpMGtyOTdkM2c0cmZza2FmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TmyxoW4ruLLWM/giphy.webp')
+            background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhvNGNsMjY0bndpMzRsZzh0Z3NxdDJpMGtyOTdkM2c0cmZza2FmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TmyxoW4ruLLWM/giphy.webp') 
                         no-repeat center center fixed;
             background-size: cover;
             z-index: -1;
-            opacity: 0.5; /* Semakin kecil, semakin dominan warna #333 */
+            opacity: 0.7; /* Meningkatkan Opacity untuk Nuansa Gelap */
+            filter: brightness(0.5); /* Menambah Efek Gelap */
+        }
+
+        /* Overlay Gelap */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay Semi-Transparan */
+            z-index: 0;
         }
 
         /* Tombol Navigasi */
         .nav-buttons {
             display: flex;
-            gap: 10px;
-            padding: 10px;
-            background-color: #444;
+            gap: 15px;
+            padding: 15px;
+            background-color: var(--container-background);
             justify-content: flex-start;
             align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+            z-index: 1;
         }
+
         .nav-buttons button {
-            background-color: #555; 
-            border: 2px solid #555;
-            color: #ddd;
-            padding: 8px 12px;
+            background-color: var(--button-color); 
+            border: 2px solid var(--input-border);
+            color: var(--text-color);
+            padding: 10px 20px;
             cursor: pointer;
             border-radius: 5px;
-            transition: all 0.3s ease;
+            font-size: 1em;
+            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
         }
+
         .nav-buttons button:hover {
-            background-color: #666;
+            background-color: var(--button-hover-color);
+            box-shadow: 0 0 10px var(--input-border);
             transform: scale(1.05);
         }
 
@@ -61,154 +95,177 @@
         .page-container {
             display: none; 
             flex: 1;         /* Agar page-container memenuhi sisa ruang body */
-            overflow-y: auto;
+            padding: 20px;
+            gap: 20px;
+            flex-wrap: nowrap; /* Tetap sejajar horisontal */
+            justify-content: center;
+            z-index: 1;
         }
+
         .visible {
             display: flex;   /* Tampilkan page-container */
         }
 
         /* --- PAGE 1 STYLING: LAYOUT HORIZONTAL --- */
         #page1 {
-            /* Biar konten di page1 tersusun horizontal */
             flex-direction: row;
             align-items: flex-start;
-            gap: 20px;
-            padding: 20px;
+            overflow-x: auto; /* Agar bisa di-scroll horizontal jika diperlukan */
         }
 
-        /* Tombol toggle widget di sisi kiri (page1) */
-        .toggle-container {
+        /* Container SIMETRIS / SIGAR / FILTER / MAGICBYTRBB di page1 */
+        .container, .poltar-container, .filter-container, .magicbytrbb {
+            width: var(--container-width);
+            background-color: var(--container-background); 
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            margin: 20px 0;
-        }
-        .toggle-container button {
-            background-color: #555; 
-            border: 2px solid #555;
-            color: #ddd;
-            width: 20px;    /* persegi */
-            height: 20px;
-            margin-bottom: 15px;
-            display: flex;  
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 5px;
-        }
-        .toggle-container button:hover {
-            background-color: #666;   
-            transform: scale(1.05);
+            gap: 15px;
         }
 
-        .widget-container {
-            display: none; /* Tersembunyi di awal */
-            width: 300px; 
-            background-color: rgba(50, 50, 50, 0.5);
-            border: 2px solid #555;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            padding: 0px;
-        }
-        h2.widget-title {
-            margin-top: 0;
-            color: #eee; 
-            text-shadow: 0 0 10px #aaa; 
-        }
-
-        /* Container SIMETRIS / SIGAR / FILTER di page1 */
-        .container, .poltar-container, .filter-container {
-            width: 500px;
-            background-color: rgba(50, 50, 50, 0.5); 
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            min-height: 300px;
-            overflow-y: auto;
-        }
-
-        h1, h2 {
-            color: #eee; 
-            text-shadow: 0 0 10px #aaa; 
+        h2 {
+            color: var(--input-border); /* Abu-abu Cerah untuk Judul */
+            text-shadow: 0 0 5px var(--input-border); 
             margin: 10px 0;
+            text-align: center;
+            font-size: var(--heading-font-size);
         }
+
         textarea, select, button, input {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             margin: 5px 0;
             border-radius: 5px;
-            border: 2px solid #555; 
-            background-color: #444; 
-            color: #ddd;            
-            font-size: 0.9em;
+            border: 1px solid var(--input-border); 
+            background-color: var(--input-background); 
+            color: var(--text-color);            
+            font-size: 1em;
             box-sizing: border-box;
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+            font-family: 'Courier New', monospace;
         }
+
+        textarea:focus, select:focus, input:focus {
+            border-color: var(--input-border);
+            box-shadow: 0 0 5px var(--input-border);
+            outline: none;
+        }
+
         button {
-            background-color: #555; 
+            background-color: var(--button-color); 
+            border: 2px solid var(--input-border);
+            color: var(--text-color);
+            padding: 12px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+            font-family: 'Courier New', monospace;
         }
+
         button:hover {
-            background-color: #666; 
+            background-color: var(--button-hover-color); /* Abu-abu Lebih Terang */
+            box-shadow: 0 0 10px var(--input-border);
             transform: scale(1.05);
         }
 
         .result-box {
-            background-color: #222; 
-            color: #ccc;           
-            font-family: monospace;
-            height: 100px;
-            overflow-y: auto;
+            background-color: var(--input-background); 
+            color: var(--text-color);           
+            font-family: 'Courier New', monospace;
+            min-height: 150px;
+            overflow: hidden; /* Menghilangkan scrollbar */
             margin: 10px 0;
-            padding: 10px;
-            border: 2px solid #555;
+            padding: 15px;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 0.8em;
+            font-size: 0.9em;
+            box-shadow: inset 0 0 5px var(--input-border);
         }
 
-        /* ---- PAGE 2 STYLING: TEMA SAMA ---- */
+        /* Styling untuk Priority Inputs */
+        .priority-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .priority-inputs input {
+            flex: 1 1 45%; /* Atur agar dua input bisa berdampingan */
+            height: 40px;   /* Konsisten tinggi input */
+            background-color: var(--input-background);
+            border: 1px solid var(--input-border);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ---- PAGE 2 STYLING: TEMA SAMA MONOCHROME ABU-ABU CERAH & HITAM ---- */
         #page2 {
             flex-direction: column; /* Page2 default kolom, tapi sama warna/theme */
-            padding: 20px;
-            gap: 20px;
+            align-items: center;
         }
+
         #container1, #container2 {
-            background-color: rgba(50,50,50,0.5);
-            border: 2px solid #555;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            background-color: var(--container-background);
+            border: 2px solid var(--input-border);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
+
         /* Iframe style */
         #container1 iframe {
             width: 100%;
-            height: 200px; /* atur sesuai kebutuhan */
+            height: 250px; /* Atur sesuai kebutuhan */
             border: none; 
+            border-radius: 5px;
         }
+
         /* Hasil pencarian */
         #hasilPengecekan p {
             margin: 5px 0;
         }
 
-        @media (max-width: 768px) {
-            #page1 {
-                flex-direction: column; /* Responsif: tumpuk ke vertikal */
-            }
-            .container, .poltar-container, .filter-container {
-                width: 300px;
-            }
+        /* Tabel Styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
         }
 
+        th, td {
+            border: 1px solid var(--input-border);
+            padding: 8px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+        }
+
+        th {
+            background-color: var(--button-color);
+            text-shadow: 0 0 5px var(--input-border);
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(211, 211, 211, 0.1); /* Sedikit Abu-abu pada Baris Genap */
+        }
     </style>
 </head>
 <body>
 
   <!-- Latar Belakang GIF -->
   <div class="background"></div>
+  <div class="overlay"></div> <!-- Overlay Gelap -->
 
   <!-- Tombol Navigasi Page1 & Page2 -->
   <div class="nav-buttons">
@@ -218,27 +275,13 @@
 
   <!-- ===================== PAGE 1 ===================== -->
   <div id="page1" class="page-container visible">
-    <!-- Bagian Kiri: Tombol Widget & Iframe Toggle -->
-    <div class="toggle-container">
-      <button onclick="toggleWidget()"></button>
-      <div class="widget-container" id="widgetDiv">
-        <h2 class="widget-title"></h2>
-        <iframe
-            src="https://widgets.vegasnet.info/result.php?show_id=89,77,111,72,84,88,98bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"
-            width="300"
-            height="250"
-            scrolling="no"
-            style="border:0;">
-        </iframe>
-      </div>
-    </div>
-
-    <!-- Kontainer SimetrisBytrbb -->
+    
+    <!-- Kontainer PoltarBytrbb -->
     <div class="container">
-        <h1>PoltarBytrbb</h1>
-        <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4">
+        <h2>PoltarByTrbb</h2>
+        <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4" oninput="updateTotalPoltar()">
         <textarea id="outputBox3" class="result-box" readonly></textarea>
-        <div class="total-result" id="totalResult">Total Kombinasi: 0</div>
+        <div class="total-result" id="totalResultPoltar">Total Kombinasi: 0</div>
         <button onclick="generate()">Generate</button>
 
         <!-- Tombol BARU: Hapus Ganjil/Genap khusus PoltarBytrbb -->
@@ -250,8 +293,9 @@
 
     <!-- Kontainer SigarBytrbb -->
     <div class="poltar-container">
-        <h2>SigarBytrbb</h2>
-        <textarea id="numbers" placeholder="Masukkan angka dipisahkan *"></textarea>
+        <h2>SigarByTrbb</h2>
+        <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
+        <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
         <select id="parts">
             <option value="1">1 Bagian</option>
             <option value="2">2 Bagian</option>
@@ -266,25 +310,42 @@
             <option value="11">11 Bagian</option>
             <option value="12">12 Bagian</option>
         </select>
-        <button onclick="splitAndShuffleNumbers()">Pisahkan dan Acak</button>
+        <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
 
         <!-- Tombol Hapus Ganjil/Genap Khusus SigarBytrbb -->
         <button onclick="hapusGanjilGenapPoltar()">Hapus Ganjil / Genap</button>
 
         <button onclick="hapusSimetrisDanTigaAngkaPoltar()">Let Him Cook</button>
 
-        <input type="text" id="suffixBox" placeholder="Tambahan, mis. #700">
-        <div id="total-string"></div>
+        <div id="total-string">Total Angka: 0</div>
         <div id="result-container" class="result-container"></div>
     </div>
 
-    <!-- Kontainer Filter pertama (range 0000-9999) -->
+    <!-- Kontainer MagicBytrbb -->
+    <div class="magicbytrbb">
+        <h2>MagicByTrbb</h2>
+        <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)"
+               oninput="updateTotalMagic()">
+        <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
+        <input type="number" id="jumlahBagianMagic" placeholder="Masukkan jumlah bagian" min="1" max="7" value="1" oninput="generatePriorityInputsMagic()">
+        
+        <!-- Container untuk Priority Inputs -->
+        <div id="priorityInputsMagic" class="priority-inputs">
+            <!-- Priority inputs akan dihasilkan secara dinamis di sini -->
+        </div>
+
+        <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
+        <div id="hasilContainerMagic"></div>
+    </div>
+
+    <!-- Kontainer PembalikBytrbb -->
     <div class="filter-container">
-        <h2>PembalikBytrbb</h2>
-        <textarea id="filterNumbers" placeholder=""></textarea>
+        <h2>PembalikByTrbb</h2>
+        <input type="text" id="filterNumbersPembalik" placeholder="Masukkan angka yang ingin difilter dipisahkan dengan *" oninput="updateTotalPembalik()">
+        <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
         <button onclick="filterNumbers()">Generate</button>
         <textarea id="filterResult" class="result-box" readonly></textarea>
-        <div id="filterTotal"></div>
+        <div id="filterTotal">Total Angka: 0</div>
         <button onclick="copyFilterResult()">Copy</button>
     </div>
   </div>
@@ -295,26 +356,25 @@
     
     <!-- Kontainer 1: Widget (iframe) -->
     <div id="container1">
-      <h2 style="text-shadow: 0 0 10px #aaa;"></h2>
+      <h2>Widget</h2>
       <iframe id="widgetIframe"
-        src="https://widgets.vegasnet.info/result.php?show_id=1,4,7,8,9,10,12,13,15,16,17,18,19,20,21,22,24,25,26,28,29,30,31,32,33,34,36,38,39,41,42,43,45,46,49,50,51,53,54,55,56,57,58,59,60,61,62,63,64,65,67,68,70,71,72,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,95,96,97,98,99,100,102,103,104,105,106,107,108,109,111,112,113,114,115,116,117,120,121,123,125,127,129,133,138,139,141,142,144,146,155,157,161,163,165,166,167,168,169,170,171bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC">
+        src="https://widgets.vegasnet.info/result.php?show_id=1,4bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"> 
       </iframe>
     </div>
 
     <!-- Kontainer 2: Parsing & Pencarian Kode Tetap -->
     <div id="container2">
-      <h2 style="text-shadow: 0 0 10px #aaa;"></h2>
+      <h2>Parsing & Pencarian Kode Tetap</h2>
 
       <!-- Textarea data input -->
-      <textarea id="dataInput2" rows="7" cols="50" style="width:100%; background-color:#444; color:#ddd;">
-</textarea>
-      <br><br>
+      <textarea id="dataInput2" rows="7" cols="50" placeholder="Masukkan data di sini..."></textarea>
+      <br>
 
       <!-- Tombol untuk proses parsing & pencarian -->
       <button onclick="parseAndSearch2()">Cari Data</button>
 
       <hr>
-      <h2 style="text-shadow: 0 0 10px #aaa;">Hasil:</h2>
+      <h2>Hasil:</h2>
       <div id="result2" class="result-box" style="height:auto;"></div>
     </div>
 
@@ -324,11 +384,12 @@
   <script>
     /* NAVIGASI ANTAR PAGE */
     function showPage(pageId){
-      // Sembunyikan dua page
-      document.getElementById('page1').classList.remove('visible');
-      document.getElementById('page1').style.display = 'none';
-      document.getElementById('page2').classList.remove('visible');
-      document.getElementById('page2').style.display = 'none';
+      // Sembunyikan semua page
+      const pages = document.querySelectorAll('.page-container');
+      pages.forEach(page => {
+          page.classList.remove('visible');
+          page.style.display = 'none';
+      });
 
       // Tampilkan target page
       const target = document.getElementById(pageId);
@@ -336,26 +397,16 @@
       target.style.display = 'flex';
     }
 
-    // TOGGLE Widget (page1)
-    function toggleWidget() {
-      const widgetDiv = document.getElementById('widgetDiv');
-      if (widgetDiv.style.display === 'none' || widgetDiv.style.display === '') {
-          widgetDiv.style.display = 'block';
-      } else {
-          widgetDiv.style.display = 'none';
-      }
-    }
-
     // ================== PAGE 1 LOGIC ===================
-    // SimetrisBytrbb
+    // PoltarBytrbb
     function generate() {
       const input = document.getElementById('inputBox1').value;
       if (input.length === 4) {
           const baseString = "1234567890";
-          let a = baseString.replace(input[0], '');
-          let b = baseString.replace(input[1], '');
-          let c = baseString.replace(input[2], '');
-          let d = baseString.replace(input[3], '');
+          let a = baseString.replace(new RegExp(input[0], 'g'), '');
+          let b = baseString.replace(new RegExp(input[1], 'g'), '');
+          let c = baseString.replace(new RegExp(input[2], 'g'), '');
+          let d = baseString.replace(new RegExp(input[3], 'g'), '');
           const aDigits = a.split('');
           const bDigits = b.split('');
           const cDigits = c.split('');
@@ -371,7 +422,7 @@
               });
           });
           document.getElementById('outputBox3').textContent = results.join('*');
-          document.getElementById('totalResult').textContent = `Total Kombinasi: ${results.length}`;
+          document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${results.length}`;
       } else {
           alert("Masukkan 4 angka!");
       }
@@ -398,7 +449,7 @@
           return !(pasanganSimetris || palindromik || berkesinambungan || angkaBerurutan);
       });
       document.getElementById('outputBox3').textContent = hasil.join('*');
-      document.getElementById('totalResult').textContent = `Total Kombinasi: ${hasil.length}`;
+      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${hasil.length}`;
     }
 
     function copyToClipboard(element) {
@@ -412,9 +463,10 @@
 
     // SigarBytrbb
     function splitAndShuffleNumbers() {
-      const numbers = document.getElementById('numbers').value.trim().split('*');
+      const numbers = document.getElementById('numbersSigar').value.trim().split('*').filter(num => num.trim() !== '');
       const parts = parseInt(document.getElementById('parts').value);
-      const suffix = document.getElementById('suffixBox').value.trim();
+      // const suffixBox = document.getElementById('suffixBox');
+      // const suffix = suffixBox ? suffixBox.value.trim() : '';
 
       const shuffledNumbers = shuffleArray(numbers);
       document.getElementById('total-string').textContent = `Total String: ${shuffledNumbers.length}`;
@@ -426,10 +478,13 @@
       chunked.forEach((chunk, index) => {
           const resultBox = document.createElement('div');
           resultBox.classList.add('result-box-container');
+          resultBox.style.display = 'flex';
+          resultBox.style.flexDirection = 'column';
+          resultBox.style.gap = '10px';
 
           const textArea = document.createElement('textarea');
           textArea.classList.add('result-box');
-          textArea.value = chunk.join('*') + suffix;
+          textArea.value = chunk.join('*'); // + (suffix ? `*${suffix}` : '');
           textArea.setAttribute('readonly', true);
 
           const copyButton = document.createElement('button');
@@ -454,7 +509,7 @@
     function hapusGanjilGenapPoltarBytrbb(){
       const outputBox = document.getElementById('outputBox3');
       let splitted = outputBox.textContent.split('*');
-      
+
       let filtered = splitted.filter(num => {
           if (num.length !== 4) return false;
           let allOdd = true;
@@ -472,7 +527,7 @@
       });
 
       outputBox.textContent = filtered.join('*');
-      document.getElementById('totalResult').textContent = `Total Kombinasi: ${filtered.length}`;
+      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${filtered.length}`;
       alert("Proses hapus ganjil semua / genap semua selesai (PoltarBytrbb)!");
     }
 
@@ -546,7 +601,7 @@
           const padded = String(i).padStart(4,'0');
           allNumbers.push(padded);
       }
-      const userInput = document.getElementById('filterNumbers').value.trim();
+      const userInput = document.getElementById('filterNumbersPembalik').value.trim();
       if(!userInput){
           alert("Masukkan angka yang ingin difilter, misal: 1234*9874*2190");
           return;
@@ -555,7 +610,7 @@
       const filteredResult = allNumbers.filter(num => !excludeList.includes(num));
 
       document.getElementById('filterResult').value = filteredResult.join('*');
-      document.getElementById('filterTotal').textContent = `Total: ${filteredResult.length}`;
+      document.getElementById('filterTotal').textContent = `Total Angka: ${filteredResult.length}`;
     }
 
     function copyFilterResult(){
@@ -573,6 +628,7 @@
       }
       return array;
     }
+
     function chunkArray(array, size) {
       const result = [];
       const chunkSize = Math.floor(array.length / size);
@@ -589,15 +645,15 @@
 
     // ================== PAGE 2: CODE FIXED CODES ===================
     // Pindahkan parse & search code snippet ke container2
-    const fixedCodeString = `
-0000*0001*0002*0003*0004*0005*0006*0007*0008*0009*0011*0020*0022*0024*0026*0028*0033*0040*0042*0044*0046*0048*0055*0060*0062*0064*0066*0068*0077*0080*0082*0084*0086*0088*0099*0101*0110*0111*0200*0202*0204*0206*0208*0220*0222*0224*0226*0228*0240*0242*0244*0246*0248*0260*0262*0264*0266*0268*0280*0282*0284*0286*0288*0303*0330*0333*0400*0402*0404*0406*0408*0420*0422*0424*0426*0428*0440*0442*0444*0446*0448*0460*0462*0464*0466*0468*0480*0482*0484*0486*0488*0505*0550*0555*0600*0602*0604*0606*0608*0620*0622*0624*0626*0628*0640*0642*0644*0646*0648*0660*0662*0664*0666*0668*0680*0682*0684*0686*0688*0707*0770*0777*0800*0802*0804*0806*0808*0820*0822*0824*0826*0828*0840*0842*0844*0846*0848*0860*0862*0864*0866*0868*0880*0882*0884*0886*0888*0909*0990*0999*1000*1001*1010*1100*1110*1111*1112*1113*1114*1115*1116*1117*1118*1119*1122*1131*1133*1135*1137*1139*1144*1151*1153*1155*1157*1159*1166*1171*1173*1175*1177*1179*1188*1191*1193*1195*1197*1199*1212*1221*1222*1234*1311*1313*1315*1317*1319*1331*1333*1335*1337*1339*1351*1353*1355*1357*1359*1371*1373*1375*1377*1379*1391*1393*1395*1397*1399*1414*1441*1444*1511*1513*1515*1517*1519*1531*1533*1535*1537*1539*1551*1553*1555*1557*1559*1571*1573*1575*1577*1579*1591*1593*1595*1597*1599*1616*1661*1666*1711*1713*1715*1717*1719*1731*1733*1735*1737*1739*1751*1753*1755*1757*1759*1771*1773*1775*1777*1779*1791*1793*1795*1797*1799*1818*1881*1888*1911*1913*1915*1917*1919*1931*1933*1935*1937*1939*1951*1953*1955*1957*1959*1971*1973*1975*1977*1979*1991*1993*1995*1997*1999*2000*2002*2004*2006*2008*2020*2022*2024*2026*2028*2040*2042*2044*2046*2048*2060*2062*2064*2066*2068*2080*2082*2084*2086*2088*2111*2112*2121*2200*2202*2204*2206*2208*2211*2220*2221*2222*2223*2224*2225*2226*2227*2228*2229*2233*2240*2242*2244*2246*2248*2255*2260*2262*2264*2266*2268*2277*2280*2282*2284*2286*2288*2299*2323*2332*2333*2345*2400*2402*2404*2406*2408*2420*2422*2424*2426*2428*2440*2442*2444*2446*2448*2460*2462*2464*2466*2468*2480*2482*2484*2486*2488*2525*2552*2555*2600*2602*2604*2606*2608*2620*2622*2624*2626*2628*2640*2642*2644*2646*2648*2660*2662*2664*2666*2668*2680*2682*2684*2686*2688*2727*2772*2777*2800*2802*2804*2806*2808*2820*2822*2824*2826*2828*2840*2842*2844*2846*2848*2860*2862*2864*2866*2868*2880*2882*2884*2886*2888*2929*2992*2999*3000*3003*3030*3111*3113*3115*3117*3119*3131*3133*3135*3137*3139*3151*3153*3155*3157*3159*3171*3173*3175*3177*3179*3191*3193*3195*3197*3199*3222*3223*3232*3300*3311*3313*3315*3317*3319*3322*3330*3331*3332*3333*3334*3335*3336*3337*3338*3339*3344*3351*3353*3355*3357*3359*3366*3371*3373*3375*3377*3379*3388*3391*3393*3395*3397*3399*3434*3443*3444*3456*3511*3513*3515*3517*3519*3531*3533*3535*3537*3539*3551*3553*3555*3557*3559*3571*3573*3575*3577*3579*3591*3593*3595*3597*3599*3636*3663*3666*3711*3713*3715*3717*3719*3731*3733*3735*3737*3739*3751*3753*3755*3757*3759*3771*3773*3775*3777*3779*3791*3793*3795*3797*3799*3838*3883*3888*3911*3913*3915*3917*3919*3931*3933*3935*3937*3939*3951*3953*3955*3957*3959*3971*3973*3975*3977*3979*3991*3993*3995*3997*3999*4000*4002*4004*4006*4008*4020*4022*4024*4026*4028*4040*4042*4044*4046*4048*4060*4062*4064*4066*4068*4080*4082*4084*4086*4088*4111*4114*4141*4200*4202*4204*4206*4208*4220*4222*4224*4226*4228*4240*4242*4244*4246*4248*4260*4262*4264*4266*4268*4280*4282*4284*4286*4288*4321*4333*4334*4343*4400*4402*4404*4406*4408*4411*4420*4422*4424*4426*4428*4433*4440*4441*4442*4443*4444*4445*4446*4447*4448*4449*4455*4460*4462*4464*4466*4468*4477*4480*4482*4484*4486*4488*4499*4545*4554*4555*4567*4600*4602*4604*4606*4608*4620*4622*4624*4626*4628*4640*4642*4644*4646*4648*4660*4662*4664*4666*4668*4680*4682*4684*4686*4688*4747*4774*4777*4800*4802*4804*4806*4808*4820*4822*4824*4826*4828*4840*4842*4844*4846*4848*4860*4862*4864*4866*4868*4880*4882*4884*4886*4888*4949*4994*4999*5000*5005*5050*5111*5113*5115*5117*5119*5131*5133*5135*5137*5139*5151*5153*5155*5157*5159*5171*5173*5175*5177*5179*5191*5193*5195*5197*5199*5222*5225*5252*5311*5313*5315*5317*5319*5331*5333*5335*5337*5339*5351*5353*5355*5357*5359*5371*5373*5375*5377*5379*5391*5393*5395*5397*5399*5432*5444*5445*5454*5500*5511*5513*5515*5517*5519*5522*5531*5533*5535*5537*5539*5544*5550*5551*5552*5553*5554*5555*5556*5557*5558*5559*5566*5571*5573*5575*5577*5579*5588*5591*5593*5595*5597*5599*5656*5665*5666*5678*5711*5713*5715*5717*5719*5731*5733*5735*5737*5739*5751*5753*5755*5757*5759*5771*5773*5775*5777*5779*5791*5793*5795*5797*5799*5858*5885*5888*5911*5913*5915*5917*5919*5931*5933*5935*5937*5939*5951*5953*5955*5957*5959*5971*5973*5975*5977*5979*5991*5993*5995*5997*5999*6000*6002*6004*6006*6008*6020*6022*6024*6026*6028*6040*6042*6044*6046*6048*6060*6062*6064*6066*6068*6080*6082*6084*6086*6088*6111*6116*6161*6200*6202*6204*6206*6208*6220*6222*6224*6226*6228*6240*6242*6244*6246*6248*6260*6262*6264*6266*6268*6280*6282*6284*6286*6288*6333*6336*6363*6400*6402*6404*6406*6408*6420*6422*6424*6426*6428*6440*6442*6444*6446*6448*6460*6462*6464*6466*6468*6480*6482*6484*6486*6488*6543*6555*6556*6565*6600*6602*6604*6606*6608*6611*6620*6622*6624*6626*6628*6633*6640*6642*6644*6646*6648*6655*6660*6661*6662*6663*6664*6665*6666*6667*6668*6669*6677*6680*6682*6684*6686*6688*6699*6767*6776*6777*6789*6800*6802*6804*6806*6808*6820*6822*6824*6826*6828*6840*6842*6844*6846*6848*6860*6862*6864*6866*6868*6880*6882*6884*6886*6888*6969*6996*6999*7000*7007*7070*7111*7113*7115*7117*7119*7131*7133*7135*7137*7139*7151*7153*7155*7157*7159*7171*7173*7175*7177*7179*7191*7193*7195*7197*7199*7222*7227*7272*7311*7313*7315*7317*7319*7331*7333*7335*7337*7339*7351*7353*7355*7357*7359*7371*7373*7375*7377*7379*7391*7393*7395*7397*7399*7444*7447*7474*7511*7513*7515*7517*7519*7531*7533*7535*7537*7539*7551*7553*7555*7557*7559*7571*7573*7575*7577*7579*7591*7593*7595*7597*7599*7654*7666*7667*7676*7700*7711*7713*7715*7717*7719*7722*7731*7733*7735*7737*7739*7744*7751*7753*7755*7757*7759*7766*7770*7771*7772*7773*7774*7775*7776*7777*7778*7779*7788*7791*7793*7795*7797*7799*7878*7887*7888*7911*7913*7915*7917*7919*7931*7933*7935*7937*7939*7951*7953*7955*7957*7959*7971*7973*7975*7977*7979*7991*7993*7995*7997*7999*8000*8002*8004*8006*8008*8020*8022*8024*8026*8028*8040*8042*8044*8046*8048*8060*8062*8064*8066*8068*8080*8082*8084*8086*8088*8111*8118*8181*8200*8202*8204*8206*8208*8220*8222*8224*8226*8228*8240*8242*8244*8246*8248*8260*8262*8264*8266*8268*8280*8282*8284*8286*8288*8333*8338*8383*8400*8402*8404*8406*8408*8420*8422*8424*8426*8428*8440*8442*8444*8446*8448*8460*8462*8464*8466*8468*8480*8482*8484*8486*8488*8555*8558*8585*8600*8602*8604*8606*8608*8620*8622*8624*8626*8628*8640*8642*8644*8646*8648*8660*8662*8664*8666*8668*8680*8682*8684*8686*8688*8765*8777*8778*8787*8800*8802*8804*8806*8808*8811*8820*8822*8824*8826*8828*8833*8840*8842*8844*8846*8848*8855*8860*8862*8864*8866*8868*8877*8880*8881*8882*8883*8884*8885*8886*8887*8888*8889*8899*8989*8998*8999*9000*9009*9090*9111*9113*9115*9117*9119*9131*9133*9135*9137*9139*9151*9153*9155*9157*9159*9171*9173*9175*9177*9179*9191*9193*9195*9197*9199*9222*9229*9292*9311*9313*9315*9317*9319*9331*9333*9335*9337*9339*9351*9353*9355*9357*9359*9371*9373*9375*9377*9379*9391*9393*9395*9397*9399*9444*9449*9494*9511*9513*9515*9517*9519*9531*9533*9535*9537*9539*9551*9553*9555*9557*9559*9571*9573*9575*9577*9579*9591*9593*9595*9597*9599*9666*9669*9696*9711*9713*9715*9717*9719*9731*9733*9735*9737*9739*9751*9753*9755*9757*9759*9771*9773*9775*9777*9779*9791*9793*9795*9797*9799*9876*9888*9889*9898*9900*9911*9913*9915*9917*9919*9922*9931*9933*9935*9937*9939*9944*9951*9953*9955*9957*9959*9966*9971*9973*9975*9977*9979*9988*9990*9991*9992*9993*9994*9995*9996*9997*9998*9999
-`.trim();
+    const fixedCodeString = 
+`0000*0001`
+    .trim();
     const fixedCodes = fixedCodeString.split("*");
 
     function parseAndSearch2() {
         const lines = document.getElementById("dataInput2").value.trim().split("\n");
         
-        // Regex: ^(.*?) \s+ (dd-mm-yyyy) \s+ (4digit)
+        // Regex: ^(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{4})$
         const pattern = /^(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{4})$/;
 
         const results = [];
@@ -623,20 +679,20 @@
         const [nameInfo, dateInfo, codeInfo] = line.split('\t');
         return `
           <tr>
-            <td style="border:1px solid #555; padding:6px;">${nameInfo}</td>
-            <td style="border:1px solid #555; padding:6px;">${dateInfo}</td>
-            <td style="border:1px solid #555; padding:6px;">${codeInfo}</td>
+            <td style="border:1px solid var(--input-border); padding:8px;">${nameInfo}</td>
+            <td style="border:1px solid var(--input-border); padding:8px;">${dateInfo}</td>
+            <td style="border:1px solid var(--input-border); padding:8px;">${codeInfo}</td>
           </tr>
         `;
     }).join('');
 
     const tableHTML = `
-      <table style="border-collapse: collapse; width:100%;">
+      <table>
         <thead>
           <tr>
-            <th style="border:1px solid #555; padding:6px;">Keterangan</th>
-            <th style="border:1px solid #555; padding:6px;">Tanggal</th>
-            <th style="border:1px solid #555; padding:6px;">Kode</th>
+            <th>Keterangan</th>
+            <th>Tanggal</th>
+            <th>Kode</th>
           </tr>
         </thead>
         <tbody>
@@ -654,6 +710,110 @@
 
     }
 
+    // ================== MAGICBYTRBB LOGIC ===================
+    function updateTotalMagic() {
+        const input = document.getElementById('inputAngkaMagic').value.trim();
+        const total = input === '' ? 0 : input.split('*').filter(num => num.trim() !== '').length;
+        document.getElementById('totalAngkaMagic').textContent = `Total Angka: ${total}`;
+    }
+
+    function updateTotalSigar() {
+        const input = document.getElementById('numbersSigar').value.trim();
+        const total = input === '' ? 0 : input.split('*').filter(num => num.trim() !== '').length;
+        document.getElementById('totalStringSigar').textContent = `Total Angka: ${total}`;
+    }
+
+    function updateTotalPembalik() {
+        const input = document.getElementById('filterNumbersPembalik').value.trim();
+        const total = input === '' ? 0 : input.split('*').filter(num => num.trim() !== '').length;
+        document.getElementById('totalAngkaPembalik').textContent = `Total Angka: ${total}`;
+    }
+
+    function generatePriorityInputsMagic(){
+        const jumlah = parseInt(document.getElementById('jumlahBagianMagic').value);
+        const container = document.getElementById('priorityInputsMagic');
+        container.innerHTML = ''; // clear existing inputs
+
+        for(let i=1; i<=jumlah; i++){
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.id = 'prioritasAngkaMagic' + i;
+            input.placeholder = 'Prio ' + i;
+            input.min = 0; // assuming priority cannot be negative
+            container.appendChild(input);
+        }
+    }
+
+    // Inisialisasi priority inputs saat halaman dimuat
+    window.onload = function(){
+        generatePriorityInputsMagic();
+    }
+
+    function bagiDanPrioritasAngka() {
+        const inputString = document.getElementById("inputAngkaMagic").value;
+        const angkaArray = inputString.split('*').filter(num => num.trim() !== '');
+        const jumlahBagian = parseInt(document.getElementById("jumlahBagianMagic").value);
+        const prioritasAngka = [];
+        let totalPrioritas = 0;
+
+        for (let i = 1; i <= jumlahBagian; i++) {
+            let prioritas = parseInt(document.getElementById("prioritasAngkaMagic" + i).value) || 0;
+            prioritasAngka.push(prioritas);
+            totalPrioritas += prioritas;
+        }
+
+        if (totalPrioritas > angkaArray.length) {
+            alert("Total prioritas melebihi jumlah angka yang tersedia. Silakan periksa input Anda.");
+            return;
+        }
+
+        let hasilBagi = [];
+
+        prioritasAngka.forEach((prioritas, index) => {
+            if (prioritas > 0) {
+                hasilBagi[index] = angkaArray.splice(0, prioritas);
+            } else {
+                hasilBagi[index] = [];
+            }
+        });
+
+        const sisaAngka = angkaArray.length;
+        const kelompokTanpaPrioritas = hasilBagi.filter(grup => grup.length === 0).length;
+        const sisaPerKelompok = kelompokTanpaPrioritas > 0 ? Math.floor(sisaAngka / kelompokTanpaPrioritas) : 0;
+
+        hasilBagi.forEach((grup, index) => {
+            if (grup.length === 0) {
+                while (grup.length < sisaPerKelompok && angkaArray.length > 0) {
+                    let randomIndex = Math.floor(Math.random() * angkaArray.length);
+                    grup.push(angkaArray.splice(randomIndex, 1)[0]);
+                }
+            }
+        });
+
+        while (angkaArray.length > 0) {
+            hasilBagi.forEach(grup => {
+                if (angkaArray.length > 0) {
+                    let randomIndex = Math.floor(Math.random() * angkaArray.length);
+                    grup.push(angkaArray.splice(randomIndex, 1)[0]);
+                }
+            });
+        }
+
+        const container = document.getElementById("hasilContainerMagic");
+        container.innerHTML = '';
+        hasilBagi.forEach((grup, index) => {
+            const label = document.createElement("div");
+            label.className = 'hasil-label';
+            label.style.fontWeight = 'bold';
+            label.textContent = `Hasil ${index + 1} (Jumlah Angka: ${grup.length}):`;
+            container.appendChild(label);
+
+            const textarea = document.createElement("textarea");
+            textarea.classList.add('result-box');
+            textarea.value = grup.join('*');
+            container.appendChild(textarea);
+        });
+    }
   </script>
 </body>
 </html>
