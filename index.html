@@ -262,7 +262,7 @@
         <textarea id="outputBox3" class="result-box" readonly></textarea>
         <div class="total-result" id="totalResultPoltar">Total Kombinasi: 0</div>
         <button onclick="generatePoltar()">Generate</button>
-        <button onclick="hapusGanjilGenapPoltarBytrbb()">~~Odd/Even~~</button>
+        <button onclick="hapusGanjilGenapPoltarBytrbb()"style="text-decoration: line-through;">Odd/Even</button>
         <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
         <button onclick="copyToClipboard()">Copy</button>
     </div>
@@ -273,11 +273,11 @@
         <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
         <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
         <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
-        <button onclick="hapusGanjilGenapPoltar()">~~Odd/Even~~</button>
+       <button onclick="hapusGanjilGenapPoltarBytrbb()"style="text-decoration: line-through;">Odd/Even</button>
 
         <!-- Tambah 2 tombol: Hapus 3 Digit Sama & Hapus Simetris -->
-        <button onclick="hapusTigaAngkaBerurutanPoltar()">~~Tiga Angka Berururtan~~</button>
-        <button onclick="hapusSimetrisCombinePoltar()">~~Simetris~~</button>
+        <button onclick="hapusTigaAngkaBerurutanPoltar()"style="text-decoration: line-through;">Tiga Angka Berururtan</button>
+        <button onclick="hapusSimetrisCombinePoltar()"style="text-decoration: line-through;">Simetris</button>
 
         <div id="total-string">Total Angka: 0</div>
         <div id="result-container" class="result-container"></div>
