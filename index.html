@@ -262,34 +262,52 @@
         <textarea id="outputBox3" class="result-box" readonly></textarea>
         <div class="total-result" id="totalResultPoltar">Total Kombinasi: 0</div>
         <button onclick="generatePoltar()">Generate</button>
-        <button onclick="hapusGanjilGenapPoltarBytrbb()"style="text-decoration: line-through;">Odd/Even</button>
+        
+        <!-- Perhatikan: tombol ini memproses #outputBox3 (Poltar) -->
+        <button onclick="hapusGanjilGenapPoltarBytrbb()" style="text-decoration: line-through;">
+          Odd/Even
+        </button>
+
         <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
         <button onclick="copyToClipboard()">Copy</button>
     </div>
 
-    <!-- Kontainer SigarBytrbb -->
+    <!-- Kontainer SigarBytrbb (di kode Anda tertulis "MagicByTrbb", 
+         namun isi fungsinya adalah Sigar. Jadi kita tetap sebut SigarByTrbb) -->
     <div class="poltar-container">
         <h2>MagicByTrbb</h2>
         <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
         <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
-        <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
-       <button onclick="hapusGanjilGenapPoltarBytrbb()"style="text-decoration: line-through;">Odd/Even</button>
 
-        <!-- Tambah 2 tombol: Hapus 3 Digit Sama & Hapus Simetris -->
-        <button onclick="hapusTigaAngkaBerurutanPoltar()"style="text-decoration: line-through;">Tiga Angka Berururtan</button>
-        <button onclick="hapusSimetrisCombinePoltar()"style="text-decoration: line-through;">Simetris</button>
+        <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
+        
+        <!-- FIX di sini: Ganti panggilan dari hapusGanjilGenapPoltarBytrbb() 
+             menjadi hapusGanjilGenapPoltar() 
+             agar memproses data di #result-container -->
+        <button onclick="hapusGanjilGenapPoltar()" style="text-decoration: line-through;">
+          Odd/Even
+        </button>
+
+        <button onclick="hapusTigaAngkaBerurutanPoltar()" style="text-decoration: line-through;">
+          Tiga Angka Berururtan
+        </button>
+        <button onclick="hapusSimetrisCombinePoltar()" style="text-decoration: line-through;">
+          Simetris
+        </button>
 
         <div id="total-string">Total Angka: 0</div>
         <div id="result-container" class="result-container"></div>
     </div>
 
-    <!-- Kontainer MagicBytrbb -->
+    <!-- Kontainer MagicBytrbb (tampaknya isinya SigarByTrbb, 
+         tapi kita biarkan sesuai kode Anda -->
     <div class="magicbytrbb">
         <h2>SigarByTrbb</h2>
         <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)"
                oninput="updateTotalMagic()">
         <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
-        <input type="number" id="jumlahBagianMagic" placeholder="Masukkan jumlah bagian" min="1" max="7" value="1" oninput="generatePriorityInputsMagic()">
+        <input type="number" id="jumlahBagianMagic" placeholder="Masukkan jumlah bagian" min="1" max="7" value="1" 
+               oninput="generatePriorityInputsMagic()">
         
         <div id="priorityInputsMagic" class="priority-inputs"></div>
 
@@ -393,6 +411,7 @@
               num.slice(0,2) === num.slice(2,4) || 
               (num[0] === num[2] && num[1] === num[3])
           );
+          // Cek triple digit
           for (let i = 0; i < num.length - 2; i++) {
               if (num[i] === num[i+1] && num[i] === num[i+2]) {
                   return false;
@@ -494,6 +513,7 @@
       });
     }
 
+    // Fungsi ini memproses .result-box di #result-container (SigarByTrbb)
     function hapusGanjilGenapPoltar(){
       const resultContainer = document.getElementById('result-container');
       const textAreas = resultContainer.querySelectorAll('textarea.result-box');
@@ -522,44 +542,34 @@
         `Total String: ${overallCount}`;
     }
 
-    /* 
-       TOMBOL: Hapus 3 Digit Sama
-    */
     function hapusTigaAngkaBerurutanPoltar(){
       filterSigarTextAreas(num => {
         // Tolak jika ada 3 digit sama berurutan
         for (let i = 0; i < num.length - 2; i++) {
             if (num[i] === num[i+1] && num[i] === num[i+2]) {
-                return false; // hapus
+                return false; 
             }
         }
         return true;
       });
     }
 
-    /* 
-       TOMBOL: Hapus Simetris 
-       (Simetris/Palindromik, Asc/Desc, Berkesinambungan)
-    */
     function hapusSimetrisCombinePoltar(){
       filterSigarTextAreas(num => {
         const pasanganSimetris = (num[0] === num[1] && num[2] === num[3]);
         const palindromik      = (num[0] === num[3] && num[1] === num[2]);
-
         const ascending  = '123456789';
         const descending = '987654321';
         const ascdesc    = ascending.includes(num) || descending.includes(num);
-
         const berkesinambungan = (
             num.slice(0,2) === num.slice(2,4) ||
             (num[0] === num[2] && num[1] === num[3])
         );
-        // Buang jika salah satu kondisi terpenuhi
+
         return !(pasanganSimetris || palindromik || ascdesc || berkesinambungan);
       });
     }
 
-    // Helper function: memproses semua textarea di #result-container
     function filterSigarTextAreas(predicate){
       const resultContainer = document.getElementById('result-container');
       const textAreas = resultContainer.querySelectorAll('textarea.result-box');
@@ -759,9 +769,15 @@
                 const [nameInfo, dateInfo, codeInfo] = line.split('\t');
                 return `
                   <tr>
-                    <td style="border:1px solid var(--input-border); padding:8px;">${nameInfo}</td>
-                    <td style="border:1px solid var(--input-border); padding:8px;">${dateInfo}</td>
-                    <td style="border:1px solid var(--input-border); padding:8px;">${codeInfo}</td>
+                    <td style="border:1px solid var(--input-border); padding:8px;">
+                      ${nameInfo}
+                    </td>
+                    <td style="border:1px solid var(--input-border); padding:8px;">
+                      ${dateInfo}
+                    </td>
+                    <td style="border:1px solid var(--input-border); padding:8px;">
+                      ${codeInfo}
+                    </td>
                   </tr>
                 `;
             }).join('');
