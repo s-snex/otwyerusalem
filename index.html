@@ -119,10 +119,7 @@
             overflow-x: auto; 
         }
 
-        /* 
-           Sesuaikan agar semua kontainer di page1 
-           menggunakan selektor yang sama (width, bg, dsb)
-        */
+        /* Kontainer di Page 1 */
         .poltarbytrbb-container, 
         .magicbytrbb-container, 
         .sigarbytrbb-container, 
@@ -343,11 +340,7 @@
         <div id="priorityInputsMagic" class="priority-inputs"></div>
 
         <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
-        <!-- Tombol Copy Semua Hasil -->
-        <div class="btn-group">
-          <button onclick="copyAllResult()">Copy Semua Hasil</button>
-        </div>
-
+       
         <div id="hasilContainerMagic"></div>
     </div>
 
@@ -370,7 +363,7 @@
     <div id="container1">
       <h2>Data Market</h2>
       <iframe id="widgetIframe"
-        src="https://widgets.vegasnet.info/result.php?show_id=88,89,72,166,167,168,169,170,30,39,60,74,157,90,9,65,45,138,59,115,5,26,70,76,89,94,13,67,4,29,91,99,21,35,63,16,57,17,61,43,114,8,10,42,101,51,113,15,54,139bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"> 
+        src="https://widgets.vegasnet.info/result.php?show_id=84,98,88,89,72,166,167,168,169,170,30,39,60,74,157,90,9,65,45,138,59,115,5,26,70,76,89,94,13,67,4,29,91,99,21,35,63,16,57,17,61,43,114,8,10,42,101,51,113,15,54,139bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"> 
       </iframe>
     </div>
 
@@ -382,7 +375,6 @@
       <!-- Tombol untuk proses parsing & pencarian -->
       <button onclick="parseAndSearch2()">Cari Data</button>
 
-      <hr>
       <h2>Hasil:</h2>
       <div id="result2" class="result-box" style="height:auto;"></div>
     </div>
@@ -416,7 +408,8 @@
           const bDigits = b.split('');
           const cDigits = c.split('');
           const dDigits = d.split('');
-          const results = [];
+
+          let results = [];
           aDigits.forEach(num1 => {
               bDigits.forEach(num2 => {
                   cDigits.forEach(num3 => {
@@ -426,6 +419,10 @@
                   });
               });
           });
+
+          // === Tambahkan shuffle agar hasil acak setiap kali Generate ===
+          results = shuffleArray(results);
+
           document.getElementById('outputBox3').textContent = results.join('*');
           document.getElementById('totalResultPoltar').textContent = 
             `Total Kombinasi: ${results.length}`;
@@ -810,19 +807,19 @@
       return result;
     }
 
-    /* ===================== PAGE 2 (Pencarian + Jam) ===================== */
+    /* ===================== PAGE 2 (Pencarian + Sort by Tanggal, Jam) ===================== */
 
     // 1) Database jam
     const timeLookup = {
       "Macau 00": "00:00",
-      "Macau 13:00 WIB": "13:00",
+      "Macau 13:00": "13:00",
       "Macau 16": "16:00",
-      "Macau 19:00 WIB": "19:00",
-      "Macau 22:00 WIB": "22:00",
-      "Oregon 04:00 WIB": "04:00",
-      "Oregon 07:00 WIB": "07:00",
-      "Oregon 10:00 WIB": "10:00",
-      "Oregon 13:00 WIB": "13:00",
+      "Macau 19:00": "19:00",
+      "Macau 22:00": "22:00",
+      "Oregon 04:00": "04:00",
+      "Oregon 07:00": "07:00",
+      "Oregon 10:00": "10:00",
+      "Oregon 13:00": "13:00",
       "Hongkong Lotto": "23:00",
       "Sydney Lotto": "14:00",
       "Kentucky Midday": "01:00",
@@ -839,10 +836,10 @@
       "Pcso": "20:00",
       "Indiana Midday": "01:00",
       "Indiana Evening": "10:30",
-      "Morocco Quatro 01:00 ": "01:00",
-      "Morocco Quatro 04:00 ": "04:00",
-      "Morocco Quatro 19:00 ": "19:00",
-      "Morocco Quatro 22:00 ": "22:00",
+      "Morocco Quatro 01:00": "01:00",
+      "Morocco Quatro 04:00": "04:00",
+      "Morocco Quatro 19:00": "19:00",
+      "Morocco Quatro 22:00": "22:00",
       "Virginia Day": "02:00",
       "West Virginia": "07:00",
       "Virginia Night": "11:00",
@@ -857,7 +854,14 @@
       "Tennesse Evening": "07:20",
       "Tennesse Morning": "22:20",
       "Maryland Evening": "01:10",
-      "Maryland Midday": "07:40"
+      "Maryland Midday": "07:40",
+      "Japan": "17:00",
+      "Cambodia": "11:10",
+      "China": "15:15",
+      "Taiwan": "20:30",
+      "Florida Midday": "01:30",
+      "Florida Evening": "09:45",
+      "California": "09:30",
     };
 
     // 2) Kode Valid
@@ -866,13 +870,14 @@
 `.trim();
     const fixedCodes = fixedCodeString.split("*");
 
-    // 3) Fungsi parseAndSearch2
+    // 3) Fungsi parseAndSearch2 (sort by Tanggal, lalu Jam)
     function parseAndSearch2() {
         // Pola: (.*?) (dd-mm-yyyy) (4 digit)
         const pattern = /^(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{4})$/;
 
         const lines = document.getElementById("dataInput2").value.trim().split("\n");
         const results = [];
+
         for (const line of lines) {
             const trimmedLine = line.trim();
             const match = trimmedLine.match(pattern);
@@ -886,15 +891,52 @@
 
                 // Hanya tampilkan jika codeInfo valid
                 if (fixedCodes.includes(codeInfo)) {
-                    // Push format => name \t date \t jam \t code
+                    // "nameInfo\tdateInfo\tjamInfo\tcodeInfo"
                     results.push(`${nameInfo}\t${dateInfo}\t${jamInfo}\t${codeInfo}`);
                 }
             }
         }
-        // Tampilkan
+
+        // === Lakukan sorting berdasarkan Tanggal, lalu Jam ===
+        // 1. Split -> array of arrays
+        let splittedResults = results.map(line => line.split('\t')); 
+        // splittedResults[i] = [nameInfo, dateInfo, jamInfo, codeInfo]
+
+        // 2. Sort
+        splittedResults.sort((a, b) => {
+           const dateA = a[1]; // "dd-mm-yyyy"
+           const dateB = b[1]; // "dd-mm-yyyy"
+
+           // parse date
+           const [dayA, monA, yearA] = dateA.split('-').map(x => parseInt(x, 10));
+           const [dayB, monB, yearB] = dateB.split('-').map(x => parseInt(x, 10));
+
+           // Bandingkan TAHUN
+           if (yearA !== yearB) return yearA - yearB;
+           // BULAN
+           if (monA !== monB) return monA - monB;
+           // TANGGAL
+           if (dayA !== dayB) return dayA - dayB;
+
+           // Jika Tanggal sama -> bandingkan jam
+           const jamA = a[2];
+           const jamB = b[2];
+
+           function parseJam(jam) {
+             if (jam === "??:??") return 9999; 
+             const [H, M] = jam.split(':').map(n => parseInt(n, 10));
+             return H * 60 + M;  // total menit
+           }
+           return parseJam(jamA) - parseJam(jamB);
+        });
+
+        // 3. Ubah kembali ke string "name\tdate\tjam\tcode"
+        const sortedResults = splittedResults.map(arr => arr.join('\t'));
+
+        // === Tampilkan (pakai sortedResults) ===
         const resultDiv = document.getElementById("result2");
-        if (results.length > 0) {
-            const tableRows = results.map(line => {
+        if (sortedResults.length > 0) {
+            const tableRows = sortedResults.map(line => {
                 const [nameInfo, dateInfo, jamInfo, codeInfo] = line.split('\t');
                 return `
                   <tr>
