@@ -23,24 +23,24 @@
 
             --container-background: rgba(31, 30, 37, 0.3); /* Transparansi 70% */
             --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-            --border-radius: 10px;
+            --border-radius: 8px;
             --transition-speed: 0.3s;
-            --heading-font-size: 1.8em;
-            --container-width: 300px;
+            --heading-font-size: 1.5em;
+            --container-width: 280px;
 
-            --sidebar-width: 50px; /* Lebar sidebar diatur ke 50px */
-            --sidebar-icon-size: 24px;
-            --sidebar-padding: 10px 0;
+            --sidebar-width: 40px; /* Lebar sidebar dikurangi */
+            --sidebar-icon-size: 20px;
+            --sidebar-padding: 8px 0;
             --sidebar-link-color: #ECE9F4;
             --sidebar-link-hover-bg: #C8BFE7;
             --sidebar-link-hover-color: #1F1E25;
 
             /* Variabel untuk ukuran huruf */
-            --font-size-input: 1.2em;
-            --font-size-textarea: 1.4em;
-            --font-size-button: 1.1em;
-            --font-size-heading: 2em; /* Untuk judul */
-            --font-size-label: 1em; /* Untuk label */
+            --font-size-input: 1em;
+            --font-size-textarea: 1.2em;
+            --font-size-button: 1em;
+            --font-size-heading: 1.6em; /* Untuk judul */
+            --font-size-label: 0.9em; /* Untuk label */
         }
 
         *,
@@ -70,7 +70,7 @@
 
         /* Sidebar Navigasi */
         .sidebar {
-            width: var(--sidebar-width); /* Lebar sidebar */
+            width: var(--sidebar-width); /* Lebar sidebar dikurangi */
             background-color: rgba(31, 30, 37, 0.3); /* Transparansi 60% */
             box-shadow: 2px 0 5px rgba(0,0,0,0.6);
             padding: var(--sidebar-padding);
@@ -87,7 +87,7 @@
         }
 
         .sidebar a {
-            padding: 15px 0;
+            padding: 10px 0;
             text-decoration: none;
             font-size: var(--sidebar-icon-size);
             color: var(--sidebar-link-color);
@@ -97,7 +97,7 @@
             width: 100%;
             position: relative;
             transition: background-color var(--transition-speed), color var(--transition-speed);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .sidebar a:hover {
@@ -112,14 +112,15 @@
             background-color: var(--text-color);
             color: var(--background-color);
             text-align: center;
-            border-radius: 6px;
-            padding: 5px;
+            border-radius: 4px;
+            padding: 4px;
             position: absolute;
-            left: 60px;
+            left: 50px;
             z-index: 1;
             white-space: nowrap;
             top: 50%;
             transform: translateY(-50%);
+            font-size: 0.8em;
         }
 
         .sidebar a:hover .tooltip {
@@ -129,7 +130,7 @@
         /* Main Content */
         .main-content {
             flex-grow: 1; /* Mengambil sisa ruang */
-            padding: 20px;
+            padding: 15px;
             overflow-y: auto;
             background-color: rgba(31, 30, 37, 0.5); /* Transparansi 50% */
             display: flex;
@@ -140,7 +141,7 @@
         /* Kelas Umum untuk Kontainer */
         .common-container {
             width: 100%; /* Sesuaikan dengan layout horizontal */
-            padding: 20px; /* Sama untuk semua kontainer */
+            padding: 15px; /* Sama untuk semua kontainer */
             background-color: var(--container-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -151,7 +152,7 @@
         .page-container {
             display: none; 
             flex-direction: column; 
-            gap: 20px;
+            gap: 15px;
             z-index: 1;
         }
 
@@ -163,7 +164,7 @@
         #page1.visible {
             flex-direction: row; /* Mengatur kontainer di dalam page1 secara horizontal */
             flex-wrap: wrap; /* Membungkus kontainer jika melebihi lebar */
-            gap: 20px;
+            gap: 15px;
         }
 
         /* Kontainer di Page 1 */
@@ -172,42 +173,42 @@
         .sigarbytrbb-container, 
         .pembalikbytrbb-container,
         .pengurangan-container { /* Tambahkan pengurangan-container */
-            width: calc(25% - 20px); /* Membagi lebar secara merata untuk empat kontainer */
+            width: calc(25% - 15px); /* Membagi lebar secara merata untuk empat kontainer */
             background-color: var(--container-background);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            min-width: 250px; /* Minimal lebar agar tetap responsif */
+            gap: 10px;
+            min-width: 220px; /* Minimal lebar agar tetap responsif */
         }
 
         /* Layout Horizontal untuk Page 3 */
         .riset-section {
             display: flex;
             flex-direction: row;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap; /* Agar kontainer membungkus pada layar kecil */
         }
 
         .risetbytrbb-container, 
         .pengurangan-container {
-            flex: 1 1 45%; /* Kedua kontainer mengambil 45% lebar masing-masing */
-            min-width: 300px; /* Minimal lebar untuk tampilan yang baik */
+            flex: 1 1 40%; /* Kedua kontainer mengambil 40% lebar masing-masing */
+            min-width: 250px; /* Minimal lebar untuk tampilan yang baik */
         }
 
         /* Tambahkan kelas seragam untuk kedua kontainer di Page 3 */
         .risetbytrbb-container, 
         .pengurangan-container {
-            padding: 20px;
+            padding: 15px;
             margin: 0;
             background-color: var(--container-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         /* Responsivitas untuk Page 3 */
@@ -220,14 +221,14 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: var(--sidebar-width); /* Tetap 50px pada layar kecil */
+                width: var(--sidebar-width); /* Tetap 40px pada layar kecil */
             }
             .sidebar a {
-                font-size: 16px;
-                padding: 12px 0;
+                font-size: 14px;
+                padding: 10px 0;
             }
             .main-content {
-                padding: 15px;
+                padding: 10px;
                 background-color: rgba(31, 30, 37, 0.7); /* Transparansi 70% untuk layar kecil */
             }
             .poltarbytrbb-container, 
@@ -246,8 +247,8 @@
         #container1 {
             /* Menggunakan kelas umum */
             width: 60%;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 750px;
+            padding: 15px;
             background-color: var(--container-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -258,62 +259,58 @@
         #container2 {
             /* Menggunakan kelas umum */
             width: 60%;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 750px;
+            padding: 15px;
             background-color: var(--container-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             margin: 0 auto;
         }
 
-        /* Styling untuk Kontainer Riset (Page 3) */
-        .risetbytrbb-container {
-            /* Menggunakan kelas seragam yang telah ditambahkan */
-        }
-
         /* Mengubah ukuran iframe di Kontainer Data Market */
         #widgetIframe {
             width: 100%; /* Lebar iframe mengikuti lebar kontainer */
-            height: 200px; /* Tinggi iframe diubah menjadi 600px */
+            height: 180px; /* Tinggi iframe dikurangi */
             border: none;
-            border-radius: 5px; /* Menambahkan border radius jika diinginkan */
+            border-radius: 4px; /* Menambahkan border radius jika diinginkan */
         }
 
         /* Mengubah ukuran font untuk judul Data Market */
         #container1 h2, #container2 h2, .risetbytrbb-container h2, .pengurangan-container h2 { /* Tambahkan pengurangan-container h2 */
             font-size: var(--font-size-heading); /* Menggunakan variabel untuk ukuran huruf */
-            margin-bottom: 20px; /* Menambah jarak bawah */
+            margin-bottom: 15px; /* Menambah jarak bawah */
             text-align: center; /* Memusatkan teks */
         }
 
         /* General Styling for Containers */
         .sigarbytrbb-container .btn-group {
             display: flex; 
-            gap: 10px; 
+            gap: 8px; 
             justify-content: flex-end; 
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .result-box-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
         .hasil-label {
             font-weight: bold; 
+            font-size: var(--font-size-label);
         }
         .hasil-item {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
         }
 
         /* Mengubah ukuran font untuk elemen heading lainnya */
         h2 {
             color: var(--input-border); 
             text-shadow: 0 0 2px var(--input-border); 
-            margin: 10px 0;
+            margin: 8px 0;
             text-align: center;
             font-size: var(--heading-font-size);
         }
@@ -321,16 +318,16 @@
         h3 {
             color: var(--input-border); 
             text-shadow: 0 0 2px var(--input-border); 
-            margin: 10px 0;
+            margin: 8px 0;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.2em;
         }
 
         textarea, button, input {
             width: 100%;
-            padding: 12px;
-            margin: 5px 0;
-            border-radius: 5px;
+            padding: 10px;
+            margin: 4px 0;
+            border-radius: 4px;
             border: 1px solid var(--input-border); 
             background-color: var(--input-background);
             color: var(--text-color);
@@ -351,10 +348,9 @@
             background-color: var(--button-color);
             border: 2px solid var(--input-border);
             color: var(--text-color);
-            padding: 12px 20px;
+            padding: 10px 16px;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 1em;
+            border-radius: 4px;
             transition: background-color var(--transition-speed), 
                         transform var(--transition-speed), 
                         box-shadow var(--transition-speed);
@@ -362,19 +358,19 @@
 
         button:hover {
             background-color: var(--button-hover-color);
-            box-shadow: 0 0 10px var(--input-border);
-            transform: scale(1.05);
+            box-shadow: 0 0 8px var(--input-border);
+            transform: scale(1.03);
         }
 
         .result-box {
             background-color: var(--input-background);
             color: var(--text-color);
-            min-height: 150px;
+            min-height: 120px;
             overflow: hidden; 
-            margin: 10px 0;
-            padding: 15px;
+            margin: 8px 0;
+            padding: 10px;
             border: 1px solid var(--input-border);
-            border-radius: 5px;
+            border-radius: 4px;
             white-space: pre-wrap;
             word-wrap: break-word;
             font-size: var(--font-size-textarea); /* Menggunakan variabel untuk ukuran huruf */
@@ -384,13 +380,13 @@
         .priority-inputs {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .priority-inputs input {
-            flex: 1 1 45%;
-            height: 40px;  
+            flex: 1 1 40%;
+            height: 32px;  
             background-color: var(--input-background);
             border: 1px solid var(--input-border);
             color: var(--text-color);
@@ -401,20 +397,20 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         th, td {
             border: 1px solid var(--input-border);
-            padding: 8px;
+            padding: 6px;
             text-align: left;
-            font-size: 1em; /* Atur sesuai kebutuhan */
+            font-size: 0.9em; /* Atur sesuai kebutuhan */
         }
 
         th {
             background-color: var(--button-color);
             color: var(--text-color);
-            font-size: 1.1em; /* Mengubah ukuran huruf untuk header tabel */
+            font-size: 1em; /* Mengubah ukuran huruf untuk header tabel */
         }
 
         /* Responsivitas untuk Kontainer Umum */
@@ -429,17 +425,17 @@
             .common-container {
                 width: 90%; /* Mengisi penuh pada layar kecil */
                 max-width: none; /* Menghapus batas lebar maksimum */
-                padding: 10px; /* Mengurangi padding */
+                padding: 8px; /* Mengurangi padding */
             }
 
             /* Mengubah ukuran iframe pada layar kecil */
             #widgetIframe {
-                height: 400px; /* Menyesuaikan tinggi iframe */
+                height: 350px; /* Menyesuaikan tinggi iframe */
             }
 
             /* Mengubah ukuran font untuk judul pada layar kecil */
             .common-container h2 {
-                font-size: 1.5em; /* Menyesuaikan ukuran huruf */
+                font-size: 1.2em; /* Menyesuaikan ukuran huruf */
             }
         }
     </style>
@@ -519,7 +515,7 @@
           <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)"
                  oninput="updateTotalMagic()">
           <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
-          <input type="number" id="jumlahBagianMagic" placeholder="Masukkan jumlah bagian" min="1" max="7" value="1" 
+          <input type="number" id="jumlahBagianMagic" placeholder="Jumlah bagian" min="1" max="7" value="1" 
                  oninput="generatePriorityInputsMagic()">
           
           <div id="priorityInputsMagic" class="priority-inputs"></div>
@@ -554,7 +550,7 @@
       <div id="container2" class="container common-container">
         <h2>Input Data</h2>
         <!-- Textarea data input -->
-        <textarea id="dataInput2" rows="7" cols="50" placeholder="Masukkan data di sini..."></textarea>
+        <textarea id="dataInput2" rows="5" cols="40" placeholder="Masukkan data di sini..."></textarea>
         <br>
         <!-- Tombol untuk proses parsing & pencarian -->
         <button onclick="parseAndSearch2()">Cari Data</button>
@@ -615,7 +611,7 @@
           <!-- Hasil Gabungan -->
           <h3>Result</h3>
           <textarea id="risetCombinedResult" class="result-box" readonly></textarea>
-          <div id="risetCombinedCount">Total String: 0</div>
+          <div id="risetCombinedCount">Total Gabungan: 0</div>
           <button onclick="copyRisetResult()">Copy</button>
         </div>
         <!-- /risetbytrbb-container -->
@@ -1349,7 +1345,7 @@
         
         const hasilStr = shuffledHasil.join('*');
         document.getElementById('penguranganResult').value = hasilStr;
-        document.getElementById('penguranganCount').textContent = `Total Angka: ${shuffledHasil.length}`;
+        document.getElementById('penguranganCount').textContent = `Total String: ${shuffledHasil.length}`;
     }
 
     // Fungsi untuk menyalin hasil pengurangan ke clipboard
