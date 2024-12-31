@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>OTW YERUSALEM (Desktop Only)</title>
+    <title>OTW YERUSALEM</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
@@ -128,16 +128,28 @@
             display: block;
         }
 
-        /* Group Container -> inline-block agar 2 kontainer berdampingan */
+        /* Group Container -> inline-block agar 2 kontainer berdampingan di Page 1 */
         .group-container {
             display: inline-block;
             vertical-align: top;
-            width: 48%; /* agar 2 kolom muat */
+            width: 48%; /* agar 2 kolom muat di Page 1 */
             margin: 0.5%;
             background-color: var(--container-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             overflow: hidden; 
+        }
+
+        /* 
+           KHUSUS untuk Page 2 dan Page 3 
+           -> kontainer lebih kecil & center 
+        */
+        #page2 .group-container,
+        #page3 .group-container {
+            display: block;       /* override agar tidak inline-block */
+            width: 60%;           /* lebih kecil */
+            max-width: 600px;     /* batasi lebar maksimal */
+            margin: 20px auto;    /* center di tengah-tengah */
         }
 
         /* Tabs style: horizontal */
@@ -318,7 +330,6 @@
 
         <!-- Tab PoltarByTrbb -->
         <div id="PoltarByTrbb" class="tabcontent active">
-            <h2>PoltarByTrbb</h2>
             <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4" oninput="updateTotalPoltar()">
             <textarea id="outputBox3" class="result-box" readonly></textarea>
             <div class="info-label" id="totalResultPoltar">Total Kombinasi: 0</div>
@@ -332,7 +343,6 @@
 
         <!-- Tab MagicByTrbb -->
         <div id="MagicByTrbb" class="tabcontent">
-            <h2>MagicByTrbb</h2>
             <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
             <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
 
@@ -364,7 +374,6 @@
 
         <!-- Tab SigarByTrbb -->
         <div id="SigarByTrbb" class="tabcontent active">
-            <h2>SigarByTrbb</h2>
             <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)" oninput="updateTotalMagic()">
             <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
             <input type="number" id="jumlahBagianMagic" placeholder="Jumlah bagian" min="1" max="10" value="6" oninput="generatePriorityInputsMagic()">
@@ -377,7 +386,6 @@
 
         <!-- Tab PembalikByTrbb -->
         <div id="PembalikByTrbb" class="tabcontent">
-            <h2>PembalikByTrbb</h2>
             <input type="text" id="filterNumbersPembalik" placeholder="Masukkan angka yang ingin difilter (pisahkan *)" 
                    oninput="updateTotalPembalik()">
             <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
@@ -393,7 +401,8 @@
 
     <!-- ===================== PAGE 2 ===================== -->
     <div id="page2" class="page-container">
-      <div class="group-container" style="width: 98%; margin: 0 auto; display: block;">
+      <!-- Kontainer 1: Data Market -->
+      <div class="group-container">
         <h2>Data Market</h2>
         <iframe id="widgetIframe"
           src="https://widgets.vegasnet.info/result.php?show_id=2,4,5,8,9,10,12,13,15,16,17,18,22,24,26,29,30,31,36,37,38,39,40,42,43,44,45,47,49,50,51,53,54,56,57,59,60,61,65,67,70,72,74,76,77,84,88,89,90,91,93,94,98,99,101,113,114,115,116,157,160,166,167,168,169,170,171&bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"
@@ -403,7 +412,8 @@
         ></iframe>
       </div>
 
-      <div class="group-container" style="width: 98%; margin: 10px auto; display: block;">
+      <!-- Kontainer 2: Input Data & Hasil -->
+      <div class="group-container">
         <h2>Input Data</h2>
         <!-- Textarea data input -->
         <textarea id="dataInput2" rows="5" cols="40" placeholder="Masukkan data di sini..."></textarea>
@@ -420,7 +430,7 @@
 
     <!-- ===================== PAGE 3 ===================== -->
     <div id="page3" class="page-container">
-      <div class="group-container" style="width: 98%; margin: 0 auto; display: block;">
+      <div class="group-container">
         <div class="tabs">
           <button class="tablinks active" onclick="openTab(event, 'CombineByTrbb')">CombineByTrbb</button>
           <button class="tablinks" onclick="openTab(event, 'SubtraByTrbb')">SubtraByTrbb</button>
@@ -428,8 +438,6 @@
 
         <!-- Tab CombineByTrbb -->
         <div id="CombineByTrbb" class="tabcontent active">
-          <h2>CombineByTrbb</h2>
-          
           <div class="box-label">Data A</div>
           <textarea 
             id="risetInput1" 
@@ -473,8 +481,6 @@
 
         <!-- Tab SubtraByTrbb -->
         <div id="SubtraByTrbb" class="tabcontent">
-          <h2>SubtraByTrbb</h2>
-          
           <div class="box-label">Data A</div>
           <textarea 
               id="penguranganInputA" 
