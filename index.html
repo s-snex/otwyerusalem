@@ -11,6 +11,8 @@
         /* 
           THEME: Soft Lavender & Deep Charcoal 
           Versi Desktop-Only, dengan perbaikan tampilan & tab horizontal
+          =====================================
+          Diperbarui agar ukuran font seragam
         */
         :root {
             --background-color: #1F1E25;       
@@ -19,20 +21,18 @@
             
             --button-color: #312F39;           
             --button-hover-color: #4C4859;     
-            --input-background: #2D2A35; /* sedikit lebih terang daripada background */
+            --input-background: #2D2A35; 
             --input-border: #C8BFE7;           
 
-            --container-background: rgba(45, 42, 53, 0.6); /* Bikin kontainer lebih tembus, lebih cerah */
+            --container-background: rgba(45, 42, 53, 0.6); 
             --box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             --border-radius: 6px;
             --transition-speed: 0.3s;
             
-            /* Font & ukuran */
-            --font-size-heading: 1.2em; 
-            --font-size-input: 0.95em;
-            --font-size-textarea: 0.95em;
-            --font-size-button: 0.95em;
-            --font-size-label: 0.85em;
+            /* Font-size diselaraskan */
+            --font-size-heading: 1.2em;  /* H2/h3 sedikit lebih besar */
+            --font-size-normal: 1em;     /* Untuk teks, input, label, dll */
+            --font-size-small: 0.9em;    /* Label atau info yang lebih kecil */
 
             /* Layouting */
             --sidebar-width: 50px; 
@@ -54,6 +54,7 @@
             width: 100%;
             background-color: var(--background-color);
             color: var(--text-color);
+            font-size: var(--font-size-normal); /* Standar font-size */
         }
         body {
             background-image: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzI5NnR4ZTdwYjUwNnllbmprc3RtbjR0MDduYWJuNXJ6NXRheml6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/HNNxPpLSQlRMoqsLyO/giphy.gif');
@@ -99,7 +100,7 @@
             color: var(--background-color);
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.75em;
+            font-size: var(--font-size-small);
             top: 50%;
             transform: translateY(-50%);
             white-space: nowrap;
@@ -139,7 +140,7 @@
             overflow: hidden; 
         }
 
-        /* Tabs style: horizontal, center or left alignment */
+        /* Tabs style: horizontal */
         .tabs {
             display: flex; 
             align-items: center; 
@@ -152,7 +153,7 @@
             border: none;
             outline: none;
             cursor: pointer;
-            font-size: var(--font-size-button);
+            font-size: var(--font-size-normal);
             color: var(--text-color);
             padding: 10px 16px;
             margin-right: 4px;
@@ -165,8 +166,6 @@
             border-bottom: 3px solid var(--accent-color);
         }
 
-        /* Tab content: horizontally? 
-           Biasanya tabcontent bergantian, tetap "display block/none" */
         .tabcontent {
             display: none;
             padding: 10px;
@@ -186,17 +185,17 @@
         h3 {
             color: var(--accent-color);
             text-align: center;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             margin: 6px 0;
         }
         .box-label {
             font-weight: bold;
-            font-size: var(--font-size-label);
+            font-size: var(--font-size-small);
             margin-top: 6px;
             margin-bottom: 3px;
         }
         .info-label {
-            font-size: var(--font-size-label);
+            font-size: var(--font-size-small);
             margin-bottom: 5px;
         }
 
@@ -209,7 +208,7 @@
             border: 1px solid var(--input-border);
             background-color: var(--input-background);
             color: var(--text-color);
-            font-size: var(--font-size-input);
+            font-size: var(--font-size-normal);
             font-family: 'Courier New', monospace;
             transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
         }
@@ -243,7 +242,7 @@
             border-radius: 4px;
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: var(--font-size-textarea);
+            font-size: var(--font-size-normal);
             box-shadow: inset 0 0 4px var(--input-border);
         }
         .result-box-container {
@@ -254,7 +253,7 @@
         }
         .hasil-label {
             font-weight: bold; 
-            font-size: var(--font-size-label);
+            font-size: var(--font-size-small);
             margin-bottom: 2px;
         }
 
@@ -265,7 +264,7 @@
             gap: 4px;
         }
         .priority-inputs input {
-            width: 300px; 
+            width: 270px; 
         }
 
         /* Tabel */
@@ -278,12 +277,12 @@
             border: 1px solid var(--input-border);
             padding: 6px;
             text-align: left;
-            font-size: 0.85em;
+            font-size: var(--font-size-small);
         }
         th {
             background-color: var(--button-color);
             color: var(--text-color);
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
         }
     </style>
 </head>
@@ -366,7 +365,6 @@
         <!-- Tab SigarByTrbb -->
         <div id="SigarByTrbb" class="tabcontent active">
             <h2>SigarByTrbb</h2>
-            <!-- Ubah default "Jumlah Bagian" menjadi 6 agar ada 6 box prioritas -->
             <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)" oninput="updateTotalMagic()">
             <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
             <input type="number" id="jumlahBagianMagic" placeholder="Jumlah bagian" min="1" max="10" value="6" oninput="generatePriorityInputsMagic()">
