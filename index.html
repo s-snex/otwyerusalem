@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* 
           THEME: Soft Lavender & Deep Charcoal 
@@ -74,9 +75,6 @@
             overflow-y: auto;
             position: relative;
         }
-        .sidebar h2 {
-            display: none;
-        }
         .sidebar a {
             display: block;
             text-decoration: none;
@@ -128,9 +126,10 @@
             display: block;
         }
 
-        /* Group Container -> inline-block agar 2 kontainer berdampingan di Page 1 */
+        /* Group Container -> inline-block (Page 1), 
+           tetapi di Page 2, 3, 4 akan ditimpa agar lebih kecil & di center */
         .group-container {
-            display: inline-block;
+            display: inline-block;  /* di page4 akan kita override inline-block */
             vertical-align: top;
             width: 48%; /* agar 2 kolom muat di Page 1 */
             margin: 0.5%;
@@ -140,18 +139,15 @@
             overflow: hidden; 
         }
 
-        /* 
-           KHUSUS untuk Page 2 dan Page 3 
-           -> kontainer lebih kecil & center 
-        */
-		
+        /* KHUSUS untuk Page 2, Page 3, Page 4 => kontainer lebih kecil & center */
         #page2 .group-container,
         #page3 .group-container {
             display: block;       /* override agar tidak inline-block */
-            width: 48%;           /* lebih kecil */
-            max-width: 600px;     /* batasi lebar maksimal */
-            margin: 20px auto;    /* center di tengah-tengah */
+            width: 48%;           
+            max-width: 600px;     
+            margin: 20px auto;    
         }
+        /* Biar di Page 4 berjejer, kita override di inline style (lihat di HTML) */
 
         /* Tabs style: horizontal */
         .tabs {
@@ -178,7 +174,6 @@
             font-weight: bold;
             border-bottom: 3px solid var(--accent-color);
         }
-
         .tabcontent {
             display: none;
             padding: 10px;
@@ -299,21 +294,29 @@
         }
     </style>
 </head>
-<body>
 
+<body>
   <!-- Sidebar Navigasi -->
   <div class="sidebar">
+    <!-- Page 1 -->
     <a href="#" onclick="showPage('page1')">
       <i class="fas fa-utensils"></i>
       <span class="tooltip">Lets Cook</span>
     </a>
+    <!-- Page 2 -->
     <a href="#" onclick="showPage('page2')">
       <i class="fas fa-search"></i>
       <span class="tooltip">Screening</span>
     </a>
+    <!-- Page 3 -->
     <a href="#" onclick="showPage('page3')">
       <i class="fas fa-flask"></i>
       <span class="tooltip">Riset</span>
+    </a>
+    <!-- Page 4 (Angka Kunci Finder) -->
+    <a href="#" onclick="showPage('page4')">
+      <i class="fas fa-key"></i>
+      <span class="tooltip">Angka Kunci</span>
     </a>
   </div>
 
@@ -509,6 +512,39 @@
     </div>
     <!-- /page3 -->
 
+    <!-- ===================== PAGE 4 (BARU) ===================== -->
+    <div id="page4" class="page-container">
+      <!-- Kontainer "K"ByTrbb (Greedy Finder) -->
+      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
+        <h2>"K"ByTrbb</h2>
+        <textarea id="inputData" rows="10" placeholder="Pisahkan tiap data dengan Enter"></textarea>
+        <button onclick="findAngkaKunci()">Cari</button>
+
+        <h3>Hasil:</h3>
+        <div id="result" class="result-box" style="height:auto;"></div>
+      </div>
+
+      <!-- Kontainer Combiner ABCD -> di sebelah -->
+      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
+        <h2>PoltarByTrbb</h2>
+        
+        <input type="text" id="combA" placeholder="misal: 1 atau 12, kosong => 1234567890" />
+        
+        <input type="text" id="combB" placeholder="misal: 0 atau 09, kosong => 1234567890" />
+        
+        <input type="text" id="combC" placeholder="misal: 45, kosong => 1234567890" />
+        
+        <input type="text" id="combD" placeholder="misal: 7, kosong => 1234567890" />
+
+        <button onclick="generateCombinerABCD()">Generate</button>
+
+        <h3>Hasil</h3>
+        <textarea id="combinerResult" class="result-box" style="height:200px;" readonly></textarea>
+        <div class="info-label" id="combinerCount">Total: 0</div>
+      </div>
+    </div>
+    <!-- /page4 -->
+
   </div>
   <!-- /main-content -->
 
@@ -547,9 +583,9 @@
       evt.currentTarget.classList.add('active');
     }
 
-    /* ===================== POLTARBYTRBB ===================== */
+    /* ===================== POLTARBYTRBB (Page 1) ===================== */
     function updateTotalPoltar() { 
-      // ...
+      // Fungsi placeholder
     }
     function generatePoltar() {
       const input = document.getElementById('inputBox1').value;
@@ -905,7 +941,7 @@
       });
     }
 
-    /* ===================== UTILITAS UMUM ===================== */
+    /* ===================== UTILITAS UMUM (Shuffle, Chunk, dsb.) ===================== */
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -958,7 +994,7 @@
             }
         }
 
-        // Sorting by date (year, month, day), then jam
+        // Sorting by date (year, month, day), lalu jam
         let splittedResults = results.map(line => line.split('\t')); 
         splittedResults.sort((a, b) => {
            const [dayA, monA, yearA] = a[1].split('-').map(x => parseInt(x, 10));
@@ -969,7 +1005,7 @@
            if (dayA !== dayB) return dayA - dayB;
 
            function parseJam(jam) {
-             if (jam === "??:??") return 9999;
+             if (jam === "??:??") return 9999; // jam dummy agar diurut paling akhir
              const [H, M] = jam.split(':').map(n => parseInt(n, 10));
              return H * 60 + M;
            }
@@ -1087,9 +1123,225 @@
             .catch(() => { alert("Gagal menyalin, coba manual."); });
     }
 
+
+    /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
+    function findAngkaKunci() {
+        const textArea = document.getElementById("inputData").value;
+    // Pisahkan baris dan filter yang valid (4-digit angka)
+    let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
+    
+    if (lines.length === 0) {
+        document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+        return;
+    }
+
+    // Inisialisasi coverage[pos][digit] = set of line indices
+    let coverage = [];
+    for (let p = 0; p < 4; p++) {
+        coverage[p] = [];
+        for (let d = 0; d < 10; d++) {
+            coverage[p][d] = new Set();
+        }
+    }
+
+    // Mengisi coverage
+    lines.forEach((line, index) => {
+        for (let p = 0; p < 4; p++) {
+            let digit = parseInt(line[p], 10);
+            coverage[p][digit].add(index);
+        }
+    });
+
+    // Parameter pencarian
+    let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
+    let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
+
+    // Fungsi rekursif untuk mencari kombinasi
+    function recursiveSearch(uncovered, currentPairs, depth) {
+        // Jika semua baris tercakup atau sudah mencapai batas opsi
+        if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
+            allChosenPairs.push([...currentPairs]);
+            return;
+        }
+
+        // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
+        let bestCover = 0;
+        let bestPairs = [];
+
+        for (let p = 0; p < 4; p++) {
+            for (let d = 0; d < 10; d++) {
+                let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
+                if (canCover.size > bestCover) {
+                    bestCover = canCover.size;
+                    bestPairs = [{ pos: p, digit: d }];
+                } else if (canCover.size === bestCover && canCover.size > 0) {
+                    bestPairs.push({ pos: p, digit: d });
+                }
+            }
+        }
+
+        // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
+        if (bestCover === 0) {
+            allChosenPairs.push([...currentPairs]);
+            return;
+        }
+
+        // Coba semua pasangan terbaik
+        for (let pair of bestPairs) {
+            let newUncovered = new Set(uncovered);
+            coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
+
+            currentPairs.push(pair);
+            recursiveSearch(newUncovered, currentPairs, depth + 1);
+            currentPairs.pop();
+
+            // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
+            if (allChosenPairs.length >= maxOptions) {
+                break;
+            }
+        }
+    }
+
+    // Inisialisasi set baris yang belum tercakup
+    let initialUncovered = new Set();
+    for (let i = 0; i < lines.length; i++) {
+        initialUncovered.add(i);
+    }
+
+    // Mulai pencarian kombinasi
+    recursiveSearch(initialUncovered, [], 0);
+
+    // Tampilkan semua kombinasi yang ditemukan
+    displayAllCombinations(allChosenPairs, lines);
+}
+
+function displayAllCombinations(allChosenPairs, lines) {
+    let SList = [];
+
+    // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
+    allChosenPairs.forEach(pairs => {
+        let S = [new Set(), new Set(), new Set(), new Set()];
+        pairs.forEach(pair => {
+            S[pair.pos].add(pair.digit);
+        });
+        SList.push(S);
+    });
+
+    // Mulai membangun HTML untuk hasil
+    let resultHTML = "<div>";
+
+    SList.forEach((S, index) => {
+        resultHTML += `<h3>Opsi ${index + 1}</h3>`;
+        resultHTML += "<ul>";
+        // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+        for (let p = 0; p < 4; p++) {
+            let posLabel = "";
+            switch(p){
+                case 0: posLabel = "A"; break;
+                case 1: posLabel = "B"; break;
+                case 2: posLabel = "C"; break;
+                case 3: posLabel = "D"; break;
+            }
+            let digits = Array.from(S[p]).sort((a, b) => a - b);
+            let digitsWithCount = digits.map(d => {
+                // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
+                let count = 0;
+                lines.forEach(line => {
+                    if(parseInt(line[p], 10) === d){
+                        count++;
+                    }
+                });
+                return `${d} = ${count}`;
+            });
+            resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+        }
+        resultHTML += "</ul>";
+
+        // Cek baris yang tidak tercakup oleh kombinasi ini
+        let notCovered = [];
+        lines.forEach(line => {
+            let covered = false;
+            for (let p = 0; p < 4; p++) {
+                let digit = parseInt(line[p], 10);
+                if (S[p].has(digit)) {
+                    covered = true;
+                    break;
+                }
+            }
+            if (!covered) {
+                notCovered.push(line);
+            }
+        });
+
+        if (notCovered.length === 0) {
+            resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
+        } else {
+            resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
+            resultHTML += "<ul>";
+            notCovered.forEach(x => {
+                resultHTML += `<li>${x}</li>`;
+            });
+            resultHTML += "</ul>";
+        }
+
+        resultHTML += "<hr>";
+    });
+
+    resultHTML += "</div>";
+
+    // Tampilkan hasil di div#result
+    document.getElementById("result").innerHTML = resultHTML;
+}
+
+    /* ============== COMBINER ABCD (Page 4) ============== */
+    function parseDigitsNoComma(str){
+      let cleaned = str.trim();
+      if(!cleaned){
+        // default
+        return "1234567890";
+      }
+      // filter only 0..9
+      let allowed = "";
+      for(let ch of cleaned){
+        if(ch >= '0' && ch <= '9'){
+          allowed += ch;
+        }
+      }
+      if(!allowed) return "1234567890";
+      return allowed;
+    }
+    function getCombosABCD(aPool, bPool, cPool, dPool){
+      let results = [];
+      for(let aa of aPool){
+        for(let bb of bPool){
+          for(let cc of cPool){
+            for(let dd of dPool){
+              results.push(aa + bb + cc + dd);
+            }
+          }
+        }
+      }
+      return results;
+    }
+    function generateCombinerABCD(){
+      const aVal = document.getElementById("combA").value;
+      const bVal = document.getElementById("combB").value;
+      const cVal = document.getElementById("combC").value;
+      const dVal = document.getElementById("combD").value;
+
+      const aPool = parseDigitsNoComma(aVal);
+      const bPool = parseDigitsNoComma(bVal);
+      const cPool = parseDigitsNoComma(cVal);
+      const dPool = parseDigitsNoComma(dVal);
+
+      const combos = getCombosABCD(aPool, bPool, cPool, dPool);
+      document.getElementById("combinerResult").value = combos.join("*");
+      document.getElementById("combinerCount").textContent = "Total: " + combos.length;
+    }
+
     /* Onload */
     window.onload = function(){
-      generatePriorityInputsMagic(); /* Default 6 box pada SigarByTrbb */
+      // ...
     }
   </script>
 </body>
