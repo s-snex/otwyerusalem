@@ -518,10 +518,16 @@
       <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
         <h2>"K"ByTrbb</h2>
         <textarea id="inputData" rows="10" placeholder="Pisahkan tiap data dengan Enter"></textarea>
-        <button onclick="findAngkaKunci()">Cari</button>
+        <button onclick="findAngkaKunci()">Cari 4D</button>
+        
+        <!-- Tombol dan Hasil untuk Digit Ketiga dan Keempat -->
+        <button onclick="findAngkaKunci34()">Cari 2D</button>
 
         <h3>Hasil:</h3>
         <div id="result" class="result-box" style="height:auto;"></div>
+
+        <h3>Hasil 2D:</h3>
+        <div id="resultDigits34" class="result-box" style="height:auto;"></div>
       </div>
 
       <!-- Kontainer Combiner ABCD -> di sebelah -->
@@ -1127,171 +1133,341 @@
     /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
     function findAngkaKunci() {
         const textArea = document.getElementById("inputData").value;
-    // Pisahkan baris dan filter yang valid (4-digit angka)
-    let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
-    
-    if (lines.length === 0) {
-        document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
-        return;
-    }
-
-    // Inisialisasi coverage[pos][digit] = set of line indices
-    let coverage = [];
-    for (let p = 0; p < 4; p++) {
-        coverage[p] = [];
-        for (let d = 0; d < 10; d++) {
-            coverage[p][d] = new Set();
-        }
-    }
-
-    // Mengisi coverage
-    lines.forEach((line, index) => {
-        for (let p = 0; p < 4; p++) {
-            let digit = parseInt(line[p], 10);
-            coverage[p][digit].add(index);
-        }
-    });
-
-    // Parameter pencarian
-    let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
-    let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
-
-    // Fungsi rekursif untuk mencari kombinasi
-    function recursiveSearch(uncovered, currentPairs, depth) {
-        // Jika semua baris tercakup atau sudah mencapai batas opsi
-        if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
-            allChosenPairs.push([...currentPairs]);
+        // Pisahkan baris dan filter yang valid (4-digit angka)
+        let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
+        
+        if (lines.length === 0) {
+            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
             return;
         }
 
-        // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
-        let bestCover = 0;
-        let bestPairs = [];
-
+        // Inisialisasi coverage[pos][digit] = set of line indices
+        let coverage = [];
         for (let p = 0; p < 4; p++) {
+            coverage[p] = [];
             for (let d = 0; d < 10; d++) {
-                let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
-                if (canCover.size > bestCover) {
-                    bestCover = canCover.size;
-                    bestPairs = [{ pos: p, digit: d }];
-                } else if (canCover.size === bestCover && canCover.size > 0) {
-                    bestPairs.push({ pos: p, digit: d });
-                }
+                coverage[p][d] = new Set();
             }
         }
 
-        // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
-        if (bestCover === 0) {
-            allChosenPairs.push([...currentPairs]);
-            return;
-        }
-
-        // Coba semua pasangan terbaik
-        for (let pair of bestPairs) {
-            let newUncovered = new Set(uncovered);
-            coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
-
-            currentPairs.push(pair);
-            recursiveSearch(newUncovered, currentPairs, depth + 1);
-            currentPairs.pop();
-
-            // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
-            if (allChosenPairs.length >= maxOptions) {
-                break;
-            }
-        }
-    }
-
-    // Inisialisasi set baris yang belum tercakup
-    let initialUncovered = new Set();
-    for (let i = 0; i < lines.length; i++) {
-        initialUncovered.add(i);
-    }
-
-    // Mulai pencarian kombinasi
-    recursiveSearch(initialUncovered, [], 0);
-
-    // Tampilkan semua kombinasi yang ditemukan
-    displayAllCombinations(allChosenPairs, lines);
-}
-
-function displayAllCombinations(allChosenPairs, lines) {
-    let SList = [];
-
-    // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
-    allChosenPairs.forEach(pairs => {
-        let S = [new Set(), new Set(), new Set(), new Set()];
-        pairs.forEach(pair => {
-            S[pair.pos].add(pair.digit);
-        });
-        SList.push(S);
-    });
-
-    // Mulai membangun HTML untuk hasil
-    let resultHTML = "<div>";
-
-    SList.forEach((S, index) => {
-        resultHTML += `<h3>Opsi ${index + 1}</h3>`;
-        resultHTML += "<ul>";
-        // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
-        for (let p = 0; p < 4; p++) {
-            let posLabel = "";
-            switch(p){
-                case 0: posLabel = "A"; break;
-                case 1: posLabel = "B"; break;
-                case 2: posLabel = "C"; break;
-                case 3: posLabel = "D"; break;
-            }
-            let digits = Array.from(S[p]).sort((a, b) => a - b);
-            let digitsWithCount = digits.map(d => {
-                // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
-                let count = 0;
-                lines.forEach(line => {
-                    if(parseInt(line[p], 10) === d){
-                        count++;
-                    }
-                });
-                return `${d} = ${count}`;
-            });
-            resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
-        }
-        resultHTML += "</ul>";
-
-        // Cek baris yang tidak tercakup oleh kombinasi ini
-        let notCovered = [];
-        lines.forEach(line => {
-            let covered = false;
+        // Mengisi coverage
+        lines.forEach((line, index) => {
             for (let p = 0; p < 4; p++) {
                 let digit = parseInt(line[p], 10);
-                if (S[p].has(digit)) {
-                    covered = true;
+                coverage[p][digit].add(index);
+            }
+        });
+
+        // Parameter pencarian
+        let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
+        let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
+
+        // Fungsi rekursif untuk mencari kombinasi
+        function recursiveSearch(uncovered, currentPairs, depth) {
+            // Jika semua baris tercakup atau sudah mencapai batas opsi
+            if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
+                allChosenPairs.push([...currentPairs]);
+                return;
+            }
+
+            // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
+            let bestCover = 0;
+            let bestPairs = [];
+
+            for (let p = 0; p < 4; p++) {
+                for (let d = 0; d < 10; d++) {
+                    let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
+                    if (canCover.size > bestCover) {
+                        bestCover = canCover.size;
+                        bestPairs = [{ pos: p, digit: d }];
+                    } else if (canCover.size === bestCover && canCover.size > 0) {
+                        bestPairs.push({ pos: p, digit: d });
+                    }
+                }
+            }
+
+            // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
+            if (bestCover === 0) {
+                allChosenPairs.push([...currentPairs]);
+                return;
+            }
+
+            // Coba semua pasangan terbaik
+            for (let pair of bestPairs) {
+                let newUncovered = new Set(uncovered);
+                coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
+
+                currentPairs.push(pair);
+                recursiveSearch(newUncovered, currentPairs, depth + 1);
+                currentPairs.pop();
+
+                // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
+                if (allChosenPairs.length >= maxOptions) {
                     break;
                 }
             }
-            if (!covered) {
-                notCovered.push(line);
+        }
+
+        // Inisialisasi set baris yang belum tercakup
+        let initialUncovered = new Set();
+        for (let i = 0; i < lines.length; i++) {
+            initialUncovered.add(i);
+        }
+
+        // Mulai pencarian kombinasi
+        recursiveSearch(initialUncovered, [], 0);
+
+        // Tampilkan semua kombinasi yang ditemukan
+        displayAllCombinations(allChosenPairs, lines);
+    }
+
+    function displayAllCombinations(allChosenPairs, lines) {
+        let SList = [];
+
+        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
+        allChosenPairs.forEach(pairs => {
+            let S = [new Set(), new Set(), new Set(), new Set()];
+            pairs.forEach(pair => {
+                S[pair.pos].add(pair.digit);
+            });
+            SList.push(S);
+        });
+
+        // Mulai membangun HTML untuk hasil
+        let resultHTML = "<div>";
+
+        SList.forEach((S, index) => {
+            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
+            resultHTML += "<ul>";
+            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+            for (let p = 0; p < 4; p++) {
+                let posLabel = "";
+                switch(p){
+                    case 0: posLabel = "As"; break;
+                    case 1: posLabel = "Cop"; break;
+                    case 2: posLabel = "Kep"; break;
+                    case 3: posLabel = "Ekor"; break;
+                }
+                let digits = Array.from(S[p]).sort((a, b) => a - b);
+                let digitsWithCount = digits.map(d => {
+                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
+                    let count = 0;
+                    lines.forEach(line => {
+                        if(parseInt(line[p], 10) === d){
+                            count++;
+                        }
+                    });
+                    return `${d} = ${count}`;
+                });
+                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+            }
+            resultHTML += "</ul>";
+
+            // Cek baris yang tidak tercakup oleh kombinasi ini
+            let notCovered = [];
+            lines.forEach(line => {
+                let covered = false;
+                for (let p = 0; p < 4; p++) {
+                    let digit = parseInt(line[p], 10);
+                    if (S[p].has(digit)) {
+                        covered = true;
+                        break;
+                    }
+                }
+                if (!covered) {
+                    notCovered.push(line);
+                }
+            });
+
+            if (notCovered.length === 0) {
+                resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
+            } else {
+                resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
+                resultHTML += "<ul>";
+                notCovered.forEach(x => {
+                    resultHTML += `<li>${x}</li>`;
+                });
+                resultHTML += "</ul>";
+            }
+
+            resultHTML += "<hr>";
+        });
+
+        resultHTML += "</div>";
+
+        // Tampilkan hasil di div#result
+        document.getElementById("result").innerHTML = resultHTML;
+    }
+
+    /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
+    /* Fungsi baru untuk memproses hanya digit ketiga dan keempat */
+    function findAngkaKunci34() {
+        const textArea = document.getElementById("inputData").value;
+        // Pisahkan baris dan filter yang valid (4-digit angka)
+        let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
+        
+        if (lines.length === 0) {
+            document.getElementById("resultDigits34").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+            return;
+        }
+
+        // Inisialisasi coverage[pos][digit] = set of line indices
+        let coverage = [];
+        for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
+            coverage[p] = [];
+            for (let d = 0; d < 10; d++) {
+                coverage[p][d] = new Set();
+            }
+        }
+
+        // Mengisi coverage
+        lines.forEach((line, index) => {
+            for (let p = 2; p < 4; p++) {
+                let digit = parseInt(line[p], 10);
+                coverage[p][digit].add(index);
             }
         });
 
-        if (notCovered.length === 0) {
-            resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
-        } else {
-            resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
-            resultHTML += "<ul>";
-            notCovered.forEach(x => {
-                resultHTML += `<li>${x}</li>`;
-            });
-            resultHTML += "</ul>";
+        // Parameter pencarian
+        let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
+        let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
+
+        // Fungsi rekursif untuk mencari kombinasi
+        function recursiveSearch(uncovered, currentPairs, depth) {
+            // Jika semua baris tercakup atau sudah mencapai batas opsi
+            if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
+                allChosenPairs.push([...currentPairs]);
+                return;
+            }
+
+            // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
+            let bestCover = 0;
+            let bestPairs = [];
+
+            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
+                for (let d = 0; d < 10; d++) {
+                    let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
+                    if (canCover.size > bestCover) {
+                        bestCover = canCover.size;
+                        bestPairs = [{ pos: p, digit: d }];
+                    } else if (canCover.size === bestCover && canCover.size > 0) {
+                        bestPairs.push({ pos: p, digit: d });
+                    }
+                }
+            }
+
+            // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
+            if (bestCover === 0) {
+                allChosenPairs.push([...currentPairs]);
+                return;
+            }
+
+            // Coba semua pasangan terbaik
+            for (let pair of bestPairs) {
+                let newUncovered = new Set(uncovered);
+                coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
+
+                currentPairs.push(pair);
+                recursiveSearch(newUncovered, currentPairs, depth + 1);
+                currentPairs.pop();
+
+                // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
+                if (allChosenPairs.length >= maxOptions) {
+                    break;
+                }
+            }
         }
 
-        resultHTML += "<hr>";
-    });
+        // Inisialisasi set baris yang belum tercakup
+        let initialUncovered = new Set();
+        for (let i = 0; i < lines.length; i++) {
+            initialUncovered.add(i);
+        }
 
-    resultHTML += "</div>";
+        // Mulai pencarian kombinasi
+        recursiveSearch(initialUncovered, [], 0);
 
-    // Tampilkan hasil di div#result
-    document.getElementById("result").innerHTML = resultHTML;
-}
+        // Tampilkan semua kombinasi yang ditemukan
+        displayAllCombinations34(allChosenPairs, lines);
+    }
+
+    function displayAllCombinations34(allChosenPairs, lines) {
+        let SList = [];
+
+        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
+        allChosenPairs.forEach(pairs => {
+            let S = [new Set(), new Set(), new Set(), new Set()];
+            pairs.forEach(pair => {
+                S[pair.pos].add(pair.digit);
+            });
+            SList.push(S);
+        });
+
+        // Mulai membangun HTML untuk hasil
+        let resultHTML = "<div>";
+
+        SList.forEach((S, index) => {
+            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
+            resultHTML += "<ul>";
+            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
+                let posLabel = "";
+                switch(p){
+                    case 0: posLabel = "As"; break; // Tidak akan digunakan
+                    case 1: posLabel = "Cop"; break; // Tidak akan digunakan
+                    case 2: posLabel = "Kep"; break;
+                    case 3: posLabel = "Ekor"; break;
+                }
+                let digits = Array.from(S[p]).sort((a, b) => a - b);
+                let digitsWithCount = digits.map(d => {
+                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
+                    let count = 0;
+                    lines.forEach(line => {
+                        if(parseInt(line[p], 10) === d){
+                            count++;
+                        }
+                    });
+                    return `${d} = ${count}`;
+                });
+                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+            }
+            resultHTML += "</ul>";
+
+            // Cek baris yang tidak tercakup oleh kombinasi ini
+            let notCovered = [];
+            lines.forEach(line => {
+                let covered = false;
+                for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
+                    let digit = parseInt(line[p], 10);
+                    if (S[p].has(digit)) {
+                        covered = true;
+                        break;
+                    }
+                }
+                if (!covered) {
+                    notCovered.push(line);
+                }
+            });
+
+            if (notCovered.length === 0) {
+                resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
+            } else {
+                resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
+                resultHTML += "<ul>";
+                notCovered.forEach(x => {
+                    resultHTML += `<li>${x}</li>`;
+                });
+                resultHTML += "</ul>";
+            }
+
+            resultHTML += "<hr>";
+        });
+
+        resultHTML += "</div>";
+
+        // Tampilkan hasil di div#resultDigits34
+        document.getElementById("resultDigits34").innerHTML = resultHTML;
+    }
 
     /* ============== COMBINER ABCD (Page 4) ============== */
     function parseDigitsNoComma(str){
