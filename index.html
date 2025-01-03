@@ -141,7 +141,8 @@
 
         /* KHUSUS untuk Page 2, Page 3, Page 4 => kontainer lebih kecil & center */
         #page2 .group-container,
-        #page3 .group-container {
+        #page3 .group-container,
+        #page4 .group-container {
             display: block;       /* override agar tidak inline-block */
             width: 48%;           
             max-width: 600px;     
@@ -523,11 +524,21 @@
         <!-- Tombol dan Hasil untuk Digit Ketiga dan Keempat -->
         <button onclick="findAngkaKunci34()">Cari 2D</button>
 
-        <h3>Hasil:</h3>
+        <!-- Hasil Cari 4D -->
+        <h3>Hasil(4D):</h3>
         <div id="result" class="result-box" style="height:auto;"></div>
 
+        <!-- Rangkuman Opsi Cari 4D -->
+        <h3>Rangkuman Opsi (4D):</h3>
+        <div id="summaryResult" class="result-box" style="height:auto;"></div>
+
+        <!-- Hasil Cari 2D -->
         <h3>Hasil 2D:</h3>
         <div id="resultDigits34" class="result-box" style="height:auto;"></div>
+
+        <!-- Rangkuman Opsi Cari 2D -->
+        <h3>Rangkuman Opsi (2D):</h3>
+        <div id="summaryResultDigits34" class="result-box" style="height:auto;"></div>
       </div>
 
       <!-- Kontainer Combiner ABCD -> di sebelah -->
@@ -588,8 +599,7 @@
       currentTab.classList.add('active');
       evt.currentTarget.classList.add('active');
     }
-
-    /* ===================== POLTARBYTRBB (Page 1) ===================== */
+	/* ===================== POLTARBYTRBB (Page 1) ===================== */
     function updateTotalPoltar() { 
       // Fungsi placeholder
     }
@@ -1129,8 +1139,8 @@
             .catch(() => { alert("Gagal menyalin, coba manual."); });
     }
 
-
     /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
+    /* Fungsi untuk Cari 4D (Tetap Sebelumnya) */
     function findAngkaKunci() {
         const textArea = document.getElementById("inputData").value;
         // Pisahkan baris dan filter yang valid (4-digit angka)
@@ -1138,6 +1148,7 @@
         
         if (lines.length === 0) {
             document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+            document.getElementById("summaryResult").innerHTML = "";
             return;
         }
 
@@ -1162,10 +1173,13 @@
         let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
         let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
 
-        // Fungsi rekursif untuk mencari kombinasi
-        function recursiveSearch(uncovered, currentPairs, depth) {
-            // Jika semua baris tercakup atau sudah mencapai batas opsi
-            if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
+        // Fungsi rekursif untuk mencari kombinasi dengan batas 6 unik digit
+        function recursiveSearch(uncovered, currentPairs, selectedDigits) {
+            // Jika sudah mencapai batas unik digit atau mencapai batas opsi
+            if (selectedDigits.size > 6 || allChosenPairs.length >= maxOptions) {
+                return;
+            }
+            if (uncovered.size === 0) {
                 allChosenPairs.push([...currentPairs]);
                 return;
             }
@@ -1194,14 +1208,19 @@
 
             // Coba semua pasangan terbaik
             for (let pair of bestPairs) {
+                let newSelectedDigits = new Set(selectedDigits);
+                newSelectedDigits.add(pair.digit);
+                if (newSelectedDigits.size > 6) {
+                    continue; // Lewati jika melebihi batas
+                }
+
                 let newUncovered = new Set(uncovered);
                 coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
 
                 currentPairs.push(pair);
-                recursiveSearch(newUncovered, currentPairs, depth + 1);
+                recursiveSearch(newUncovered, currentPairs, newSelectedDigits);
                 currentPairs.pop();
 
-                // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
                 if (allChosenPairs.length >= maxOptions) {
                     break;
                 }
@@ -1215,7 +1234,13 @@
         }
 
         // Mulai pencarian kombinasi
-        recursiveSearch(initialUncovered, [], 0);
+        recursiveSearch(initialUncovered, [], new Set());
+
+        if (allChosenPairs.length === 0) {
+            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada kombinasi yang memenuhi batas 6 unik digit.</p>";
+            document.getElementById("summaryResult").innerHTML = "";
+            return;
+        }
 
         // Tampilkan semua kombinasi yang ditemukan
         displayAllCombinations(allChosenPairs, lines);
@@ -1263,11 +1288,141 @@
             }
             resultHTML += "</ul>";
 
+            // Cek baris yang tercakup oleh kombinasi ini
+            let covered = [];
+            let uncovered = [];
+            lines.forEach(line => {
+                let isCovered = false;
+                for (let p = 0; p < 4; p++) { // Memeriksa semua digit
+                    let digit = parseInt(line[p], 10);
+                    if (S[p].has(digit)) {
+                        isCovered = true;
+                        break;
+                    }
+                }
+                if (isCovered) {
+                    covered.push(line);
+                } else {
+                    uncovered.push(line);
+                }
+            });
+
+            // Hapus bagian yang menampilkan "covered" dan hanya tampilkan "uncovered"
+            if (uncovered.length > 0) {
+                resultHTML += "<p>Angka yang tidak tercover adalah:</p>";
+                resultHTML += "<ul>";
+                uncovered.forEach(x => {
+                    resultHTML += `<li>${x}</li>`;
+                });
+                resultHTML += "</ul>";
+                resultHTML += `<p>Total Angka Tidak Tercover: ${uncovered.length}</p>`;
+            } else {
+                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
+            }
+
+            resultHTML += "<hr>";
+        });
+
+        resultHTML += "</div>";
+
+        // Tampilkan hasil di div#result
+        document.getElementById("result").innerHTML = resultHTML;
+
+        /* =================== Rangkuman Opsi Cari 4D =================== */
+        // Mengumpulkan semua digit per kategori dari semua opsi
+        let summary = {
+            As: {},
+            Cop: {},
+            Kep: {},
+            Ekor: {}
+        };
+
+        allChosenPairs.forEach(pairs => {
+            pairs.forEach(pair => {
+                let pos = pair.pos;
+                let digit = pair.digit;
+                let category = "";
+                switch(pos){
+                    case 0: category = "As"; break;
+                    case 1: category = "Cop"; break;
+                    case 2: category = "Kep"; break;
+                    case 3: category = "Ekor"; break;
+                }
+                if (!summary[category][digit]) {
+                    summary[category][digit] = 0;
+                }
+                // Hitung jumlah kemunculan digit dalam semua opsi
+                summary[category][digit]++;
+            });
+        });
+
+        // Menyiapkan rangkuman
+        let summaryHTML = "<div>";
+
+        for (let category in summary) {
+            let categoryCounts = summary[category];
+            if (Object.keys(categoryCounts).length === 0) {
+                summaryHTML += `<p>${category} = </p>`;
+                continue;
+            }
+            // Mengambil semua digit dengan jumlah kemunculan mereka
+            let digits = Object.keys(categoryCounts)
+                               .sort((a, b) => a - b) // Sort digits numerik
+                               .join("");
+            summaryHTML += `<p>${category} = ${digits}</p>`;
+        }
+
+        summaryHTML += "</div>";
+
+        // Tampilkan rangkuman di div#summaryResult
+        document.getElementById("summaryResult").innerHTML = summaryHTML;
+    }
+
+    function displayAllCombinations34(allChosenPairs, lines) {
+        let SList = [];
+
+        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
+        allChosenPairs.forEach(pairs => {
+            let S = [new Set(), new Set(), new Set(), new Set()];
+            pairs.forEach(pair => {
+                S[pair.pos].add(pair.digit);
+            });
+            SList.push(S);
+        });
+
+        // Mulai membangun HTML untuk hasil
+        let resultHTML = "<div>";
+
+        SList.forEach((S, index) => {
+            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
+            resultHTML += "<ul>";
+            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
+                let posLabel = "";
+                switch(p){
+                    case 2: posLabel = "Kep"; break;
+                    case 3: posLabel = "Ekor"; break;
+                }
+                let digits = Array.from(S[p]).sort((a, b) => a - b);
+                let digitsWithCount = digits.map(d => {
+                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
+                    let count = 0;
+                    lines.forEach(line => {
+                        if(parseInt(line[p], 10) === d){
+                            count++;
+                        }
+                    });
+                    return `${d} = ${count}`;
+                });
+                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+            }
+            resultHTML += "</ul>";
+
             // Cek baris yang tidak tercakup oleh kombinasi ini
             let notCovered = [];
             lines.forEach(line => {
                 let covered = false;
-                for (let p = 0; p < 4; p++) {
+                for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
                     let digit = parseInt(line[p], 10);
                     if (S[p].has(digit)) {
                         covered = true;
@@ -1279,15 +1434,16 @@
                 }
             });
 
-            if (notCovered.length === 0) {
-                resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
-            } else {
-                resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
+            if (notCovered.length > 0) {
+                resultHTML += "<p>Baris berikut tidak ter-cover:</p>";
                 resultHTML += "<ul>";
                 notCovered.forEach(x => {
                     resultHTML += `<li>${x}</li>`;
                 });
                 resultHTML += "</ul>";
+                resultHTML += `<p>Total Baris Tidak Tercover: ${notCovered.length}</p>`;
+            } else {
+                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
             }
 
             resultHTML += "<hr>";
@@ -1295,11 +1451,55 @@
 
         resultHTML += "</div>";
 
-        // Tampilkan hasil di div#result
-        document.getElementById("result").innerHTML = resultHTML;
+        // Tampilkan hasil di div#resultDigits34
+        document.getElementById("resultDigits34").innerHTML = resultHTML;
+
+        /* =================== Rangkuman Opsi Cari 2D =================== */
+        // Mengumpulkan semua digit per kategori dari semua opsi
+        let summary = {
+            Kep: {},
+            Ekor: {}
+        };
+
+        allChosenPairs.forEach(pairs => {
+            pairs.forEach(pair => {
+                let pos = pair.pos;
+                let digit = pair.digit;
+                let category = "";
+                switch(pos){
+                    case 2: category = "Kep"; break;
+                    case 3: category = "Ekor"; break;
+                }
+                if (!summary[category][digit]) {
+                    summary[category][digit] = 0;
+                }
+                // Hitung jumlah kemunculan digit dalam semua opsi
+                summary[category][digit]++;
+            });
+        });
+
+        // Menyiapkan rangkuman
+        let summaryHTML = "<div>";
+
+        for (let category in summary) {
+            let categoryCounts = summary[category];
+            if (Object.keys(categoryCounts).length === 0) {
+                summaryHTML += `<p>${category} = </p>`;
+                continue;
+            }
+            // Mengambil semua digit dengan jumlah kemunculan mereka
+            let digits = Object.keys(categoryCounts)
+                               .sort((a, b) => a - b) // Sort digits numerik
+                               .join("");
+            summaryHTML += `<p>${category} = ${digits}</p>`;
+        }
+
+        summaryHTML += "</div>";
+
+        // Tampilkan rangkuman di div#summaryResultDigits34
+        document.getElementById("summaryResultDigits34").innerHTML = summaryHTML;
     }
 
-    /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
     /* Fungsi baru untuk memproses hanya digit ketiga dan keempat */
     function findAngkaKunci34() {
         const textArea = document.getElementById("inputData").value;
@@ -1308,6 +1508,7 @@
         
         if (lines.length === 0) {
             document.getElementById("resultDigits34").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+            document.getElementById("summaryResultDigits34").innerHTML = "";
             return;
         }
 
@@ -1413,8 +1614,6 @@
             for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
                 let posLabel = "";
                 switch(p){
-                    case 0: posLabel = "As"; break; // Tidak akan digunakan
-                    case 1: posLabel = "Cop"; break; // Tidak akan digunakan
                     case 2: posLabel = "Kep"; break;
                     case 3: posLabel = "Ekor"; break;
                 }
@@ -1449,15 +1648,16 @@
                 }
             });
 
-            if (notCovered.length === 0) {
-                resultHTML += "<p>Semua baris tercakup oleh himpunan digit di atas.</p>";
-            } else {
-                resultHTML += "<p style='color:red;'>Baris berikut tidak ter-cover:</p>";
+            if (notCovered.length > 0) {
+                resultHTML += "<p>Baris berikut tidak ter-cover:</p>";
                 resultHTML += "<ul>";
                 notCovered.forEach(x => {
                     resultHTML += `<li>${x}</li>`;
                 });
                 resultHTML += "</ul>";
+                resultHTML += `<p>Total Baris Tidak Tercover: ${notCovered.length}</p>`;
+            } else {
+                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
             }
 
             resultHTML += "<hr>";
@@ -1467,6 +1667,51 @@
 
         // Tampilkan hasil di div#resultDigits34
         document.getElementById("resultDigits34").innerHTML = resultHTML;
+
+        /* =================== Rangkuman Opsi Cari 2D =================== */
+        // Mengumpulkan semua digit per kategori dari semua opsi
+        let summary = {
+            Kep: {},
+            Ekor: {}
+        };
+
+        allChosenPairs.forEach(pairs => {
+            pairs.forEach(pair => {
+                let pos = pair.pos;
+                let digit = pair.digit;
+                let category = "";
+                switch(pos){
+                    case 2: category = "Kep"; break;
+                    case 3: category = "Ekor"; break;
+                }
+                if (!summary[category][digit]) {
+                    summary[category][digit] = 0;
+                }
+                // Hitung jumlah kemunculan digit dalam semua opsi
+                summary[category][digit]++;
+            });
+        });
+
+        // Menyiapkan rangkuman
+        let summaryHTML = "<div>";
+
+        for (let category in summary) {
+            let categoryCounts = summary[category];
+            if (Object.keys(categoryCounts).length === 0) {
+                summaryHTML += `<p>${category} = </p>`;
+                continue;
+            }
+            // Mengambil semua digit dengan jumlah kemunculan mereka
+            let digits = Object.keys(categoryCounts)
+                               .sort((a, b) => a - b) // Sort digits numerik
+                               .join("");
+            summaryHTML += `<p>${category} = ${digits}</p>`;
+        }
+
+        summaryHTML += "</div>";
+
+        // Tampilkan rangkuman di div#summaryResultDigits34
+        document.getElementById("summaryResultDigits34").innerHTML = summaryHTML;
     }
 
     /* ============== COMBINER ABCD (Page 4) ============== */
