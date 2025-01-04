@@ -127,7 +127,7 @@
         }
 
         /* Group Container -> inline-block (Page 1), 
-           tetapi di Page 2, 3, 4 akan ditimpa agar lebih kecil & di center */
+           tetapi di Page 2, 3, Page 4 akan ditimpa agar lebih kecil & di center */
         .group-container {
             display: inline-block;  /* di page4 akan kita override inline-block */
             vertical-align: top;
@@ -531,6 +531,9 @@
         <!-- Rangkuman Opsi Cari 4D -->
         <h3>Rangkuman Opsi (4D):</h3>
         <div id="summaryResult" class="result-box" style="height:auto;"></div>
+		<!-- Tambahkan tombol untuk memulai otomatisasi -->
+		<button onclick="automateProcess()">Automate Process</button>
+
 
         <!-- Hasil Cari 2D -->
         <h3>Hasil 2D:</h3>
@@ -601,7 +604,7 @@
     }
 	/* ===================== POLTARBYTRBB (Page 1) ===================== */
     function updateTotalPoltar() { 
-      // Fungsi placeholder
+      // Fungsi placeholder (Anda bisa menambahkan logika sesuai kebutuhan)
     }
     function generatePoltar() {
       const input = document.getElementById('inputBox1').value;
@@ -754,7 +757,7 @@
               let allOdd = true;
               let allEven = true;
               for (let digit of num) {
-                  const d = parseInt(digit, 10);
+                  let d = parseInt(digit, 10);
                   if (d % 2 === 0) {
                       allOdd = false;
                   } else {
@@ -1264,7 +1267,7 @@
         SList.forEach((S, index) => {
             resultHTML += `<h3>Opsi ${index + 1}</h3>`;
             resultHTML += "<ul>";
-            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+            // Untuk setiap posisi, tambahkan digit saja tanpa jumlah kemunculannya
             for (let p = 0; p < 4; p++) {
                 let posLabel = "";
                 switch(p){
@@ -1273,18 +1276,8 @@
                     case 2: posLabel = "Kep"; break;
                     case 3: posLabel = "Ekor"; break;
                 }
-                let digits = Array.from(S[p]).sort((a, b) => a - b);
-                let digitsWithCount = digits.map(d => {
-                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
-                    let count = 0;
-                    lines.forEach(line => {
-                        if(parseInt(line[p], 10) === d){
-                            count++;
-                        }
-                    });
-                    return `${d} = ${count}`;
-                });
-                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+                let digits = Array.from(S[p]).sort((a, b) => a - b).join("");
+                resultHTML += `<li>${posLabel} = ${digits || ""}</li>`;
             }
             resultHTML += "</ul>";
 
@@ -1365,7 +1358,7 @@
                 summaryHTML += `<p>${category} = </p>`;
                 continue;
             }
-            // Mengambil semua digit dengan jumlah kemunculan mereka
+            // Mengambil semua digit tanpa jumlah kemunculan
             let digits = Object.keys(categoryCounts)
                                .sort((a, b) => a - b) // Sort digits numerik
                                .join("");
@@ -1396,25 +1389,15 @@
         SList.forEach((S, index) => {
             resultHTML += `<h3>Opsi ${index + 1}</h3>`;
             resultHTML += "<ul>";
-            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
+            // Untuk setiap posisi, tambahkan digit saja tanpa jumlah kemunculannya
             for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
                 let posLabel = "";
                 switch(p){
                     case 2: posLabel = "Kep"; break;
                     case 3: posLabel = "Ekor"; break;
                 }
-                let digits = Array.from(S[p]).sort((a, b) => a - b);
-                let digitsWithCount = digits.map(d => {
-                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
-                    let count = 0;
-                    lines.forEach(line => {
-                        if(parseInt(line[p], 10) === d){
-                            count++;
-                        }
-                    });
-                    return `${d} = ${count}`;
-                });
-                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
+                let digits = Array.from(S[p]).sort((a, b) => a - b).join("");
+                resultHTML += `<li>${posLabel} = ${digits || ""}</li>`;
             }
             resultHTML += "</ul>";
 
@@ -1487,7 +1470,7 @@
                 summaryHTML += `<p>${category} = </p>`;
                 continue;
             }
-            // Mengambil semua digit dengan jumlah kemunculan mereka
+            // Mengambil semua digit tanpa jumlah kemunculan
             let digits = Object.keys(categoryCounts)
                                .sort((a, b) => a - b) // Sort digits numerik
                                .join("");
@@ -1592,126 +1575,64 @@
         displayAllCombinations34(allChosenPairs, lines);
     }
 
-    function displayAllCombinations34(allChosenPairs, lines) {
-        let SList = [];
+    /* ===================== AUTOMATE PROCESS ===================== */
+    function automateProcess() {
+        // Mengambil rangkuman opsi (4D)
+        const summaryHTML = document.getElementById("summaryResult").innerText;
+        const summaryLines = summaryHTML.split("\n").map(line => line.trim()).filter(line => line !== "");
 
-        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
-        allChosenPairs.forEach(pairs => {
-            let S = [new Set(), new Set(), new Set(), new Set()];
-            pairs.forEach(pair => {
-                S[pair.pos].add(pair.digit);
-            });
-            SList.push(S);
+        // Membuat objek untuk menyimpan kategori dan digitnya
+        let summaryData = {};
+
+        summaryLines.forEach(line => {
+            // Contoh format: "As = 1246"
+            let [category, digits] = line.split("=");
+            if (category && digits) {
+                summaryData[category.trim()] = digits.trim();
+            }
         });
 
-        // Mulai membangun HTML untuk hasil
-        let resultHTML = "<div>";
+        // Mendefinisikan urutan kategori yang akan diproses
+        const categories = ["As", "Cop", "Kep", "Ekor"];
 
-        SList.forEach((S, index) => {
-            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
-            resultHTML += "<ul>";
-            // Untuk setiap posisi, tambahkan digit beserta jumlah kemunculannya
-            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-                let posLabel = "";
-                switch(p){
-                    case 2: posLabel = "Kep"; break;
-                    case 3: posLabel = "Ekor"; break;
-                }
-                let digits = Array.from(S[p]).sort((a, b) => a - b);
-                let digitsWithCount = digits.map(d => {
-                    // Hitung jumlah kemunculan digit d di posisi p dalam seluruh data
-                    let count = 0;
-                    lines.forEach(line => {
-                        if(parseInt(line[p], 10) === d){
-                            count++;
-                        }
-                    });
-                    return `${d} = ${count}`;
-                });
-                resultHTML += `<li>${posLabel} = {${digitsWithCount.join(", ") || "}"}}</li>`;
-            }
-            resultHTML += "</ul>";
-
-            // Cek baris yang tidak tercakup oleh kombinasi ini
-            let notCovered = [];
-            lines.forEach(line => {
-                let covered = false;
-                for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-                    let digit = parseInt(line[p], 10);
-                    if (S[p].has(digit)) {
-                        covered = true;
-                        break;
-                    }
-                }
-                if (!covered) {
-                    notCovered.push(line);
-                }
-            });
-
-            if (notCovered.length > 0) {
-                resultHTML += "<p>Baris berikut tidak ter-cover:</p>";
-                resultHTML += "<ul>";
-                notCovered.forEach(x => {
-                    resultHTML += `<li>${x}</li>`;
-                });
-                resultHTML += "</ul>";
-                resultHTML += `<p>Total Baris Tidak Tercover: ${notCovered.length}</p>`;
-            } else {
-                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
-            }
-
-            resultHTML += "<hr>";
-        });
-
-        resultHTML += "</div>";
-
-        // Tampilkan hasil di div#resultDigits34
-        document.getElementById("resultDigits34").innerHTML = resultHTML;
-
-        /* =================== Rangkuman Opsi Cari 2D =================== */
-        // Mengumpulkan semua digit per kategori dari semua opsi
-        let summary = {
-            Kep: {},
-            Ekor: {}
+        // Mapping kategori ke input di Page 4 dan CombineByTrbb di Page 3
+        const mapping = {
+            "As": { combId: "combA", risetId: "risetInput1" },
+            "Cop": { combId: "combB", risetId: "risetInput2" },
+            "Kep": { combId: "combC", risetId: "risetInput3" },
+            "Ekor": { combId: "combD", risetId: "risetInput4" }
         };
 
-        allChosenPairs.forEach(pairs => {
-            pairs.forEach(pair => {
-                let pos = pair.pos;
-                let digit = pair.digit;
-                let category = "";
-                switch(pos){
-                    case 2: category = "Kep"; break;
-                    case 3: category = "Ekor"; break;
-                }
-                if (!summary[category][digit]) {
-                    summary[category][digit] = 0;
-                }
-                // Hitung jumlah kemunculan digit dalam semua opsi
-                summary[category][digit]++;
-            });
+        categories.forEach(category => {
+            if (summaryData[category]) {
+                const combId = mapping[category].combId;
+                const risetId = mapping[category].risetId;
+
+                // Memasukkan digit ke PoltarByTrbb (Page 4)
+                document.getElementById(combId).value = summaryData[category];
+
+                // Generate kombinasi
+                generateCombinerABCD();
+
+                // Mengambil hasil generate
+                const combinerResult = document.getElementById("combinerResult").value;
+
+                // Memasukkan hasil ke CombineByTrbb (Page 3)
+                document.getElementById(risetId).value = combinerResult;
+
+                // Memperbarui total string
+                updateRisetCount(risetId, `risetTotal${risetId.slice(-1)}`);
+
+                // Mengosongkan input di PoltarByTrbb (Page 4) sebelum kategori berikutnya
+                document.getElementById(combId).value = "";
+            }
         });
 
-        // Menyiapkan rangkuman
-        let summaryHTML = "<div>";
+        // Menggabungkan data di CombineByTrbb (Page 3)
+        combineRisetData();
 
-        for (let category in summary) {
-            let categoryCounts = summary[category];
-            if (Object.keys(categoryCounts).length === 0) {
-                summaryHTML += `<p>${category} = </p>`;
-                continue;
-            }
-            // Mengambil semua digit dengan jumlah kemunculan mereka
-            let digits = Object.keys(categoryCounts)
-                               .sort((a, b) => a - b) // Sort digits numerik
-                               .join("");
-            summaryHTML += `<p>${category} = ${digits}</p>`;
-        }
-
-        summaryHTML += "</div>";
-
-        // Tampilkan rangkuman di div#summaryResultDigits34
-        document.getElementById("summaryResultDigits34").innerHTML = summaryHTML;
+        // Memberikan feedback bahwa proses telah selesai
+        alert("Automate Process telah dijalankan dan data telah dimasukkan ke Page 3.");
     }
 
     /* ============== COMBINER ABCD (Page 4) ============== */
