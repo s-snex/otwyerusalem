@@ -209,7 +209,7 @@
         }
 
         /* Form, input, button, textarea */
-        textarea, button, input {
+        textarea, button, input, select {
             width: 100%;
             padding: 8px;
             margin: 4px 0;
@@ -221,7 +221,7 @@
             font-family: 'Courier New', monospace;
             transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
         }
-        textarea:focus, input:focus {
+        textarea:focus, input:focus, select:focus {
             border-color: var(--accent-color);
             box-shadow: 0 0 5px var(--accent-color);
             outline: none;
@@ -518,6 +518,16 @@
       <!-- Kontainer "K"ByTrbb (Greedy Finder) -->
       <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
         <h2>"K"ByTrbb</h2>
+        
+        <!-- Opsi untuk memilih batas maksimum digit unik -->
+        <div class="box-label">Batas Maksimum Digit Unik:</div>
+        <select id="maxUniqueDigits" onchange="resetKunciResults()">
+          <option value="6">6 Digit Unik</option>
+          <option value="7">7 Digit Unik</option>
+          <option value="8">8 Digit Unik</option>
+          <option value="9">9 Digit Unik</option>
+        </select>
+        
         <textarea id="inputData" rows="10" placeholder="Pisahkan tiap data dengan Enter"></textarea>
         <button onclick="findAngkaKunci()">Cari 4D</button>
         
@@ -602,6 +612,7 @@
       currentTab.classList.add('active');
       evt.currentTarget.classList.add('active');
     }
+	
 	/* ===================== POLTARBYTRBB (Page 1) ===================== */
     function updateTotalPoltar() { 
       // Fungsi placeholder (Anda bisa menambahkan logika sesuai kebutuhan)
@@ -1143,7 +1154,15 @@
     }
 
     /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
-    /* Fungsi untuk Cari 4D (Tetap Sebelumnya) */
+    /* Fungsi untuk reset hasil ketika batas maksimum digit unik berubah */
+    function resetKunciResults() {
+        document.getElementById("result").innerHTML = "";
+        document.getElementById("summaryResult").innerHTML = "";
+        document.getElementById("resultDigits34").innerHTML = "";
+        document.getElementById("summaryResultDigits34").innerHTML = "";
+    }
+
+    /* Fungsi untuk Cari 4D (Tetap Sebelumnya dengan penyesuaian max digit unik) */
     function findAngkaKunci() {
         const textArea = document.getElementById("inputData").value;
         // Pisahkan baris dan filter yang valid (4-digit angka)
@@ -1152,6 +1171,13 @@
         if (lines.length === 0) {
             document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
             document.getElementById("summaryResult").innerHTML = "";
+            return;
+        }
+
+        // Ambil batas maksimum digit unik dari dropdown
+        let maxUniqueDigits = parseInt(document.getElementById("maxUniqueDigits").value, 10);
+        if (isNaN(maxUniqueDigits) || maxUniqueDigits < 6 || maxUniqueDigits > 9) {
+            alert("Batas maksimum digit unik harus antara 6 hingga 9.");
             return;
         }
 
@@ -1176,10 +1202,10 @@
         let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
         let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
 
-        // Fungsi rekursif untuk mencari kombinasi dengan batas 6 unik digit
+        // Fungsi rekursif untuk mencari kombinasi dengan batas unik digit
         function recursiveSearch(uncovered, currentPairs, selectedDigits) {
             // Jika sudah mencapai batas unik digit atau mencapai batas opsi
-            if (selectedDigits.size > 6 || allChosenPairs.length >= maxOptions) {
+            if (selectedDigits.size > maxUniqueDigits || allChosenPairs.length >= maxOptions) {
                 return;
             }
             if (uncovered.size === 0) {
@@ -1213,7 +1239,7 @@
             for (let pair of bestPairs) {
                 let newSelectedDigits = new Set(selectedDigits);
                 newSelectedDigits.add(pair.digit);
-                if (newSelectedDigits.size > 6) {
+                if (newSelectedDigits.size > maxUniqueDigits) {
                     continue; // Lewati jika melebihi batas
                 }
 
@@ -1240,16 +1266,16 @@
         recursiveSearch(initialUncovered, [], new Set());
 
         if (allChosenPairs.length === 0) {
-            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada kombinasi yang memenuhi batas 6 unik digit.</p>";
+            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada kombinasi yang memenuhi batas " + maxUniqueDigits + " unik digit.</p>";
             document.getElementById("summaryResult").innerHTML = "";
             return;
         }
 
         // Tampilkan semua kombinasi yang ditemukan
-        displayAllCombinations(allChosenPairs, lines);
+        displayAllCombinations(allChosenPairs, lines, maxUniqueDigits);
     }
 
-    function displayAllCombinations(allChosenPairs, lines) {
+    function displayAllCombinations(allChosenPairs, lines, maxUniqueDigits) {
         let SList = [];
 
         // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
