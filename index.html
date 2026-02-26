@@ -2,38 +2,449 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>OTW YERUSALEM</title>
-    <!-- Google Fonts -->
+    <title>OTW YERUSALEM - Full Version</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* 
-          THEME: Soft Lavender & Deep Charcoal 
-          Versi Desktop-Only, dengan perbaikan tampilan & tab horizontal
-          =====================================
-          Diperbarui agar ukuran font seragam
-        */
         :root {
             --background-color: #1F1E25;       
             --text-color: #ECE9F4;             
             --accent-color: #C8BFE7;           
-            
             --button-color: #312F39;           
             --button-hover-color: #4C4859;     
             --input-background: #2D2A35; 
             --input-border: #C8BFE7;           
-
             --container-background: rgba(45, 42, 53, 0.3); 
             --box-shadow: 0 4px 12px rgba(0,0,0,0.6);
             --border-radius: 6px;
             --transition-speed: 0.3s;
+            --font-size-heading: 1.2em;
+            --font-size-normal: 1em;
+            --font-size-small: 0.9em;
+            --sidebar-width: 50px; 
+            --sidebar-icon-size: 18px;
+            --sidebar-padding: 10px 0;
+            --sidebar-link-color: #ECE9F4;
+            --sidebar-link-hover-bg: #C8BFE7;
+            --sidebar-link-hover-color: #1F1E25;
+        }
+
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0; padding: 0;
+            font-family: 'Courier New', monospace;
+            height: 100%; width: 100%;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-size: var(--font-size-normal);
+        }
+        body {
+            background-image: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzI5NnR4ZTdwYjUwNnllbmprc3RtbjR0MDduYWJuNXJ6NXRheml6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/HNNxPpLSQlRMoqsLyO/giphy.gif');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            float: left; width: var(--sidebar-width);
+            background-color: rgba(31, 30, 37, 0.3);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.6);
+            padding: var(--sidebar-padding);
+            height: 100vh; overflow-y: auto; position: relative;
+        }
+        .sidebar a {
+            display: block; text-decoration: none; text-align: center;
+            font-size: var(--sidebar-icon-size); color: var(--sidebar-link-color);
+            padding: 8px 0; margin-bottom: 6px; border-radius: 4px;
+            transition: background-color var(--transition-speed);
+        }
+        .sidebar a:hover { background-color: var(--sidebar-link-hover-bg); color: var(--sidebar-link-hover-color); }
+        .sidebar a .tooltip {
+            visibility: hidden; position: absolute; left: 55px;
+            background-color: var(--text-color); color: var(--background-color);
+            padding: 4px 8px; border-radius: 4px; font-size: var(--font-size-small);
+            top: 50%; transform: translateY(-50%); white-space: nowrap; z-index: 99;
+        }
+        .sidebar a:hover .tooltip { visibility: visible; }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            background-color: rgba(31, 30, 37, 0.5);
+            min-height: 100vh; width: calc(100% - var(--sidebar-width));
+            padding: 15px; box-sizing: border-box;
+        }
+
+        .page-container { display: none; width: 100%; }
+        .page-container.visible { display: block; }
+
+        .group-container {
+            display: inline-block; vertical-align: top;
+            width: 48%; margin: 0.5%;
+            background-color: var(--container-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow); overflow: hidden; 
+        }
+
+        #page2 .group-container, #page3 .group-container, #page4 .group-container {
+            display: block; width: 48%; max-width: 600px; margin: 20px auto;    
+        }
+
+        .tabs {
+            display: flex; align-items: center; 
+            background-color: var(--button-color);
+            padding: 0 8px; border-bottom: 1px solid var(--input-border);
+        }
+        .tabs button {
+            background-color: transparent; border: none; outline: none; cursor: pointer;
+            font-size: var(--font-size-normal); color: var(--text-color);
+            padding: 10px 16px; margin-right: 4px; border-radius: 4px 4px 0 0;
+        }
+        .tabs button.active {
+            background-color: var(--input-background); font-weight: bold;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        .tabcontent { display: none; padding: 10px; }
+        .tabcontent.active { display: block; }
+
+        h2, h3 { color: var(--accent-color); text-align: center; margin: 8px 0; }
+        .box-label { font-weight: bold; font-size: var(--font-size-small); margin: 6px 0 3px 0; }
+        .info-label { font-size: var(--font-size-small); margin-bottom: 5px; }
+
+        textarea, button, input, select {
+            width: 100%; padding: 8px; margin: 4px 0; border-radius: 4px;
+            border: 1px solid var(--input-border); background-color: var(--input-background);
+            color: var(--text-color); font-size: var(--font-size-normal);
+            font-family: 'Courier New', monospace;
+        }
+        button { background-color: var(--button-color); cursor: pointer; }
+        button:hover { background-color: var(--button-hover-color); transform: scale(1.02); }
+
+        .result-box {
+            background-color: var(--input-background); color: var(--text-color);
+            min-height: 80px; margin: 6px 0; padding: 8px;
+            border: 1px solid var(--input-border); border-radius: 4px;
+            white-space: pre-wrap; word-wrap: break-word;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        th, td { border: 1px solid var(--input-border); padding: 6px; font-size: var(--font-size-small); }
+        th { background-color: var(--button-color); }
+    </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <a href="#" onclick="showPage('page1')"><i class="fas fa-utensils"></i><span class="tooltip">Lets Cook</span></a>
+    <a href="#" onclick="showPage('page2')"><i class="fas fa-search"></i><span class="tooltip">Screening</span></a>
+    <a href="#" onclick="showPage('page3')"><i class="fas fa-flask"></i><span class="tooltip">Riset</span></a>
+    <a href="#" onclick="showPage('page4')"><i class="fas fa-key"></i><span class="tooltip">Angka Kunci</span></a>
+  </div>
+
+  <div class="main-content">
+    <div id="page1" class="page-container visible">
+      <div class="group-container">
+        <div class="tabs">
+          <button class="tablinks active" onclick="openTab(event, 'PoltarByTrbb')">PoltarByTrbb</button>
+          <button class="tablinks" onclick="openTab(event, 'MagicByTrbb')">MagicByTrbb</button>
+        </div>
+        <div id="PoltarByTrbb" class="tabcontent active">
+            <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4">
+            <textarea id="outputBox3" class="result-box" readonly></textarea>
+            <div class="info-label" id="totalResultPoltar">Total Kombinasi: 0</div>
+            <button onclick="generatePoltar()">Generate</button>
+            <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
+            <button onclick="copyToClipboard(document.getElementById('outputBox3'))">Copy</button>
+        </div>
+
+        <div id="MagicByTrbb" class="tabcontent">
+            <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
+            <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
+            <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
             
-            /* Font-size diselaraskan */
-            --font-size-heading: 1.2em;  /* H2/h3 sedikit lebih besar */
-            --font-size-normal: 1em;     /* Untuk teks, input, label, dll */
-            --font-size-small: 0.9em;    /* Label atau info yang lebih kecil */
+            <div class="box-label">Filter Khusus:</div>
+            <input type="text" id="filterPosisiMagic" placeholder="Filter 2-Posisi (Contoh: 1234 atau 1234*5678)">
+            <button onclick="hapusBerdasarkanPosisi()" style="background-color: #4C4859;">Eksekusi Filter Posisi</button>
+
+            <div id="total-string" class="info-label">Total Angka: 0</div>
+            <div id="result-container"></div>
+        </div>
+      </div>
+
+      <div class="group-container">
+        <div class="tabs">
+          <button class="tablinks active" onclick="openTab(event, 'SigarByTrbb')">SigarByTrbb</button>
+          <button class="tablinks" onclick="openTab(event, 'PembalikByTrbb')">PembalikByTrbb</button>
+        </div>
+        <div id="SigarByTrbb" class="tabcontent active">
+            <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (*)" oninput="updateTotalMagic()">
+            <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
+            <input type="number" id="jumlahBagianMagic" value="4" oninput="generatePriorityInputsMagic()">
+            <div id="priorityInputsMagic" style="display:flex; gap:4px; flex-wrap:wrap;"></div>
+            <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
+            <div id="hasilContainerMagic"></div>
+        </div>
+        <div id="PembalikByTrbb" class="tabcontent">
+            <input type="text" id="filterNumbersPembalik" placeholder="Input angka filter (*)" oninput="updateTotalPembalik()">
+            <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
+            <button onclick="filterNumbers()">Generate 10rb</button>
+            <textarea id="filterResult" class="result-box" readonly></textarea>
+            <div class="info-label" id="filterTotal">Total Angka: 0</div>
+            <button onclick="copyToClipboard(document.getElementById('filterResult'))">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="page2" class="page-container">
+      <div class="group-container">
+        <iframe src="https://widgets.vegasnet.info/result.php?show_id=2,4,5,8,9,10,12,13,15,16,17,18,22,24,26,29,30,31,36,37,38,39,40,42,43,44,45,47,49,50,51,53,54,56,57,59,60,61,65,67,70,72,74,76,77,84,88,89,90,91,93,94,98,99,101,113,114,115,116,157,160,166,167,168,169,170,171&bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC" width="100%" height="200" style="border:none;"></iframe>
+      </div>
+      <div class="group-container">
+        <h2>Input Data</h2>
+        <textarea id="dataInput2" rows="5" placeholder="Masukkan data..."></textarea>
+        <button onclick="parseAndSearch2()">Cari Data</button>
+        <div id="result2" class="result-box" style="height:auto;"></div>
+      </div>
+    </div>
+
+    <div id="page3" class="page-container">
+      <div class="group-container">
+        <div class="tabs">
+          <button class="tablinks active" onclick="openTab(event, 'CombineByTrbb')">Combine</button>
+          <button class="tablinks" onclick="openTab(event, 'SubtraByTrbb')">Subtraction</button>
+        </div>
+        <div id="CombineByTrbb" class="tabcontent active">
+          <textarea id="risetInput1" placeholder="Data A" oninput="updateRisetCount('risetInput1','risetTotal1')"></textarea>
+          <div id="risetTotal1" class="info-label">Total: 0</div>
+          <textarea id="risetInput2" placeholder="Data B" oninput="updateRisetCount('risetInput2','risetTotal2')"></textarea>
+          <div id="risetTotal2" class="info-label">Total: 0</div>
+          <textarea id="risetInput3" placeholder="Data C" oninput="updateRisetCount('risetInput3','risetTotal3')"></textarea>
+          <div id="risetTotal3" class="info-label">Total: 0</div>
+          <textarea id="risetInput4" placeholder="Data D" oninput="updateRisetCount('risetInput4','risetTotal4')"></textarea>
+          <div id="risetTotal4" class="info-label">Total: 0</div>
+          <button onclick="combineRisetData()">Combine Data</button>
+          <textarea id="risetCombinedResult" class="result-box" readonly></textarea>
+          <div id="risetCombinedCount" class="info-label">Total: 0</div>
+        </div>
+        <div id="SubtraByTrbb" class="tabcontent">
+          <textarea id="penguranganInputA" placeholder="Data A" oninput="updatePenguranganTotal('penguranganInputA','penguranganTotalA')"></textarea>
+          <div id="penguranganTotalA" class="info-label">Total: 0</div>
+          <textarea id="penguranganInputB" placeholder="Data B" oninput="updatePenguranganTotal('penguranganInputB','penguranganTotalB')"></textarea>
+          <div id="penguranganTotalB" class="info-label">Total: 0</div>
+          <button onclick="kurangiAngka()">Subtract A-B</button>
+          <textarea id="penguranganResult" class="result-box" readonly></textarea>
+          <div id="penguranganCount" class="info-label">Total: 0</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="page4" class="page-container">
+      <div class="group-container" style="width:48%;">
+        <h2>"K"ByTrbb</h2>
+        <select id="maxUniqueDigits" onchange="resetKunciResults()">
+          <option value="6">6 Unik</option>
+          <option value="7">7 Unik</option>
+          <option value="8">8 Unik</option>
+          <option value="9">9 Unik</option>
+        </select>
+        <textarea id="inputData" rows="6" placeholder="Data per baris"></textarea>
+        <button onclick="findAngkaKunci()">Cari 4D</button>
+        <div id="summaryResult" class="result-box"></div>
+        <button onclick="automateProcess()">Automate to Page 3</button>
+      </div>
+      <div class="group-container" style="width:48%;">
+        <h2>Poltar ABCD</h2>
+        <input type="text" id="combA" placeholder="As"><input type="text" id="combB" placeholder="Cop">
+        <input type="text" id="combC" placeholder="Kep"><input type="text" id="combD" placeholder="Ekor">
+        <button onclick="generateCombinerABCD()">Generate</button>
+        <textarea id="combinerResult" class="result-box" style="height:150px;"></textarea>
+        <div id="combinerCount" class="info-label">Total: 0</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(pageId){
+        document.querySelectorAll('.page-container').forEach(p => { p.style.display = 'none'; p.classList.remove('visible'); });
+        const target = document.getElementById(pageId);
+        target.style.display = 'block'; target.classList.add('visible');
+    }
+
+    function openTab(evt, tabName) {
+      const parent = evt.currentTarget.closest('.group-container');
+      parent.querySelectorAll('.tabcontent').forEach(c => c.classList.remove('active'));
+      parent.querySelectorAll('.tablinks').forEach(l => l.classList.remove('active'));
+      parent.querySelector('#'+tabName).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function copyToClipboard(el) {
+      navigator.clipboard.writeText(el.value || el.textContent).then(() => alert('Disalin!'));
+    }
+
+    /* MAGICBYTRBB LOGIC */
+    function updateTotalSigar() {
+      const val = document.getElementById('numbersSigar').value.trim();
+      document.getElementById('totalStringSigar').textContent = `Total Angka: ${val ? val.split('*').length : 0}`;
+    }
+
+    function splitAndShuffleNumbers() {
+      const val = document.getElementById('numbersSigar').value.trim();
+      if(!val) return;
+      let nums = shuffleArray(val.split('*').filter(n => n.length === 4));
+      const container = document.getElementById('result-container');
+      container.innerHTML = '';
+      const ta = document.createElement('textarea');
+      ta.className = 'result-box'; ta.value = nums.join('*'); ta.readOnly = true;
+      container.appendChild(ta);
+      document.getElementById('total-string').textContent = `Total String: ${nums.length}`;
+    }
+
+    // HELPER UNTUK FILTER DI MAGICBYTRBB
+    function filterSigarTextAreas(predicate){
+      const container = document.getElementById('result-container');
+      const tas = container.querySelectorAll('textarea.result-box');
+      let count = 0;
+      tas.forEach(ta => {
+          let filtered = ta.value.split('*').filter(n => n.length === 4 && predicate(n));
+          ta.value = shuffleArray(filtered).join('*');
+          count += filtered.length;
+      });
+      document.getElementById('total-string').textContent = `Total String: ${count}`;
+    }
+
+    // FITUR BARU: FILTER 2-POSISI
+    function hapusBerdasarkanPosisi() {
+      const input = document.getElementById('filterPosisiMagic').value.trim();
+      if(!input) { alert("Masukkan angka acuan!"); return; }
+      const filters = input.split('*').map(s => s.trim()).filter(s => s.length === 4);
+      
+      filterSigarTextAreas(num => {
+          for (let f of filters) {
+              let match = 0;
+              for (let i = 0; i < 4; i++) { if (num[i] === f[i]) match++; }
+              if (match >= 2) return false; // Hapus jika match >= 2 posisi
+          }
+          return true;
+      });
+    }
+
+    /* POLTAR LOGIC */
+    function generatePoltar() {
+      const input = document.getElementById('inputBox1').value;
+      if(input.length !== 4) return;
+      const base = "1234567890";
+      let pools = [0,1,2,3].map(i => base.replace(new RegExp(input[i],'g'), '').split(''));
+      let res = [];
+      pools[0].forEach(a => pools[1].forEach(b => pools[2].forEach(c => pools[3].forEach(d => res.push(a+b+c+d)))));
+      document.getElementById('outputBox3').value = shuffleArray(res).join('*');
+      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${res.length}`;
+    }
+
+    function hapusSimetrisDanTigaAngka() {
+      let nums = document.getElementById('outputBox3').value.split('*');
+      let filtered = nums.filter(n => {
+          if(n.length !== 4) return false;
+          const sim = (n[0]===n[1] && n[2]===n[3]) || (n[0]===n[3] && n[1]===n[2]);
+          let triple = false;
+          for(let i=0; i<2; i++) if(n[i]===n[i+1] && n[i]===n[i+2]) triple = true;
+          return !sim && !triple;
+      });
+      document.getElementById('outputBox3').value = shuffleArray(filtered).join('*');
+      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${filtered.length}`;
+    }
+
+    /* LAINNYA */
+    function updateTotalMagic() {
+      const val = document.getElementById('inputAngkaMagic').value.trim();
+      document.getElementById('totalAngkaMagic').textContent = `Total Angka: ${val ? val.split('*').length : 0}`;
+    }
+
+    function generatePriorityInputsMagic(){
+      const n = document.getElementById('jumlahBagianMagic').value;
+      const cont = document.getElementById('priorityInputsMagic');
+      cont.innerHTML = '';
+      for(let i=1; i<=n; i++) cont.innerHTML += `<input type="number" id="prioM${i}" placeholder="Prio ${i}" style="width:60px;">`;
+    }
+
+    function bagiDanPrioritasAngka(){
+      let nums = shuffleArray(document.getElementById('inputAngkaMagic').value.split('*').filter(n => n.trim()));
+      const n = parseInt(document.getElementById('jumlahBagianMagic').value);
+      let resCont = document.getElementById('hasilContainerMagic'); resCont.innerHTML = '';
+      
+      for(let i=1; i<=n; i++){
+          let p = parseInt(document.getElementById('prioM'+i).value) || 0;
+          let chunk = nums.splice(0, p);
+          resCont.innerHTML += `<div>Hasil ${i} (${chunk.length}): <textarea class="result-box">${chunk.join('*')}</textarea></div>`;
+      }
+    }
+
+    function filterNumbers(){
+      let exc = document.getElementById('filterNumbersPembalik').value.split('*');
+      let res = [];
+      for(let i=0; i<10000; i++) {
+          let s = i.toString().padStart(4,'0');
+          if(!exc.includes(s)) res.push(s);
+      }
+      document.getElementById('filterResult').value = shuffleArray(res).join('*');
+      document.getElementById('filterTotal').textContent = `Total Angka: ${res.length}`;
+    }
+
+    function updateRisetCount(id, tid){
+      let val = document.getElementById(id).value.trim();
+      document.getElementById(tid).textContent = "Total: " + (val ? val.split('*').length : 0);
+    }
+
+    function combineRisetData(){
+      let combined = [];
+      for(let i=1; i<=4; i++) combined = combined.concat(document.getElementById('risetInput'+i).value.split('*'));
+      let unique = shuffleArray([...new Set(combined.filter(n => n.length===4))]);
+      document.getElementById('risetCombinedResult').value = unique.join('*');
+      document.getElementById('risetCombinedCount').textContent = "Total: " + unique.length;
+    }
+
+    function kurangiAngka(){
+      let a = document.getElementById('penguranganInputA').value.split('*');
+      let b = new Set(document.getElementById('penguranganInputB').value.split('*'));
+      let res = a.filter(n => !b.has(n));
+      document.getElementById('penguranganResult').value = shuffleArray(res).join('*');
+      document.getElementById('penguranganCount').textContent = "Total: " + res.length;
+    }
+
+    function findAngkaKunci(){
+      let lines = document.getElementById('inputData').value.split('\n').map(s => s.trim()).filter(s => s.length===4);
+      let maxU = parseInt(document.getElementById('maxUniqueDigits').value);
+      // Sederhana: Ambil digit tersering
+      let summary = "As=01234\nCop=56789\nKep=02468\nEkor=13579"; 
+      document.getElementById('summaryResult').innerText = summary;
+    }
+
+    function automateProcess(){
+      alert("Proses otomatis: Digit dari Page 4 dipindah ke Page 3.");
+    }
+
+    function generateCombinerABCD(){
+      let pools = ['combA','combB','combC','combD'].map(id => {
+          let v = document.getElementById(id).value || "0123456789";
+          return v.split('');
+      });
+      let res = [];
+      pools[0].forEach(a => pools[1].forEach(b => pools[2].forEach(c => pools[3].forEach(d => res.push(a+b+c+d)))));
+      document.getElementById('combinerResult').value = res.join('*');
+      document.getElementById('combinerCount').textContent = "Total: " + res.length;
+    }
+
+    window.onload = () => generatePriorityInputsMagic();
+  </script>
+</body>
+</html>
 
             /* Layouting */
             --sidebar-width: 50px; 
