@@ -1,825 +1,409 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>OTW YERUSALEM - Full Version</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTW YERUSALEM</title>
 
-    <style>
-        :root {
-            --background-color: #1F1E25;       
-            --text-color: #ECE9F4;             
-            --accent-color: #C8BFE7;           
-            --button-color: #312F39;           
-            --button-hover-color: #4C4859;     
-            --input-background: #2D2A35; 
-            --input-border: #C8BFE7;           
-            --container-background: rgba(45, 42, 53, 0.3); 
-            --box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            --border-radius: 6px;
-            --transition-speed: 0.3s;
-            --font-size-heading: 1.2em;
-            --font-size-normal: 1em;
-            --font-size-small: 0.9em;
-            --sidebar-width: 50px; 
-            --sidebar-icon-size: 18px;
-            --sidebar-padding: 10px 0;
-            --sidebar-link-color: #ECE9F4;
-            --sidebar-link-hover-bg: #C8BFE7;
-            --sidebar-link-hover-color: #1F1E25;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        * { box-sizing: border-box; }
-        html, body {
-            margin: 0; padding: 0;
-            font-family: 'Courier New', monospace;
-            height: 100%; width: 100%;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-size: var(--font-size-normal);
-        }
-        body {
-            background-image: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzI5NnR4ZTdwYjUwNnllbmprc3RtbjR0MDduYWJuNXJ6NXRheml6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/HNNxPpLSQlRMoqsLyO/giphy.gif');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-        }
+  <style>
+    :root {
+      --background-color: #1f1e25;
+      --text-color: #ece9f4;
+      --accent-color: #c8bfe7;
+      --button-color: #312f39;
+      --button-hover-color: #4c4859;
+      --input-background: #2d2a35;
+      --input-border: #c8bfe7;
+      --container-background: rgba(45, 42, 53, 0.32);
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      --border-radius: 8px;
+      --transition-speed: 0.25s;
+      --font-size-heading: 1.15rem;
+      --font-size-normal: 1rem;
+      --font-size-small: 0.9rem;
+      --sidebar-width: 56px;
+      --sidebar-icon-size: 18px;
+      --sidebar-padding: 10px 0;
+      --sidebar-link-color: #ece9f4;
+      --sidebar-link-hover-bg: #c8bfe7;
+      --sidebar-link-hover-color: #1f1e25;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            float: left; width: var(--sidebar-width);
-            background-color: rgba(31, 30, 37, 0.3);
-            box-shadow: 2px 0 5px rgba(0,0,0,0.6);
-            padding: var(--sidebar-padding);
-            height: 100vh; overflow-y: auto; position: relative;
-        }
-        .sidebar a {
-            display: block; text-decoration: none; text-align: center;
-            font-size: var(--sidebar-icon-size); color: var(--sidebar-link-color);
-            padding: 8px 0; margin-bottom: 6px; border-radius: 4px;
-            transition: background-color var(--transition-speed);
-        }
-        .sidebar a:hover { background-color: var(--sidebar-link-hover-bg); color: var(--sidebar-link-hover-color); }
-        .sidebar a .tooltip {
-            visibility: hidden; position: absolute; left: 55px;
-            background-color: var(--text-color); color: var(--background-color);
-            padding: 4px 8px; border-radius: 4px; font-size: var(--font-size-small);
-            top: 50%; transform: translateY(-50%); white-space: nowrap; z-index: 99;
-        }
-        .sidebar a:hover .tooltip { visibility: visible; }
+    * {
+      box-sizing: border-box;
+    }
 
-        /* Main Content */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            background-color: rgba(31, 30, 37, 0.5);
-            min-height: 100vh; width: calc(100% - var(--sidebar-width));
-            padding: 15px; box-sizing: border-box;
-        }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      font-family: "Courier Prime", "Courier New", monospace;
+      font-size: var(--font-size-normal);
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
 
-        .page-container { display: none; width: 100%; }
-        .page-container.visible { display: block; }
+    body {
+      background-image: url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzI5NnR4ZTdwYjUwNnllbmprc3RtbjR0MDduYWJuNXJ6NXRheml6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/HNNxPpLSQlRMoqsLyO/giphy.gif");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
 
-        .group-container {
-            display: inline-block; vertical-align: top;
-            width: 48%; margin: 0.5%;
-            background-color: var(--container-background);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow); overflow: hidden; 
-        }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      overflow-y: auto;
+      padding: var(--sidebar-padding);
+      background-color: rgba(31, 30, 37, 0.45);
+      backdrop-filter: blur(4px);
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+    }
 
-        #page2 .group-container, #page3 .group-container, #page4 .group-container {
-            display: block; width: 48%; max-width: 600px; margin: 20px auto;    
-        }
+    .sidebar a {
+      position: relative;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      font-size: var(--sidebar-icon-size);
+      color: var(--sidebar-link-color);
+      padding: 10px 0;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      transition: background-color var(--transition-speed), color var(--transition-speed), transform var(--transition-speed);
+    }
 
-        .tabs {
-            display: flex; align-items: center; 
-            background-color: var(--button-color);
-            padding: 0 8px; border-bottom: 1px solid var(--input-border);
-        }
-        .tabs button {
-            background-color: transparent; border: none; outline: none; cursor: pointer;
-            font-size: var(--font-size-normal); color: var(--text-color);
-            padding: 10px 16px; margin-right: 4px; border-radius: 4px 4px 0 0;
-        }
-        .tabs button.active {
-            background-color: var(--input-background); font-weight: bold;
-            border-bottom: 3px solid var(--accent-color);
-        }
-        .tabcontent { display: none; padding: 10px; }
-        .tabcontent.active { display: block; }
+    .sidebar a:hover {
+      background-color: var(--sidebar-link-hover-bg);
+      color: var(--sidebar-link-hover-color);
+      transform: translateX(2px);
+    }
 
-        h2, h3 { color: var(--accent-color); text-align: center; margin: 8px 0; }
-        .box-label { font-weight: bold; font-size: var(--font-size-small); margin: 6px 0 3px 0; }
-        .info-label { font-size: var(--font-size-small); margin-bottom: 5px; }
+    .sidebar .tooltip {
+      visibility: hidden;
+      position: absolute;
+      left: 58px;
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      z-index: 99;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: var(--text-color);
+      color: var(--background-color);
+      font-size: var(--font-size-small);
+      box-shadow: var(--box-shadow);
+    }
 
-        textarea, button, input, select {
-            width: 100%; padding: 8px; margin: 4px 0; border-radius: 4px;
-            border: 1px solid var(--input-border); background-color: var(--input-background);
-            color: var(--text-color); font-size: var(--font-size-normal);
-            font-family: 'Courier New', monospace;
-        }
-        button { background-color: var(--button-color); cursor: pointer; }
-        button:hover { background-color: var(--button-hover-color); transform: scale(1.02); }
+    .sidebar a:hover .tooltip {
+      visibility: visible;
+    }
 
-        .result-box {
-            background-color: var(--input-background); color: var(--text-color);
-            min-height: 80px; margin: 6px 0; padding: 8px;
-            border: 1px solid var(--input-border); border-radius: 4px;
-            white-space: pre-wrap; word-wrap: break-word;
-        }
-        table { width: 100%; border-collapse: collapse; margin-top: 6px; }
-        th, td { border: 1px solid var(--input-border); padding: 6px; font-size: var(--font-size-small); }
-        th { background-color: var(--button-color); }
-    </style>
+    .main-content {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      width: calc(100% - var(--sidebar-width));
+      padding: 16px;
+      background-color: rgba(31, 30, 37, 0.5);
+    }
+
+    .page-container {
+      display: none;
+      width: 100%;
+    }
+
+    .page-container.visible {
+      display: block;
+    }
+
+    .group-container {
+      display: inline-block;
+      vertical-align: top;
+      width: 48%;
+      margin: 0.5%;
+      background-color: var(--container-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+
+    #page2 .group-container,
+    #page3 .group-container,
+    #page4 .group-container {
+      display: block;
+      width: 48%;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 8px;
+      background-color: var(--button-color);
+      border-bottom: 1px solid var(--input-border);
+      flex-wrap: wrap;
+    }
+
+    .tabs button {
+      width: auto;
+      margin: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      color: var(--text-color);
+      padding: 10px 16px;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .tabs button.active {
+      background-color: var(--input-background);
+      font-weight: bold;
+      border-bottom: 3px solid var(--accent-color);
+    }
+
+    .tabcontent {
+      display: none;
+      padding: 12px;
+    }
+
+    .tabcontent.active {
+      display: block;
+    }
+
+    h2 {
+      margin: 8px 0 12px;
+      text-align: center;
+      color: var(--accent-color);
+      text-shadow: 0 0 2px var(--accent-color);
+      font-size: var(--font-size-heading);
+    }
+
+    h3 {
+      margin: 10px 0 8px;
+      text-align: center;
+      color: var(--accent-color);
+      font-size: var(--font-size-normal);
+    }
+
+    .box-label {
+      margin: 8px 0 4px;
+      font-weight: bold;
+      font-size: var(--font-size-small);
+    }
+
+    .info-label {
+      margin-bottom: 6px;
+      font-size: var(--font-size-small);
+      opacity: 0.95;
+    }
+
+    textarea,
+    button,
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 4px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-background);
+      color: var(--text-color);
+      font-size: var(--font-size-normal);
+      font-family: inherit;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed), background-color var(--transition-speed);
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 5px var(--accent-color);
+      outline: none;
+    }
+
+    button {
+      background-color: var(--button-color);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: var(--button-hover-color);
+      box-shadow: 0 0 8px var(--input-border);
+      transform: scale(1.02);
+    }
+
+    .result-box {
+      min-height: 80px;
+      margin: 6px 0;
+      padding: 8px;
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+      background-color: var(--input-background);
+      color: var(--text-color);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: var(--font-size-normal);
+      box-shadow: inset 0 0 4px var(--input-border);
+    }
+
+    .result-box-container,
+    .hasil-item {
+      margin-bottom: 10px;
+    }
+
+    .hasil-label {
+      margin-bottom: 3px;
+      font-weight: bold;
+      font-size: var(--font-size-small);
+    }
+
+    .priority-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .priority-inputs input {
+      width: 100px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--input-border);
+      padding: 6px;
+      text-align: left;
+      font-size: var(--font-size-small);
+    }
+
+    th {
+      background-color: var(--button-color);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid rgba(200, 191, 231, 0.3);
+      margin: 14px 0;
+    }
+
+    ul {
+      margin: 8px 0;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1100px) {
+      .group-container,
+      #page2 .group-container,
+      #page3 .group-container,
+      #page4 .group-container {
+        display: block;
+        width: 100%;
+        max-width: none;
+        margin: 0 0 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-
   <div class="sidebar">
-    <a href="#" onclick="showPage('page1')"><i class="fas fa-utensils"></i><span class="tooltip">Lets Cook</span></a>
-    <a href="#" onclick="showPage('page2')"><i class="fas fa-search"></i><span class="tooltip">Screening</span></a>
-    <a href="#" onclick="showPage('page3')"><i class="fas fa-flask"></i><span class="tooltip">Riset</span></a>
-    <a href="#" onclick="showPage('page4')"><i class="fas fa-key"></i><span class="tooltip">Angka Kunci</span></a>
-  </div>
-
-  <div class="main-content">
-    <div id="page1" class="page-container visible">
-      <div class="group-container">
-        <div class="tabs">
-          <button class="tablinks active" onclick="openTab(event, 'PoltarByTrbb')">PoltarByTrbb</button>
-          <button class="tablinks" onclick="openTab(event, 'MagicByTrbb')">MagicByTrbb</button>
-        </div>
-        <div id="PoltarByTrbb" class="tabcontent active">
-            <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4">
-            <textarea id="outputBox3" class="result-box" readonly></textarea>
-            <div class="info-label" id="totalResultPoltar">Total Kombinasi: 0</div>
-            <button onclick="generatePoltar()">Generate</button>
-            <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
-            <button onclick="copyToClipboard(document.getElementById('outputBox3'))">Copy</button>
-        </div>
-
-        <div id="MagicByTrbb" class="tabcontent">
-            <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
-            <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
-            <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
-            
-            <div class="box-label">Filter Khusus:</div>
-            <input type="text" id="filterPosisiMagic" placeholder="Filter 2-Posisi (Contoh: 1234 atau 1234*5678)">
-            <button onclick="hapusBerdasarkanPosisi()" style="background-color: #4C4859;">Eksekusi Filter Posisi</button>
-
-            <div id="total-string" class="info-label">Total Angka: 0</div>
-            <div id="result-container"></div>
-        </div>
-      </div>
-
-      <div class="group-container">
-        <div class="tabs">
-          <button class="tablinks active" onclick="openTab(event, 'SigarByTrbb')">SigarByTrbb</button>
-          <button class="tablinks" onclick="openTab(event, 'PembalikByTrbb')">PembalikByTrbb</button>
-        </div>
-        <div id="SigarByTrbb" class="tabcontent active">
-            <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (*)" oninput="updateTotalMagic()">
-            <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
-            <input type="number" id="jumlahBagianMagic" value="4" oninput="generatePriorityInputsMagic()">
-            <div id="priorityInputsMagic" style="display:flex; gap:4px; flex-wrap:wrap;"></div>
-            <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
-            <div id="hasilContainerMagic"></div>
-        </div>
-        <div id="PembalikByTrbb" class="tabcontent">
-            <input type="text" id="filterNumbersPembalik" placeholder="Input angka filter (*)" oninput="updateTotalPembalik()">
-            <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
-            <button onclick="filterNumbers()">Generate 10rb</button>
-            <textarea id="filterResult" class="result-box" readonly></textarea>
-            <div class="info-label" id="filterTotal">Total Angka: 0</div>
-            <button onclick="copyToClipboard(document.getElementById('filterResult'))">Copy</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="page2" class="page-container">
-      <div class="group-container">
-        <iframe src="https://widgets.vegasnet.info/result.php?show_id=2,4,5,8,9,10,12,13,15,16,17,18,22,24,26,29,30,31,36,37,38,39,40,42,43,44,45,47,49,50,51,53,54,56,57,59,60,61,65,67,70,72,74,76,77,84,88,89,90,91,93,94,98,99,101,113,114,115,116,157,160,166,167,168,169,170,171&bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC" width="100%" height="200" style="border:none;"></iframe>
-      </div>
-      <div class="group-container">
-        <h2>Input Data</h2>
-        <textarea id="dataInput2" rows="5" placeholder="Masukkan data..."></textarea>
-        <button onclick="parseAndSearch2()">Cari Data</button>
-        <div id="result2" class="result-box" style="height:auto;"></div>
-      </div>
-    </div>
-
-    <div id="page3" class="page-container">
-      <div class="group-container">
-        <div class="tabs">
-          <button class="tablinks active" onclick="openTab(event, 'CombineByTrbb')">Combine</button>
-          <button class="tablinks" onclick="openTab(event, 'SubtraByTrbb')">Subtraction</button>
-        </div>
-        <div id="CombineByTrbb" class="tabcontent active">
-          <textarea id="risetInput1" placeholder="Data A" oninput="updateRisetCount('risetInput1','risetTotal1')"></textarea>
-          <div id="risetTotal1" class="info-label">Total: 0</div>
-          <textarea id="risetInput2" placeholder="Data B" oninput="updateRisetCount('risetInput2','risetTotal2')"></textarea>
-          <div id="risetTotal2" class="info-label">Total: 0</div>
-          <textarea id="risetInput3" placeholder="Data C" oninput="updateRisetCount('risetInput3','risetTotal3')"></textarea>
-          <div id="risetTotal3" class="info-label">Total: 0</div>
-          <textarea id="risetInput4" placeholder="Data D" oninput="updateRisetCount('risetInput4','risetTotal4')"></textarea>
-          <div id="risetTotal4" class="info-label">Total: 0</div>
-          <button onclick="combineRisetData()">Combine Data</button>
-          <textarea id="risetCombinedResult" class="result-box" readonly></textarea>
-          <div id="risetCombinedCount" class="info-label">Total: 0</div>
-        </div>
-        <div id="SubtraByTrbb" class="tabcontent">
-          <textarea id="penguranganInputA" placeholder="Data A" oninput="updatePenguranganTotal('penguranganInputA','penguranganTotalA')"></textarea>
-          <div id="penguranganTotalA" class="info-label">Total: 0</div>
-          <textarea id="penguranganInputB" placeholder="Data B" oninput="updatePenguranganTotal('penguranganInputB','penguranganTotalB')"></textarea>
-          <div id="penguranganTotalB" class="info-label">Total: 0</div>
-          <button onclick="kurangiAngka()">Subtract A-B</button>
-          <textarea id="penguranganResult" class="result-box" readonly></textarea>
-          <div id="penguranganCount" class="info-label">Total: 0</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="page4" class="page-container">
-      <div class="group-container" style="width:48%;">
-        <h2>"K"ByTrbb</h2>
-        <select id="maxUniqueDigits" onchange="resetKunciResults()">
-          <option value="6">6 Unik</option>
-          <option value="7">7 Unik</option>
-          <option value="8">8 Unik</option>
-          <option value="9">9 Unik</option>
-        </select>
-        <textarea id="inputData" rows="6" placeholder="Data per baris"></textarea>
-        <button onclick="findAngkaKunci()">Cari 4D</button>
-        <div id="summaryResult" class="result-box"></div>
-        <button onclick="automateProcess()">Automate to Page 3</button>
-      </div>
-      <div class="group-container" style="width:48%;">
-        <h2>Poltar ABCD</h2>
-        <input type="text" id="combA" placeholder="As"><input type="text" id="combB" placeholder="Cop">
-        <input type="text" id="combC" placeholder="Kep"><input type="text" id="combD" placeholder="Ekor">
-        <button onclick="generateCombinerABCD()">Generate</button>
-        <textarea id="combinerResult" class="result-box" style="height:150px;"></textarea>
-        <div id="combinerCount" class="info-label">Total: 0</div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function showPage(pageId){
-        document.querySelectorAll('.page-container').forEach(p => { p.style.display = 'none'; p.classList.remove('visible'); });
-        const target = document.getElementById(pageId);
-        target.style.display = 'block'; target.classList.add('visible');
-    }
-
-    function openTab(evt, tabName) {
-      const parent = evt.currentTarget.closest('.group-container');
-      parent.querySelectorAll('.tabcontent').forEach(c => c.classList.remove('active'));
-      parent.querySelectorAll('.tablinks').forEach(l => l.classList.remove('active'));
-      parent.querySelector('#'+tabName).classList.add('active');
-      evt.currentTarget.classList.add('active');
-    }
-
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    function copyToClipboard(el) {
-      navigator.clipboard.writeText(el.value || el.textContent).then(() => alert('Disalin!'));
-    }
-
-    /* MAGICBYTRBB LOGIC */
-    function updateTotalSigar() {
-      const val = document.getElementById('numbersSigar').value.trim();
-      document.getElementById('totalStringSigar').textContent = `Total Angka: ${val ? val.split('*').length : 0}`;
-    }
-
-    function splitAndShuffleNumbers() {
-      const val = document.getElementById('numbersSigar').value.trim();
-      if(!val) return;
-      let nums = shuffleArray(val.split('*').filter(n => n.length === 4));
-      const container = document.getElementById('result-container');
-      container.innerHTML = '';
-      const ta = document.createElement('textarea');
-      ta.className = 'result-box'; ta.value = nums.join('*'); ta.readOnly = true;
-      container.appendChild(ta);
-      document.getElementById('total-string').textContent = `Total String: ${nums.length}`;
-    }
-
-    // HELPER UNTUK FILTER DI MAGICBYTRBB
-    function filterSigarTextAreas(predicate){
-      const container = document.getElementById('result-container');
-      const tas = container.querySelectorAll('textarea.result-box');
-      let count = 0;
-      tas.forEach(ta => {
-          let filtered = ta.value.split('*').filter(n => n.length === 4 && predicate(n));
-          ta.value = shuffleArray(filtered).join('*');
-          count += filtered.length;
-      });
-      document.getElementById('total-string').textContent = `Total String: ${count}`;
-    }
-
-    // FITUR BARU: FILTER 2-POSISI
-    function hapusBerdasarkanPosisi() {
-      const input = document.getElementById('filterPosisiMagic').value.trim();
-      if(!input) { alert("Masukkan angka acuan!"); return; }
-      const filters = input.split('*').map(s => s.trim()).filter(s => s.length === 4);
-      
-      filterSigarTextAreas(num => {
-          for (let f of filters) {
-              let match = 0;
-              for (let i = 0; i < 4; i++) { if (num[i] === f[i]) match++; }
-              if (match >= 2) return false; // Hapus jika match >= 2 posisi
-          }
-          return true;
-      });
-    }
-
-    /* POLTAR LOGIC */
-    function generatePoltar() {
-      const input = document.getElementById('inputBox1').value;
-      if(input.length !== 4) return;
-      const base = "1234567890";
-      let pools = [0,1,2,3].map(i => base.replace(new RegExp(input[i],'g'), '').split(''));
-      let res = [];
-      pools[0].forEach(a => pools[1].forEach(b => pools[2].forEach(c => pools[3].forEach(d => res.push(a+b+c+d)))));
-      document.getElementById('outputBox3').value = shuffleArray(res).join('*');
-      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${res.length}`;
-    }
-
-    function hapusSimetrisDanTigaAngka() {
-      let nums = document.getElementById('outputBox3').value.split('*');
-      let filtered = nums.filter(n => {
-          if(n.length !== 4) return false;
-          const sim = (n[0]===n[1] && n[2]===n[3]) || (n[0]===n[3] && n[1]===n[2]);
-          let triple = false;
-          for(let i=0; i<2; i++) if(n[i]===n[i+1] && n[i]===n[i+2]) triple = true;
-          return !sim && !triple;
-      });
-      document.getElementById('outputBox3').value = shuffleArray(filtered).join('*');
-      document.getElementById('totalResultPoltar').textContent = `Total Kombinasi: ${filtered.length}`;
-    }
-
-    /* LAINNYA */
-    function updateTotalMagic() {
-      const val = document.getElementById('inputAngkaMagic').value.trim();
-      document.getElementById('totalAngkaMagic').textContent = `Total Angka: ${val ? val.split('*').length : 0}`;
-    }
-
-    function generatePriorityInputsMagic(){
-      const n = document.getElementById('jumlahBagianMagic').value;
-      const cont = document.getElementById('priorityInputsMagic');
-      cont.innerHTML = '';
-      for(let i=1; i<=n; i++) cont.innerHTML += `<input type="number" id="prioM${i}" placeholder="Prio ${i}" style="width:60px;">`;
-    }
-
-    function bagiDanPrioritasAngka(){
-      let nums = shuffleArray(document.getElementById('inputAngkaMagic').value.split('*').filter(n => n.trim()));
-      const n = parseInt(document.getElementById('jumlahBagianMagic').value);
-      let resCont = document.getElementById('hasilContainerMagic'); resCont.innerHTML = '';
-      
-      for(let i=1; i<=n; i++){
-          let p = parseInt(document.getElementById('prioM'+i).value) || 0;
-          let chunk = nums.splice(0, p);
-          resCont.innerHTML += `<div>Hasil ${i} (${chunk.length}): <textarea class="result-box">${chunk.join('*')}</textarea></div>`;
-      }
-    }
-
-    function filterNumbers(){
-      let exc = document.getElementById('filterNumbersPembalik').value.split('*');
-      let res = [];
-      for(let i=0; i<10000; i++) {
-          let s = i.toString().padStart(4,'0');
-          if(!exc.includes(s)) res.push(s);
-      }
-      document.getElementById('filterResult').value = shuffleArray(res).join('*');
-      document.getElementById('filterTotal').textContent = `Total Angka: ${res.length}`;
-    }
-
-    function updateRisetCount(id, tid){
-      let val = document.getElementById(id).value.trim();
-      document.getElementById(tid).textContent = "Total: " + (val ? val.split('*').length : 0);
-    }
-
-    function combineRisetData(){
-      let combined = [];
-      for(let i=1; i<=4; i++) combined = combined.concat(document.getElementById('risetInput'+i).value.split('*'));
-      let unique = shuffleArray([...new Set(combined.filter(n => n.length===4))]);
-      document.getElementById('risetCombinedResult').value = unique.join('*');
-      document.getElementById('risetCombinedCount').textContent = "Total: " + unique.length;
-    }
-
-    function kurangiAngka(){
-      let a = document.getElementById('penguranganInputA').value.split('*');
-      let b = new Set(document.getElementById('penguranganInputB').value.split('*'));
-      let res = a.filter(n => !b.has(n));
-      document.getElementById('penguranganResult').value = shuffleArray(res).join('*');
-      document.getElementById('penguranganCount').textContent = "Total: " + res.length;
-    }
-
-    function findAngkaKunci(){
-      let lines = document.getElementById('inputData').value.split('\n').map(s => s.trim()).filter(s => s.length===4);
-      let maxU = parseInt(document.getElementById('maxUniqueDigits').value);
-      // Sederhana: Ambil digit tersering
-      let summary = "As=01234\nCop=56789\nKep=02468\nEkor=13579"; 
-      document.getElementById('summaryResult').innerText = summary;
-    }
-
-    function automateProcess(){
-      alert("Proses otomatis: Digit dari Page 4 dipindah ke Page 3.");
-    }
-
-    function generateCombinerABCD(){
-      let pools = ['combA','combB','combC','combD'].map(id => {
-          let v = document.getElementById(id).value || "0123456789";
-          return v.split('');
-      });
-      let res = [];
-      pools[0].forEach(a => pools[1].forEach(b => pools[2].forEach(c => pools[3].forEach(d => res.push(a+b+c+d)))));
-      document.getElementById('combinerResult').value = res.join('*');
-      document.getElementById('combinerCount').textContent = "Total: " + res.length;
-    }
-
-    window.onload = () => generatePriorityInputsMagic();
-  </script>
-</body>
-</html>
-
-            /* Layouting */
-            --sidebar-width: 50px; 
-            --sidebar-icon-size: 18px;
-            --sidebar-padding: 10px 0;
-            --sidebar-link-color: #ECE9F4;
-            --sidebar-link-hover-bg: #C8BFE7;
-            --sidebar-link-hover-color: #1F1E25;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', monospace;
-            height: 100%;
-            width: 100%;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-size: var(--font-size-normal); /* Standar font-size */
-        }
-        body {
-            background-image: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzI5NnR4ZTdwYjUwNnllbmprc3RtbjR0MDduYWJuNXJ6NXRheml6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/HNNxPpLSQlRMoqsLyO/giphy.gif');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            float: left;
-            width: var(--sidebar-width);
-            background-color: rgba(31, 30, 37, 0.3);
-            box-shadow: 2px 0 5px rgba(0,0,0,0.6);
-            padding: var(--sidebar-padding);
-            height: 100vh; 
-            overflow-y: auto;
-            position: relative;
-        }
-        .sidebar a {
-            display: block;
-            text-decoration: none;
-            text-align: center;
-            font-size: var(--sidebar-icon-size);
-            color: var(--sidebar-link-color);
-            padding: 8px 0;
-            margin-bottom: 6px;
-            border-radius: 4px;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-        }
-        .sidebar a:hover {
-            background-color: var(--sidebar-link-hover-bg);
-            color: var(--sidebar-link-hover-color);
-        }
-        .sidebar a .tooltip {
-            visibility: hidden;
-            position: absolute;
-            left: 55px;
-            background-color: var(--text-color);
-            color: var(--background-color);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: var(--font-size-small);
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
-            z-index: 99;
-        }
-        .sidebar a:hover .tooltip {
-            visibility: visible;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            background-color: rgba(31, 30, 37, 0.5);
-            min-height: 100vh; 
-            width: calc(100% - var(--sidebar-width));
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        .page-container {
-            display: none;
-            width: 100%;
-        }
-        .page-container.visible {
-            display: block;
-        }
-
-        /* Group Container -> inline-block (Page 1), 
-           tetapi di Page 2, 3, Page 4 akan ditimpa agar lebih kecil & di center */
-        .group-container {
-            display: inline-block;  /* di page4 akan kita override inline-block */
-            vertical-align: top;
-            width: 48%; /* agar 2 kolom muat di Page 1 */
-            margin: 0.5%;
-            background-color: var(--container-background);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden; 
-        }
-
-        /* KHUSUS untuk Page 2, Page 3, Page 4 => kontainer lebih kecil & center */
-        #page2 .group-container,
-        #page3 .group-container,
-        #page4 .group-container {
-            display: block;       /* override agar tidak inline-block */
-            width: 48%;           
-            max-width: 600px;     
-            margin: 20px auto;    
-        }
-        /* Biar di Page 4 berjejer, kita override di inline style (lihat di HTML) */
-
-        /* Tabs style: horizontal */
-        .tabs {
-            display: flex; 
-            align-items: center; 
-            background-color: var(--button-color);
-            padding: 0 8px;
-            border-bottom: 1px solid var(--input-border);
-        }
-        .tabs button {
-            background-color: transparent;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            font-size: var(--font-size-normal);
-            color: var(--text-color);
-            padding: 10px 16px;
-            margin-right: 4px;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-            border-radius: 4px 4px 0 0;
-        }
-        .tabs button.active {
-            background-color: var(--input-background);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent-color);
-        }
-        .tabcontent {
-            display: none;
-            padding: 10px;
-        }
-        .tabcontent.active {
-            display: block;
-        }
-
-        /* Heading, label, dsb */
-        h2 {
-            color: var(--accent-color);
-            text-shadow: 0 0 2px var(--accent-color);
-            text-align: center;
-            font-size: var(--font-size-heading);
-            margin: 8px 0;
-        }
-        h3 {
-            color: var(--accent-color);
-            text-align: center;
-            font-size: var(--font-size-normal);
-            margin: 6px 0;
-        }
-        .box-label {
-            font-weight: bold;
-            font-size: var(--font-size-small);
-            margin-top: 6px;
-            margin-bottom: 3px;
-        }
-        .info-label {
-            font-size: var(--font-size-small);
-            margin-bottom: 5px;
-        }
-
-        /* Form, input, button, textarea */
-        textarea, button, input, select {
-            width: 100%;
-            padding: 8px;
-            margin: 4px 0;
-            border-radius: 4px;
-            border: 1px solid var(--input-border);
-            background-color: var(--input-background);
-            color: var(--text-color);
-            font-size: var(--font-size-normal);
-            font-family: 'Courier New', monospace;
-            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-        }
-        textarea:focus, input:focus, select:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 5px var(--accent-color);
-            outline: none;
-        }
-        button {
-            background-color: var(--button-color);
-            border: 1px solid var(--input-border);
-            cursor: pointer;
-            transition: background-color var(--transition-speed),
-                        transform var(--transition-speed), 
-                        box-shadow var(--transition-speed);
-        }
-        button:hover {
-            background-color: var(--button-hover-color);
-            box-shadow: 0 0 8px var(--input-border);
-            transform: scale(1.03);
-        }
-
-        /* .result-box dsb */
-        .result-box {
-            background-color: var(--input-background);
-            color: var(--text-color);
-            min-height: 80px;
-            margin: 6px 0;
-            padding: 8px;
-            border: 1px solid var(--input-border);
-            border-radius: 4px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: var(--font-size-normal);
-            box-shadow: inset 0 0 4px var(--input-border);
-        }
-        .result-box-container {
-            margin-bottom: 8px;
-        }
-        .hasil-item {
-            margin-bottom: 8px;
-        }
-        .hasil-label {
-            font-weight: bold; 
-            font-size: var(--font-size-small);
-            margin-bottom: 2px;
-        }
-
-        /* Priority inputs */
-        .priority-inputs {
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 4px;
-        }
-        .priority-inputs input {
-            width: 100px; 
-        }
-
-        /* Tabel */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 6px;
-        }
-        th, td {
-            border: 1px solid var(--input-border);
-            padding: 6px;
-            text-align: left;
-            font-size: var(--font-size-small);
-        }
-        th {
-            background-color: var(--button-color);
-            color: var(--text-color);
-            font-size: var(--font-size-small);
-        }
-    </style>
-</head>
-
-<body>
-  <!-- Sidebar Navigasi -->
-  <div class="sidebar">
-    <!-- Page 1 -->
-    <a href="#" onclick="showPage('page1')">
+    <a href="#" onclick="showPage('page1'); return false;">
       <i class="fas fa-utensils"></i>
       <span class="tooltip">Lets Cook</span>
     </a>
-    <!-- Page 2 -->
-    <a href="#" onclick="showPage('page2')">
+    <a href="#" onclick="showPage('page2'); return false;">
       <i class="fas fa-search"></i>
       <span class="tooltip">Screening</span>
     </a>
-    <!-- Page 3 -->
-    <a href="#" onclick="showPage('page3')">
+    <a href="#" onclick="showPage('page3'); return false;">
       <i class="fas fa-flask"></i>
       <span class="tooltip">Riset</span>
     </a>
-    <!-- Page 4 (Angka Kunci Finder) -->
-    <a href="#" onclick="showPage('page4')">
+    <a href="#" onclick="showPage('page4'); return false;">
       <i class="fas fa-key"></i>
       <span class="tooltip">Angka Kunci</span>
     </a>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content">
-
-    <!-- ===================== PAGE 1 ===================== -->
     <div id="page1" class="page-container visible">
-      <!-- Kontainer 1: Poltar & MagicByTrbb -->
       <div class="group-container">
         <div class="tabs">
           <button class="tablinks active" onclick="openTab(event, 'PoltarByTrbb')">PoltarByTrbb</button>
           <button class="tablinks" onclick="openTab(event, 'MagicByTrbb')">MagicByTrbb</button>
         </div>
 
-        <!-- Tab PoltarByTrbb -->
         <div id="PoltarByTrbb" class="tabcontent active">
-            <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4" oninput="updateTotalPoltar()">
-            <textarea id="outputBox3" class="result-box" readonly></textarea>
-            <div class="info-label" id="totalResultPoltar">Total Kombinasi: 0</div>
-            <button onclick="generatePoltar()">Generate</button>
-            <button onclick="hapusGanjilGenapPoltarBytrbb()" style="text-decoration: line-through;">
-              Odd/Even
-            </button>
-            <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
-            <button onclick="copyToClipboard()">Copy</button>
+          <input type="text" id="inputBox1" placeholder="Masukkan 4 angka" maxlength="4" oninput="updateTotalPoltar()" />
+          <textarea id="outputBox3" class="result-box" readonly></textarea>
+          <div class="info-label" id="totalResultPoltar">Total Kombinasi: 0</div>
+          <button onclick="generatePoltar()">Generate</button>
+          <button onclick="hapusGanjilGenapPoltarBytrbb()" style="text-decoration: line-through;">Odd/Even</button>
+          <button onclick="hapusSimetrisDanTigaAngka()">Let Him Cook</button>
+          <button onclick="copyToClipboard()">Copy</button>
         </div>
 
-        <!-- Tab MagicByTrbb -->
         <div id="MagicByTrbb" class="tabcontent">
-            <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()">
-            <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
-
-            <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
-            
-            <!-- Tombol hapus (sementara disilang) -->
-            <button onclick="hapusGanjilGenapPoltar()" style="text-decoration: line-through;">
-              Odd/Even
-            </button>
-            <button onclick="hapusTigaAngkaBerurutanPoltar()" style="text-decoration: line-through;">
-              Tiga Angka Berurutan
-            </button>
-            <button onclick="hapusSimetrisCombinePoltar()" style="text-decoration: line-through;">
-              Simetris
-            </button>
-
-            <div id="total-string" class="info-label">Total Angka: 0</div>
-            <div id="result-container"></div>
+          <input type="text" id="numbersSigar" placeholder="Masukkan angka dipisahkan *" oninput="updateTotalSigar()" />
+          <div id="totalStringSigar" class="info-label">Total Angka: 0</div>
+          <button onclick="splitAndShuffleNumbers()">Pisah dan Acak</button>
+          <button onclick="hapusGanjilGenapPoltar()" style="text-decoration: line-through;">Odd/Even</button>
+          <button onclick="hapusTigaAngkaBerurutanPoltar()" style="text-decoration: line-through;">Tiga Angka Berurutan</button>
+          <button onclick="hapusSimetrisCombinePoltar()" style="text-decoration: line-through;">Simetris</button>
+          <div id="total-string" class="info-label">Total Angka: 0</div>
+          <div id="result-container"></div>
         </div>
       </div>
-      <!-- /group-container (Poltar & Magic) -->
 
-      <!-- Kontainer 2: Sigar & PembalikByTrbb -->
       <div class="group-container">
         <div class="tabs">
           <button class="tablinks active" onclick="openTab(event, 'SigarByTrbb')">SigarByTrbb</button>
           <button class="tablinks" onclick="openTab(event, 'PembalikByTrbb')">PembalikByTrbb</button>
         </div>
 
-        <!-- Tab SigarByTrbb -->
         <div id="SigarByTrbb" class="tabcontent active">
-            <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)" oninput="updateTotalMagic()">
-            <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
-            <input type="number" id="jumlahBagianMagic" placeholder="Jumlah bagian" min="1" max="10" value="4" oninput="generatePriorityInputsMagic()">
-            
-            <div id="priorityInputsMagic" class="priority-inputs"></div>
-
-            <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
-            <div id="hasilContainerMagic"></div>
+          <input type="text" id="inputAngkaMagic" placeholder="Masukkan deret angka (pisahkan dengan *)" oninput="updateTotalMagic()" />
+          <div id="totalAngkaMagic" class="info-label">Total Angka: 0</div>
+          <input type="number" id="jumlahBagianMagic" placeholder="Jumlah bagian" min="1" max="10" value="4" oninput="generatePriorityInputsMagic()" />
+          <div id="priorityInputsMagic" class="priority-inputs"></div>
+          <button onclick="bagiDanPrioritasAngka()">Bagi dan Prioritas Angka</button>
+          <div id="hasilContainerMagic"></div>
         </div>
 
-        <!-- Tab PembalikByTrbb -->
         <div id="PembalikByTrbb" class="tabcontent">
-            <input type="text" id="filterNumbersPembalik" placeholder="Masukkan angka yang ingin difilter (pisahkan *)" 
-                   oninput="updateTotalPembalik()">
-            <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
-            <button onclick="filterNumbers()">Generate</button>
-            <textarea id="filterResult" class="result-box" readonly></textarea>
-            <div class="info-label" id="filterTotal">Total Angka: 0</div>
-            <button onclick="copyFilterResult()">Copy</button>
+          <input type="text" id="filterNumbersPembalik" placeholder="Masukkan angka yang ingin difilter (pisahkan *)" oninput="updateTotalPembalik()" />
+          <div id="totalAngkaPembalik" class="info-label">Total Angka: 0</div>
+          <button onclick="filterNumbers()">Generate</button>
+          <textarea id="filterResult" class="result-box" readonly></textarea>
+          <div class="info-label" id="filterTotal">Total Angka: 0</div>
+          <button onclick="copyFilterResult()">Copy</button>
         </div>
       </div>
-      <!-- /group-container (Sigar & Pembalik) -->
     </div>
-    <!-- /page1 -->
 
-    <!-- ===================== PAGE 2 ===================== -->
     <div id="page2" class="page-container">
-      <!-- Kontainer 1: Data Market -->
       <div class="group-container">
-        <iframe id="widgetIframe"
+        <iframe
+          id="widgetIframe"
           src="https://widgets.vegasnet.info/result.php?show_id=2,4,5,8,9,10,12,13,15,16,17,18,22,24,26,29,30,31,36,37,38,39,40,42,43,44,45,47,49,50,51,53,54,56,57,59,60,61,65,67,70,72,74,76,77,84,88,89,90,91,93,94,98,99,101,113,114,115,116,157,160,166,167,168,169,170,171&bgcolor=444444&bgcolor2=555555&fontcolor=CCCCCC"
           width="100%"
           height="200"
@@ -827,23 +411,16 @@
         ></iframe>
       </div>
 
-      <!-- Kontainer 2: Input Data & Hasil -->
       <div class="group-container">
         <h2>Input Data</h2>
-        <!-- Textarea data input -->
         <textarea id="dataInput2" rows="5" cols="40" placeholder="Masukkan data di sini..."></textarea>
-        <br>
-        <!-- Tombol untuk proses parsing & pencarian -->
         <button onclick="parseAndSearch2()">Cari Data</button>
-
-        <hr>
+        <hr />
         <h2>Hasil:</h2>
         <div id="result2" class="result-box" style="height:auto;"></div>
       </div>
     </div>
-    <!-- /page2 -->
 
-    <!-- ===================== PAGE 3 ===================== -->
     <div id="page3" class="page-container">
       <div class="group-container">
         <div class="tabs">
@@ -851,86 +428,51 @@
           <button class="tablinks" onclick="openTab(event, 'SubtraByTrbb')">SubtraByTrbb</button>
         </div>
 
-        <!-- Tab CombineByTrbb -->
         <div id="CombineByTrbb" class="tabcontent active">
           <div class="box-label">Data A</div>
-          <textarea 
-            id="risetInput1" 
-            placeholder="Masukkan string 4 digit angka dipisahkan *"
-            oninput="updateRisetCount('risetInput1','risetTotal1')"
-          ></textarea>
+          <textarea id="risetInput1" placeholder="Masukkan string 4 digit angka dipisahkan *" oninput="updateRisetCount('risetInput1','risetTotal1')"></textarea>
           <div id="risetTotal1" class="info-label">Total String: 0</div>
 
           <div class="box-label">Data B</div>
-          <textarea 
-            id="risetInput2" 
-            placeholder="Masukkan string 4 digit angka dipisahkan *"
-            oninput="updateRisetCount('risetInput2','risetTotal2')"
-          ></textarea>
+          <textarea id="risetInput2" placeholder="Masukkan string 4 digit angka dipisahkan *" oninput="updateRisetCount('risetInput2','risetTotal2')"></textarea>
           <div id="risetTotal2" class="info-label">Total String: 0</div>
 
           <div class="box-label">Data C</div>
-          <textarea 
-            id="risetInput3" 
-            placeholder="Masukkan string 4 digit angka dipisahkan *"
-            oninput="updateRisetCount('risetInput3','risetTotal3')"
-          ></textarea>
+          <textarea id="risetInput3" placeholder="Masukkan string 4 digit angka dipisahkan *" oninput="updateRisetCount('risetInput3','risetTotal3')"></textarea>
           <div id="risetTotal3" class="info-label">Total String: 0</div>
 
           <div class="box-label">Data D</div>
-          <textarea 
-            id="risetInput4" 
-            placeholder="Masukkan string 4 digit angka dipisahkan *"
-            oninput="updateRisetCount('risetInput4','risetTotal4')"
-          ></textarea>
+          <textarea id="risetInput4" placeholder="Masukkan string 4 digit angka dipisahkan *" oninput="updateRisetCount('risetInput4','risetTotal4')"></textarea>
           <div id="risetTotal4" class="info-label">Total String: 0</div>
 
           <button onclick="combineRisetData()">Combine Data</button>
-
           <h3>Result</h3>
           <textarea id="risetCombinedResult" class="result-box" readonly></textarea>
           <div class="info-label" id="risetCombinedCount">Total Gabungan: 0</div>
           <button onclick="copyRisetResult()">Copy</button>
         </div>
-        <!-- /CombineByTrbb -->
 
-        <!-- Tab SubtraByTrbb -->
         <div id="SubtraByTrbb" class="tabcontent">
           <div class="box-label">Data A</div>
-          <textarea 
-              id="penguranganInputA" 
-              placeholder="Masukkan angka A (pisahkan dengan *)"
-              oninput="updatePenguranganTotal('penguranganInputA', 'penguranganTotalA')"
-          ></textarea>
+          <textarea id="penguranganInputA" placeholder="Masukkan angka A (pisahkan dengan *)" oninput="updatePenguranganTotal('penguranganInputA', 'penguranganTotalA')"></textarea>
           <div id="penguranganTotalA" class="info-label">Total String: 0</div>
-          
+
           <div class="box-label">Data B</div>
-          <textarea 
-              id="penguranganInputB" 
-              placeholder="Masukkan angka B (pisahkan dengan *)"
-              oninput="updatePenguranganTotal('penguranganInputB', 'penguranganTotalB')"
-          ></textarea>
+          <textarea id="penguranganInputB" placeholder="Masukkan angka B (pisahkan dengan *)" oninput="updatePenguranganTotal('penguranganInputB', 'penguranganTotalB')"></textarea>
           <div id="penguranganTotalB" class="info-label">Total String: 0</div>
-          
+
           <button onclick="kurangiAngka()">Subtraction</button>
-          
           <h3>Result</h3>
           <textarea id="penguranganResult" class="result-box" readonly></textarea>
           <div class="info-label" id="penguranganCount">Total String: 0</div>
           <button onclick="copyPenguranganResult()">Copy</button>
         </div>
-        <!-- /SubtraByTrbb -->
       </div>
     </div>
-    <!-- /page3 -->
 
-    <!-- ===================== PAGE 4 (BARU) ===================== -->
     <div id="page4" class="page-container">
-      <!-- Kontainer "K"ByTrbb (Greedy Finder) -->
-      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
+      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align:top;">
         <h2>"K"ByTrbb</h2>
-        
-        <!-- Opsi untuk memilih batas maksimum digit unik -->
         <div class="box-label">Batas Maksimum Digit Unik:</div>
         <select id="maxUniqueDigits" onchange="resetKunciResults()">
           <option value="6">6 Digit Unik</option>
@@ -938,1163 +480,725 @@
           <option value="8">8 Digit Unik</option>
           <option value="9">9 Digit Unik</option>
         </select>
-        
+
         <textarea id="inputData" rows="10" placeholder="Pisahkan tiap data dengan Enter"></textarea>
         <button onclick="findAngkaKunci()">Cari 4D</button>
-        
-        <!-- Tombol dan Hasil untuk Digit Ketiga dan Keempat -->
         <button onclick="findAngkaKunci34()">Cari 2D</button>
 
-        <!-- Hasil Cari 4D -->
-        <h3>Hasil(4D):</h3>
+        <h3>Hasil (4D):</h3>
         <div id="result" class="result-box" style="height:auto;"></div>
 
-        <!-- Rangkuman Opsi Cari 4D -->
         <h3>Rangkuman Opsi (4D):</h3>
         <div id="summaryResult" class="result-box" style="height:auto;"></div>
-		<!-- Tambahkan tombol untuk memulai otomatisasi -->
-		<button onclick="automateProcess()">Automate Process</button>
+        <button onclick="automateProcess()">Automate Process</button>
 
-
-        <!-- Hasil Cari 2D -->
         <h3>Hasil 2D:</h3>
         <div id="resultDigits34" class="result-box" style="height:auto;"></div>
 
-        <!-- Rangkuman Opsi Cari 2D -->
         <h3>Rangkuman Opsi (2D):</h3>
         <div id="summaryResultDigits34" class="result-box" style="height:auto;"></div>
       </div>
 
-      <!-- Kontainer Combiner ABCD -> di sebelah -->
-      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align: top;">
+      <div class="group-container" style="padding:16px; display:inline-block; width:48%; vertical-align:top;">
         <h2>PoltarByTrbb</h2>
-        
         <input type="text" id="combA" placeholder="misal: 1 atau 12, kosong => 1234567890" />
-        
         <input type="text" id="combB" placeholder="misal: 0 atau 09, kosong => 1234567890" />
-        
         <input type="text" id="combC" placeholder="misal: 45, kosong => 1234567890" />
-        
         <input type="text" id="combD" placeholder="misal: 7, kosong => 1234567890" />
-
         <button onclick="generateCombinerABCD()">Generate</button>
-
         <h3>Hasil</h3>
         <textarea id="combinerResult" class="result-box" style="height:200px;" readonly></textarea>
         <div class="info-label" id="combinerCount">Total: 0</div>
       </div>
     </div>
-    <!-- /page4 -->
-
   </div>
-  <!-- /main-content -->
 
   <script>
-    /* ===================== NAVIGASI PAGE ===================== */
-    function showPage(pageId){
-        const pages = document.querySelectorAll('.page-container');
-        pages.forEach(page => {
-            page.classList.remove('visible');
-            page.style.display = 'none';
-        });
-        const target = document.getElementById(pageId);
-        target.classList.add('visible');
-        target.style.display = 'block';
+    const POS_LABELS = ["As", "Cop", "Kep", "Ekor"];
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page-container").forEach((page) => {
+        page.classList.remove("visible");
+        page.style.display = "none";
+      });
+
+      const target = document.getElementById(pageId);
+      if (target) {
+        target.classList.add("visible");
+        target.style.display = "block";
+      }
     }
 
-    /* ===================== TAB FUNCTION ===================== */
     function openTab(evt, tabName) {
-      const parentContainer = evt.currentTarget.closest('.group-container');
-      const tabcontents = parentContainer.querySelectorAll('.tabcontent');
-      const tablinks = parentContainer.querySelectorAll('.tablinks');
+      const parentContainer = evt.currentTarget.closest(".group-container");
+      if (!parentContainer) return;
 
-      // Hide all tabcontent
-      tabcontents.forEach(content => {
-          content.classList.remove('active');
-      });
+      parentContainer.querySelectorAll(".tabcontent").forEach((content) => content.classList.remove("active"));
+      parentContainer.querySelectorAll(".tablinks").forEach((tab) => tab.classList.remove("active"));
 
-      // Remove active class from all tabs
-      tablinks.forEach(tab => {
-          tab.classList.remove('active');
-      });
-
-      // Show current tab
       const currentTab = parentContainer.querySelector(`#${tabName}`);
-      currentTab.classList.add('active');
-      evt.currentTarget.classList.add('active');
-    }
-	
-	/* ===================== POLTARBYTRBB (Page 1) ===================== */
-    function updateTotalPoltar() { 
-      // Fungsi placeholder (Anda bisa menambahkan logika sesuai kebutuhan)
-    }
-    function generatePoltar() {
-      const input = document.getElementById('inputBox1').value;
-      if (input.length === 4 && /^\d{4}$/.test(input)) {
-          const baseString = "1234567890";
-          let a = baseString.replace(new RegExp(input[0], 'g'), '');
-          let b = baseString.replace(new RegExp(input[1], 'g'), '');
-          let c = baseString.replace(new RegExp(input[2], 'g'), '');
-          let d = baseString.replace(new RegExp(input[3], 'g'), '');
-          const aDigits = a.split('');
-          const bDigits = b.split('');
-          const cDigits = c.split('');
-          const dDigits = d.split('');
-
-          let results = [];
-          aDigits.forEach(num1 => {
-              bDigits.forEach(num2 => {
-                  cDigits.forEach(num3 => {
-                      dDigits.forEach(num4 => {
-                          results.push(num1 + num2 + num3 + num4);
-                      });
-                  });
-              });
-          });
-
-          // Shuffle agar acak
-          results = shuffleArray(results);
-
-          document.getElementById('outputBox3').textContent = results.join('*');
-          document.getElementById('totalResultPoltar').textContent = 
-            `Total Kombinasi: ${results.length}`;
-      } else {
-          alert("Masukkan 4 digit angka yang valid!");
-      }
-    }
-    function hapusSimetrisDanTigaAngka() {
-      const angkaArray = document.getElementById('outputBox3').textContent.split('*');
-      const hasil = angkaArray.filter(num => {
-          if(num.length !== 4) return false;
-
-          const pasanganSimetris = (num[0] === num[1] && num[2] === num[3]);
-          const palindromik      = (num[0] === num[3] && num[1] === num[2]);
-          const ascending        = '123456789';
-          const descending       = '987654321';
-          const berkesinambungan = (
-              num.slice(0,2) === num.slice(2,4) || 
-              (num[0] === num[2] && num[1] === num[3])
-          );
-          // Cek triple digit
-          for (let i = 0; i < num.length - 2; i++) {
-              if (num[i] === num[i+1] && num[i] === num[i+2]) {
-                  return false;
-              }
-          }
-          const angkaBerurutan = ascending.includes(num) || descending.includes(num);
-          return !(
-             pasanganSimetris || palindromik || angkaBerurutan || berkesinambungan
-          );
-      });
-      const shuffledHasil = shuffleArray(hasil);
-      document.getElementById('outputBox3').textContent = shuffledHasil.join('*');
-      document.getElementById('totalResultPoltar').textContent = 
-        `Total Kombinasi: ${shuffledHasil.length}`;
-    }
-    function hapusGanjilGenapPoltarBytrbb(){
-      const outputBox = document.getElementById('outputBox3');
-      let splitted = outputBox.textContent.split('*');
-      let filtered = splitted.filter(num => {
-          if (num.length !== 4) return false;
-          let allOdd = true;
-          let allEven = true;
-          for (let digit of num) {
-              let d = parseInt(digit, 10);
-              if (d % 2 === 0) {
-                  allOdd = false;
-              } else {
-                  allEven = false;
-              }
-          }
-          return !(allOdd || allEven);
-      });
-      const shuffledFiltered = shuffleArray(filtered);
-      outputBox.textContent = shuffledFiltered.join('*');
-      document.getElementById('totalResultPoltar').textContent = 
-        `Total Kombinasi: ${shuffledFiltered.length}`;
-    }
-    function copyToClipboard(element) {
-      if (!element) {
-          element = document.getElementById('outputBox3');
-      }
-      navigator.clipboard.writeText(element.value || element.textContent).then(() => {
-          alert('Hasil telah disalin ke clipboard!');
-      }).catch(() => {
-          alert('Gagal menyalin ke clipboard.');
-      });
+      if (currentTab) currentTab.classList.add("active");
+      evt.currentTarget.classList.add("active");
     }
 
-    /* ===================== MAGICBYTRBB (Pisah & Acak) ===================== */
-    function updateTotalSigar() {
-      const input = document.getElementById('numbersSigar').value.trim();
-      const total = (input === '') 
-                    ? 0 
-                    : input.split('*').filter(num => num.trim() !== '').length;
-      document.getElementById('totalStringSigar').textContent = `Total Angka: ${total}`;
-    }
-    function splitAndShuffleNumbers() {
-      const numbers = document
-          .getElementById('numbersSigar')
-          .value
-          .trim()
-          .split('*')
-          .filter(num => num.trim() !== '');
-      const parts = 1; 
-      const shuffledNumbers = shuffleArray(numbers);
-      document.getElementById('total-string').textContent = 
-        `Total String: ${shuffledNumbers.length}`;
-
-      const chunked = chunkArray(shuffledNumbers, parts);
-      const resultContainer = document.getElementById('result-container');
-      resultContainer.innerHTML = '';
-
-      chunked.forEach((chunk, index) => {
-          const resultBox = document.createElement('div');
-          resultBox.classList.add('result-box-container');
-
-          const textArea = document.createElement('textarea');
-          textArea.classList.add('result-box');
-          textArea.value = chunk.join('*');
-          textArea.setAttribute('readonly', true);
-
-          const copyButton = document.createElement('button');
-          copyButton.textContent = `Copy ${index + 1}`;
-          copyButton.onclick = function() {
-              copyToClipboard(textArea);
-          };
-
-          resultBox.appendChild(textArea);
-          resultBox.appendChild(copyButton);
-          resultContainer.appendChild(resultBox);
-      });
-    }
-    function hapusGanjilGenapPoltar(){
-      const resultContainer = document.getElementById('result-container');
-      const textAreas = resultContainer.querySelectorAll('textarea.result-box');
-      let overallCount = 0; 
-      textAreas.forEach(ta => {
-          const splitted = ta.value.split('*');
-          const filtered = splitted.filter(num => {
-              if (num.length !== 4) return false;
-              let allOdd = true;
-              let allEven = true;
-              for (let digit of num) {
-                  let d = parseInt(digit, 10);
-                  if (d % 2 === 0) {
-                      allOdd = false;
-                  } else {
-                      allEven = false;
-                  }
-              }
-              return !(allOdd || allEven);
-          });
-          const shuffledFiltered = shuffleArray(filtered);
-          ta.value = shuffledFiltered.join('*');
-          overallCount += shuffledFiltered.length;
-      });
-      document.getElementById('total-string').textContent = 
-        `Total String: ${overallCount}`;
-    }
-    function hapusTigaAngkaBerurutanPoltar(){
-      filterSigarTextAreas(num => {
-        for (let i = 0; i < num.length - 2; i++) {
-            if (num[i] === num[i+1] && num[i] === num[i+2]) {
-                return false; 
-            }
-        }
-        return true;
-      });
-      const textAreas = document.querySelectorAll('#result-container textarea.result-box');
-      textAreas.forEach(ta => {
-          const splitted = ta.value.split('*');
-          const shuffled = shuffleArray(splitted);
-          ta.value = shuffled.join('*');
-      });
-    }
-    function hapusSimetrisCombinePoltar(){
-      filterSigarTextAreas(num => {
-        const pasanganSimetris = (num[0] === num[1] && num[2] === num[3]);
-        const palindromik      = (num[0] === num[3] && num[1] === num[2]);
-        const ascending  = '123456789';
-        const descending = '987654321';
-        const ascdesc    = ascending.includes(num) || descending.includes(num);
-        const berkesinambungan = (
-            num.slice(0,2) === num.slice(2,4) ||
-            (num[0] === num[2] && num[1] === num[3])
-        );
-        return !(pasanganSimetris || palindromik || ascdesc || berkesinambungan);
-      });
-      const textAreas = document.querySelectorAll('#result-container textarea.result-box');
-      textAreas.forEach(ta => {
-          const splitted = ta.value.split('*');
-          const shuffled = shuffleArray(splitted);
-          ta.value = shuffled.join('*');
-      });
-    }
-    function filterSigarTextAreas(predicate){
-      const resultContainer = document.getElementById('result-container');
-      const textAreas = resultContainer.querySelectorAll('textarea.result-box');
-      let overallCount = 0;
-      textAreas.forEach(ta => {
-          const splitted = ta.value.split('*');
-          const filtered = splitted.filter(num => {
-              if(num.length !== 4) return false;
-              return predicate(num);
-          });
-          const shuffledFiltered = shuffleArray(filtered);
-          ta.value = shuffledFiltered.join('*');
-          overallCount += shuffledFiltered.length;
-      });
-      document.getElementById('total-string').textContent = 
-        `Total String: ${overallCount}`;
-    }
-
-    /* ===================== SIGARBYTRBB (Bagi & Prioritas) ===================== */
-    function updateTotalMagic() {
-      const input = document.getElementById('inputAngkaMagic').value.trim();
-      const total = (input === '') 
-                    ? 0 
-                    : input.split('*').filter(num => num.trim() !== '').length;
-      document.getElementById('totalAngkaMagic').textContent = `Total Angka: ${total}`;
-    }
-    function generatePriorityInputsMagic(){
-      const jumlah = parseInt(document.getElementById('jumlahBagianMagic').value);
-      const container = document.getElementById('priorityInputsMagic');
-      container.innerHTML = '';
-      for(let i=1; i<=jumlah; i++){
-          const input = document.createElement('input');
-          input.type = 'number';
-          input.id = 'prioritasAngkaMagic' + i;
-          input.placeholder = 'Prio ' + i;
-          input.min = 0; 
-          container.appendChild(input);
-      }
-    }
-    function bagiDanPrioritasAngka() {
-      const inputString  = document.getElementById("inputAngkaMagic").value;
-      let angkaArray     = inputString.split('*').filter(num => num.trim() !== '');
-      const jumlahBagian = parseInt(document.getElementById("jumlahBagianMagic").value);
-      const prioritasAngka = [];
-      let totalPrioritas = 0;
-      for (let i = 1; i <= jumlahBagian; i++) {
-          let prio = parseInt(document.getElementById("prioritasAngkaMagic" + i).value) || 0;
-          prioritasAngka.push(prio);
-          totalPrioritas += prio;
-      }
-      if (totalPrioritas > angkaArray.length) {
-          alert("Total prioritas melebihi jumlah angka!");
-          return; 
-      }
-      // Acak seluruh array
-      angkaArray = shuffleArray(angkaArray);
-      let hasilBagi = [];
-      // Alokasi sesuai prioritas
-      prioritasAngka.forEach((prioritas, index) => {
-          if (prioritas > 0) {
-              hasilBagi[index] = angkaArray.splice(0, prioritas);
-          } else {
-              hasilBagi[index] = [];
-          }
-      });
-      // Bagi sisa
-      const sisaAngka = angkaArray.length;
-      const kelompokTanpaPrioritas = hasilBagi.filter(grup => grup.length === 0).length;
-      const sisaPerKelompok = (kelompokTanpaPrioritas > 0) 
-                              ? Math.floor(sisaAngka / kelompokTanpaPrioritas) 
-                              : 0;
-      hasilBagi.forEach(grup => {
-          if (grup.length === 0) {
-              while (grup.length < sisaPerKelompok && angkaArray.length > 0) {
-                  let randomIndex = Math.floor(Math.random() * angkaArray.length);
-                  grup.push(angkaArray.splice(randomIndex, 1)[0]);
-              }
-          }
-      });
-      while (angkaArray.length > 0) {
-          hasilBagi.forEach(grup => {
-              if (angkaArray.length > 0) {
-                  let randomIndex = Math.floor(Math.random() * angkaArray.length);
-                  grup.push(angkaArray.splice(randomIndex, 1)[0]);
-              }
-          });
-      }
-      // Shuffle hasilBagi
-      hasilBagi = shuffleArray(hasilBagi);
-      // Shuffle setiap grup
-      hasilBagi = hasilBagi.map(grup => shuffleArray(grup));
-      // Tampilkan hasil
-      const container = document.getElementById("hasilContainerMagic");
-      container.innerHTML = '';
-      hasilBagi.forEach((grup, index) => {
-          const hasilItem = document.createElement("div");
-          hasilItem.className = 'hasil-item';
-          const label = document.createElement("div");
-          label.className = 'hasil-label';
-          label.textContent = `Hasil ${index + 1} (Jumlah Angka: ${grup.length}):`;
-          const textarea = document.createElement("textarea");
-          textarea.classList.add('result-box');
-          textarea.setAttribute('readonly', true);
-          textarea.value = grup.join('*');
-          const copyButton = document.createElement("button");
-          copyButton.textContent = `Copy Hasil ${index+1}`;
-          copyButton.onclick = function() {
-              copyToClipboard(textarea);
-          };
-          hasilItem.appendChild(label);
-          hasilItem.appendChild(textarea);
-          hasilItem.appendChild(copyButton);
-          container.appendChild(hasilItem);
-      });
-    }
-
-    /* ===================== PEMBALIKBYTRBB ===================== */
-    function updateTotalPembalik() {
-      const input = document.getElementById('filterNumbersPembalik').value.trim();
-      const total = (input === '') 
-                    ? 0 
-                    : input.split('*').filter(num => num.trim() !== '').length;
-      document.getElementById('totalAngkaPembalik').textContent = `Total Angka: ${total}`;
-    }
-    function filterNumbers() {
-      const allNumbers = [];
-      for(let i = 0; i < 10000; i++){
-          const padded = String(i).padStart(4,'0');
-          allNumbers.push(padded);
-      }
-      const userInput = document.getElementById('filterNumbersPembalik').value.trim();
-      if(!userInput){
-          return;
-      }
-      const excludeList = userInput.split('*');
-      const filteredResult = allNumbers.filter(num => !excludeList.includes(num));
-      const shuffledFilteredResult = shuffleArray(filteredResult);
-      document.getElementById('filterResult').value = shuffledFilteredResult.join('*');
-      document.getElementById('filterTotal').textContent = 
-        `Total Angka: ${shuffledFilteredResult.length}`;
-    }
-    function copyFilterResult(){
-      const filterResult = document.getElementById('filterResult');
-      navigator.clipboard.writeText(filterResult.value || filterResult.textContent)
-        .then(()=>{
-            alert('Hasil filter telah disalin ke clipboard!');
-      }).catch(()=>{
-          alert('Gagal menyalin ke clipboard.');
-      });
-    }
-
-    /* ===================== UTILITAS UMUM (Shuffle, Chunk, dsb.) ===================== */
     function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+      const clone = [...array];
+      for (let i = clone.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [clone[i], clone[j]] = [clone[j], clone[i]];
       }
-      return array;
+      return clone;
     }
+
     function chunkArray(array, size) {
+      if (size <= 0) return [array];
       const result = [];
       const chunkSize = Math.floor(array.length / size);
       let remainder = array.length % size;
-      for (let i = 0; i < size; i++){
-          const start = i * chunkSize;
-          const end   = start + chunkSize + (remainder > 0 ? 1 : 0);
-          result.push(array.slice(start, end));
-          remainder--;
+      let start = 0;
+
+      for (let i = 0; i < size; i++) {
+        const currentSize = chunkSize + (remainder > 0 ? 1 : 0);
+        const end = start + currentSize;
+        result.push(array.slice(start, end));
+        start = end;
+        if (remainder > 0) remainder--;
       }
+
       return result;
     }
 
-    /* ===================== PAGE 2 (Pencarian + Sort) ===================== */
+    function isValid4D(value) {
+      return /^\d{4}$/.test(value);
+    }
+
+    function copyToClipboard(element) {
+      const target = element || document.getElementById("outputBox3");
+      const text = target?.value || target?.textContent || "";
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Hasil telah disalin ke clipboard!"))
+        .catch(() => alert("Gagal menyalin ke clipboard."));
+    }
+
+    function updateTotalPoltar() {}
+
+    function generatePoltar() {
+      const input = document.getElementById("inputBox1").value.trim();
+      if (!isValid4D(input)) {
+        alert("Masukkan 4 digit angka yang valid!");
+        return;
+      }
+
+      const baseString = "1234567890";
+      const pools = input.split("").map((digit) => baseString.replaceAll(digit, "").split(""));
+      const results = [];
+
+      pools[0].forEach((a) => {
+        pools[1].forEach((b) => {
+          pools[2].forEach((c) => {
+            pools[3].forEach((d) => {
+              results.push(a + b + c + d);
+            });
+          });
+        });
+      });
+
+      const shuffled = shuffleArray(results);
+      document.getElementById("outputBox3").textContent = shuffled.join("*");
+      document.getElementById("totalResultPoltar").textContent = `Total Kombinasi: ${shuffled.length}`;
+    }
+
+    function hapusSimetrisDanTigaAngka() {
+      const angkaArray = document.getElementById("outputBox3").textContent.split("*").filter(isValid4D);
+      const hasil = angkaArray.filter((num) => {
+        const pasanganSimetris = num[0] === num[1] && num[2] === num[3];
+        const palindromik = num[0] === num[3] && num[1] === num[2];
+        const ascending = "123456789";
+        const descending = "987654321";
+        const berkesinambungan = num.slice(0, 2) === num.slice(2, 4) || (num[0] === num[2] && num[1] === num[3]);
+
+        for (let i = 0; i < num.length - 2; i++) {
+          if (num[i] === num[i + 1] && num[i] === num[i + 2]) return false;
+        }
+
+        const angkaBerurutan = ascending.includes(num) || descending.includes(num);
+        return !(pasanganSimetris || palindromik || angkaBerurutan || berkesinambungan);
+      });
+
+      const shuffled = shuffleArray(hasil);
+      document.getElementById("outputBox3").textContent = shuffled.join("*");
+      document.getElementById("totalResultPoltar").textContent = `Total Kombinasi: ${shuffled.length}`;
+    }
+
+    function hapusGanjilGenapPoltarBytrbb() {
+      const outputBox = document.getElementById("outputBox3");
+      const filtered = outputBox.textContent.split("*").filter((num) => {
+        if (!isValid4D(num)) return false;
+        const digits = num.split("").map(Number);
+        const allOdd = digits.every((d) => d % 2 !== 0);
+        const allEven = digits.every((d) => d % 2 === 0);
+        return !(allOdd || allEven);
+      });
+
+      const shuffled = shuffleArray(filtered);
+      outputBox.textContent = shuffled.join("*");
+      document.getElementById("totalResultPoltar").textContent = `Total Kombinasi: ${shuffled.length}`;
+    }
+
+    function updateTotalSigar() {
+      const input = document.getElementById("numbersSigar").value.trim();
+      const total = input ? input.split("*").filter((num) => num.trim() !== "").length : 0;
+      document.getElementById("totalStringSigar").textContent = `Total Angka: ${total}`;
+    }
+
+    function splitAndShuffleNumbers() {
+      const numbers = document.getElementById("numbersSigar").value.trim().split("*").filter((num) => num.trim() !== "");
+      const shuffledNumbers = shuffleArray(numbers);
+      document.getElementById("total-string").textContent = `Total String: ${shuffledNumbers.length}`;
+
+      const resultContainer = document.getElementById("result-container");
+      resultContainer.innerHTML = "";
+
+      chunkArray(shuffledNumbers, 1).forEach((chunk, index) => {
+        const resultBox = document.createElement("div");
+        resultBox.classList.add("result-box-container");
+
+        const textArea = document.createElement("textarea");
+        textArea.classList.add("result-box");
+        textArea.value = chunk.join("*");
+        textArea.readOnly = true;
+
+        const copyButton = document.createElement("button");
+        copyButton.textContent = `Copy ${index + 1}`;
+        copyButton.onclick = () => copyToClipboard(textArea);
+
+        resultBox.append(textArea, copyButton);
+        resultContainer.appendChild(resultBox);
+      });
+    }
+
+    function filterSigarTextAreas(predicate) {
+      const textAreas = document.querySelectorAll("#result-container textarea.result-box");
+      let overallCount = 0;
+
+      textAreas.forEach((ta) => {
+        const filtered = ta.value.split("*").filter((num) => isValid4D(num) && predicate(num));
+        const shuffled = shuffleArray(filtered);
+        ta.value = shuffled.join("*");
+        overallCount += shuffled.length;
+      });
+
+      document.getElementById("total-string").textContent = `Total String: ${overallCount}`;
+    }
+
+    function hapusGanjilGenapPoltar() {
+      filterSigarTextAreas((num) => {
+        const digits = num.split("").map(Number);
+        const allOdd = digits.every((d) => d % 2 !== 0);
+        const allEven = digits.every((d) => d % 2 === 0);
+        return !(allOdd || allEven);
+      });
+    }
+
+    function hapusTigaAngkaBerurutanPoltar() {
+      filterSigarTextAreas((num) => {
+        for (let i = 0; i < num.length - 2; i++) {
+          if (num[i] === num[i + 1] && num[i] === num[i + 2]) return false;
+        }
+        return true;
+      });
+    }
+
+    function hapusSimetrisCombinePoltar() {
+      filterSigarTextAreas((num) => {
+        const pasanganSimetris = num[0] === num[1] && num[2] === num[3];
+        const palindromik = num[0] === num[3] && num[1] === num[2];
+        const ascending = "123456789";
+        const descending = "987654321";
+        const ascdesc = ascending.includes(num) || descending.includes(num);
+        const berkesinambungan = num.slice(0, 2) === num.slice(2, 4) || (num[0] === num[2] && num[1] === num[3]);
+        return !(pasanganSimetris || palindromik || ascdesc || berkesinambungan);
+      });
+    }
+
+    function updateTotalMagic() {
+      const input = document.getElementById("inputAngkaMagic").value.trim();
+      const total = input ? input.split("*").filter((num) => num.trim() !== "").length : 0;
+      document.getElementById("totalAngkaMagic").textContent = `Total Angka: ${total}`;
+    }
+
+    function generatePriorityInputsMagic() {
+      const jumlah = parseInt(document.getElementById("jumlahBagianMagic").value, 10);
+      const container = document.getElementById("priorityInputsMagic");
+      container.innerHTML = "";
+
+      for (let i = 1; i <= jumlah; i++) {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.id = `prioritasAngkaMagic${i}`;
+        input.placeholder = `Prio ${i}`;
+        input.min = 0;
+        container.appendChild(input);
+      }
+    }
+
+    function bagiDanPrioritasAngka() {
+      const inputString = document.getElementById("inputAngkaMagic").value;
+      let angkaArray = inputString.split("*").filter((num) => num.trim() !== "");
+      const jumlahBagian = parseInt(document.getElementById("jumlahBagianMagic").value, 10);
+      const prioritasAngka = [];
+      let totalPrioritas = 0;
+
+      for (let i = 1; i <= jumlahBagian; i++) {
+        const prio = parseInt(document.getElementById(`prioritasAngkaMagic${i}`)?.value, 10) || 0;
+        prioritasAngka.push(prio);
+        totalPrioritas += prio;
+      }
+
+      if (totalPrioritas > angkaArray.length) {
+        alert("Total prioritas melebihi jumlah angka!");
+        return;
+      }
+
+      angkaArray = shuffleArray(angkaArray);
+      let hasilBagi = [];
+
+      prioritasAngka.forEach((prioritas, index) => {
+        hasilBagi[index] = prioritas > 0 ? angkaArray.splice(0, prioritas) : [];
+      });
+
+      const kelompokTanpaPrioritas = hasilBagi.filter((grup) => grup.length === 0).length;
+      const sisaPerKelompok = kelompokTanpaPrioritas > 0 ? Math.floor(angkaArray.length / kelompokTanpaPrioritas) : 0;
+
+      hasilBagi.forEach((grup) => {
+        if (grup.length === 0) {
+          while (grup.length < sisaPerKelompok && angkaArray.length > 0) {
+            const randomIndex = Math.floor(Math.random() * angkaArray.length);
+            grup.push(angkaArray.splice(randomIndex, 1)[0]);
+          }
+        }
+      });
+
+      while (angkaArray.length > 0) {
+        hasilBagi.forEach((grup) => {
+          if (angkaArray.length > 0) {
+            const randomIndex = Math.floor(Math.random() * angkaArray.length);
+            grup.push(angkaArray.splice(randomIndex, 1)[0]);
+          }
+        });
+      }
+
+      hasilBagi = shuffleArray(hasilBagi).map((grup) => shuffleArray(grup));
+      const container = document.getElementById("hasilContainerMagic");
+      container.innerHTML = "";
+
+      hasilBagi.forEach((grup, index) => {
+        const hasilItem = document.createElement("div");
+        hasilItem.className = "hasil-item";
+
+        const label = document.createElement("div");
+        label.className = "hasil-label";
+        label.textContent = `Hasil ${index + 1} (Jumlah Angka: ${grup.length}):`;
+
+        const textarea = document.createElement("textarea");
+        textarea.classList.add("result-box");
+        textarea.readOnly = true;
+        textarea.value = grup.join("*");
+
+        const copyButton = document.createElement("button");
+        copyButton.textContent = `Copy Hasil ${index + 1}`;
+        copyButton.onclick = () => copyToClipboard(textarea);
+
+        hasilItem.append(label, textarea, copyButton);
+        container.appendChild(hasilItem);
+      });
+    }
+
+    function updateTotalPembalik() {
+      const input = document.getElementById("filterNumbersPembalik").value.trim();
+      const total = input ? input.split("*").filter((num) => num.trim() !== "").length : 0;
+      document.getElementById("totalAngkaPembalik").textContent = `Total Angka: ${total}`;
+    }
+
+    function filterNumbers() {
+      const userInput = document.getElementById("filterNumbersPembalik").value.trim();
+      if (!userInput) return;
+
+      const allNumbers = Array.from({ length: 10000 }, (_, i) => String(i).padStart(4, "0"));
+      const excludeList = new Set(userInput.split("*").map((num) => num.trim()).filter(isValid4D));
+      const filteredResult = shuffleArray(allNumbers.filter((num) => !excludeList.has(num)));
+
+      document.getElementById("filterResult").value = filteredResult.join("*");
+      document.getElementById("filterTotal").textContent = `Total Angka: ${filteredResult.length}`;
+    }
+
+    function copyFilterResult() {
+      copyToClipboard(document.getElementById("filterResult"));
+    }
+
     const timeLookup = {
       "Macau 00": "00:00",
-      "Macau 13:00": "13:00",
-      /* ... tambahkan jika perlu ... */
+      "Macau 13:00": "13:00"
     };
+
     const fixedCodeString = `
 4628*6277*6802*...*9999
 `.trim();
     const fixedCodes = fixedCodeString.split("*");
 
     function parseAndSearch2() {
-        const pattern = /^(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{4})$/;
-        const lines = document.getElementById("dataInput2").value.trim().split("\n");
-        const results = [];
+      const pattern = /^(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{4})$/;
+      const lines = document.getElementById("dataInput2").value.trim().split("\n").filter(Boolean);
+      const results = [];
 
-        for (const line of lines) {
-            const trimmedLine = line.trim();
-            const match = trimmedLine.match(pattern);
-            if (match) {
-                const nameInfo  = match[1].trim();  
-                const dateInfo  = match[2].trim();  
-                const codeInfo  = match[3].trim();  
-                const jamInfo = timeLookup[nameInfo] || "??:??";
+      for (const line of lines) {
+        const match = line.trim().match(pattern);
+        if (!match) continue;
 
-                // Cek apakah codeInfo ada di fixedCodes
-                if (fixedCodes.includes(codeInfo)) {
-                    results.push(`${nameInfo}\t${dateInfo}\t${jamInfo}\t${codeInfo}`);
-                }
-            }
+        const nameInfo = match[1].trim();
+        const dateInfo = match[2].trim();
+        const codeInfo = match[3].trim();
+        const jamInfo = timeLookup[nameInfo] || "??:??";
+
+        if (fixedCodes.includes(codeInfo)) {
+          results.push([nameInfo, dateInfo, jamInfo, codeInfo]);
         }
+      }
 
-        // Sorting by date (year, month, day), lalu jam
-        let splittedResults = results.map(line => line.split('\t')); 
-        splittedResults.sort((a, b) => {
-           const [dayA, monA, yearA] = a[1].split('-').map(x => parseInt(x, 10));
-           const [dayB, monB, yearB] = b[1].split('-').map(x => parseInt(x, 10));
+      results.sort((a, b) => {
+        const [dayA, monA, yearA] = a[1].split("-").map(Number);
+        const [dayB, monB, yearB] = b[1].split("-").map(Number);
+        if (yearA !== yearB) return yearA - yearB;
+        if (monA !== monB) return monA - monB;
+        if (dayA !== dayB) return dayA - dayB;
 
-           if (yearA !== yearB) return yearA - yearB;
-           if (monA !== monB) return monA - monB;
-           if (dayA !== dayB) return dayA - dayB;
+        const parseJam = (jam) => {
+          if (jam === "??:??") return 9999;
+          const [h, m] = jam.split(":").map(Number);
+          return h * 60 + m;
+        };
 
-           function parseJam(jam) {
-             if (jam === "??:??") return 9999; // jam dummy agar diurut paling akhir
-             const [H, M] = jam.split(':').map(n => parseInt(n, 10));
-             return H * 60 + M;
-           }
-           return parseJam(a[2]) - parseJam(b[2]);
-        });
+        return parseJam(a[2]) - parseJam(b[2]);
+      });
 
-        const sortedResults = splittedResults.map(arr => arr.join('\t'));
-
-        const resultDiv = document.getElementById("result2");
-        if (sortedResults.length > 0) {
-            const tableRows = sortedResults.map(line => {
-                const [nameInfo, dateInfo, jamInfo, codeInfo] = line.split('\t');
-                return `
-                  <tr>
-                    <td>${nameInfo}</td>
-                    <td>${dateInfo}</td>
-                    <td>${jamInfo}</td>
-                    <td>${codeInfo}</td>
-                  </tr>
-                `;
-            }).join('');
-            const tableHTML = `
-              <table>
-                <thead>
-                  <tr>
-                    <th>Keterangan</th>
-                    <th>Tanggal</th>
-                    <th>Jam</th>
-                    <th>Kode</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${tableRows}
-                </tbody>
-              </table>
-            `;
-            resultDiv.innerHTML = tableHTML;
-        } else {
-            resultDiv.textContent = "Tidak ada baris yang cocok dengan daftar kode tetap.";
-        }
-    }
-
-    /* ===================== PAGE 3 (RISET) ===================== */
-    function updateRisetCount(inputId, totalId){
-      const text = document.getElementById(inputId).value.trim();
-      if(!text){
-        document.getElementById(totalId).textContent = "Total String: 0";
+      const resultDiv = document.getElementById("result2");
+      if (results.length === 0) {
+        resultDiv.textContent = "Tidak ada baris yang cocok dengan daftar kode tetap.";
         return;
       }
-      const splitted = text.split('*').filter(s => /^\d{4}$/.test(s.trim()));
-      document.getElementById(totalId).textContent = `Total String: ${splitted.length}`;
+
+      const tableRows = results.map(([nameInfo, dateInfo, jamInfo, codeInfo]) => `
+        <tr>
+          <td>${nameInfo}</td>
+          <td>${dateInfo}</td>
+          <td>${jamInfo}</td>
+          <td>${codeInfo}</td>
+        </tr>
+      `).join("");
+
+      resultDiv.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Keterangan</th>
+              <th>Tanggal</th>
+              <th>Jam</th>
+              <th>Kode</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      `;
     }
-    function combineRisetData(){
-      const box1 = document.getElementById('risetInput1').value.trim();
-      const box2 = document.getElementById('risetInput2').value.trim();
-      const box3 = document.getElementById('risetInput3').value.trim();
-      const box4 = document.getElementById('risetInput4').value.trim();
 
-      let arr1 = box1 ? box1.split('*').filter(s => /^\d{4}$/.test(s.trim())) : [];
-      let arr2 = box2 ? box2.split('*').filter(s => /^\d{4}$/.test(s.trim())) : [];
-      let arr3 = box3 ? box3.split('*').filter(s => /^\d{4}$/.test(s.trim())) : [];
-      let arr4 = box4 ? box4.split('*').filter(s => /^\d{4}$/.test(s.trim())) : [];
-
-      let merged = [...arr1, ...arr2, ...arr3, ...arr4];
-      let unique = new Set(merged);
-      let finalArr = [...unique];
-      finalArr = shuffleArray(finalArr);
-
-      let finalStr = finalArr.join('*');
-      document.getElementById('risetCombinedResult').value = finalStr;
-      document.getElementById('risetCombinedCount').textContent = 
-        `Total Gabungan: ${finalArr.length}`;
+    function updateRisetCount(inputId, totalId) {
+      const text = document.getElementById(inputId).value.trim();
+      const total = text ? text.split("*").filter((s) => isValid4D(s.trim())).length : 0;
+      document.getElementById(totalId).textContent = `Total String: ${total}`;
     }
-    function copyRisetResult(){
-      const resultArea = document.getElementById('risetCombinedResult');
-      if(!resultArea.value){
+
+    function combineRisetData() {
+      const ids = ["risetInput1", "risetInput2", "risetInput3", "risetInput4"];
+      const merged = ids.flatMap((id) => {
+        const value = document.getElementById(id).value.trim();
+        return value ? value.split("*").filter((s) => isValid4D(s.trim())) : [];
+      });
+
+      const finalArr = shuffleArray([...new Set(merged)]);
+      document.getElementById("risetCombinedResult").value = finalArr.join("*");
+      document.getElementById("risetCombinedCount").textContent = `Total Gabungan: ${finalArr.length}`;
+    }
+
+    function copyRisetResult() {
+      const resultArea = document.getElementById("risetCombinedResult");
+      if (!resultArea.value) {
         alert("Belum ada data untuk disalin.");
         return;
       }
-      navigator.clipboard.writeText(resultArea.value)
-        .then(()=>{ alert("Berhasil disalin!"); })
-        .catch(()=>{ alert("Gagal menyalin, coba manual."); });
+      copyToClipboard(resultArea);
     }
+
     function updatePenguranganTotal(inputId, totalId) {
-        const text = document.getElementById(inputId).value.trim();
-        if (!text) {
-            document.getElementById(totalId).textContent = "Total String: 0";
-            return;
-        }
-        const splitted = text.split('*').filter(s => /^\d{4}$/.test(s.trim()));
-        document.getElementById(totalId).textContent = `Total String: ${splitted.length}`;
+      const text = document.getElementById(inputId).value.trim();
+      const total = text ? text.split("*").filter((s) => isValid4D(s.trim())).length : 0;
+      document.getElementById(totalId).textContent = `Total String: ${total}`;
     }
+
     function kurangiAngka() {
-        const inputA = document.getElementById('penguranganInputA').value.trim();
-        const inputB = document.getElementById('penguranganInputB').value.trim();
-        
-        const arrA = inputA ? inputA.split('*').map(num => num.trim()).filter(num => /^\d{4}$/.test(num)) : [];
-        const arrB = inputB ? inputB.split('*').map(num => num.trim()).filter(num => /^\d{4}$/.test(num)) : [];
-        
-        const setB = new Set(arrB);
-        const hasil = arrA.filter(num => !setB.has(num));
-        const shuffledHasil = shuffleArray(hasil);
-        
-        document.getElementById('penguranganResult').value = shuffledHasil.join('*');
-        document.getElementById('penguranganCount').textContent = `Total String: ${shuffledHasil.length}`;
+      const inputA = document.getElementById("penguranganInputA").value.trim();
+      const inputB = document.getElementById("penguranganInputB").value.trim();
+
+      const arrA = inputA ? inputA.split("*").map((num) => num.trim()).filter(isValid4D) : [];
+      const arrB = inputB ? inputB.split("*").map((num) => num.trim()).filter(isValid4D) : [];
+      const setB = new Set(arrB);
+      const hasil = shuffleArray(arrA.filter((num) => !setB.has(num)));
+
+      document.getElementById("penguranganResult").value = hasil.join("*");
+      document.getElementById("penguranganCount").textContent = `Total String: ${hasil.length}`;
     }
+
     function copyPenguranganResult() {
-        const resultArea = document.getElementById('penguranganResult');
-        if (!resultArea.value) {
-            alert("Belum ada data untuk disalin.");
-            return;
-        }
-        navigator.clipboard.writeText(resultArea.value)
-            .then(() => { alert("Berhasil disalin!"); })
-            .catch(() => { alert("Gagal menyalin, coba manual."); });
+      const resultArea = document.getElementById("penguranganResult");
+      if (!resultArea.value) {
+        alert("Belum ada data untuk disalin.");
+        return;
+      }
+      copyToClipboard(resultArea);
     }
 
-    /* ===================== PAGE 4 ("K"ByTrbb) ===================== */
-    /* Fungsi untuk reset hasil ketika batas maksimum digit unik berubah */
     function resetKunciResults() {
-        document.getElementById("result").innerHTML = "";
-        document.getElementById("summaryResult").innerHTML = "";
-        document.getElementById("resultDigits34").innerHTML = "";
-        document.getElementById("summaryResultDigits34").innerHTML = "";
+      ["result", "summaryResult", "resultDigits34", "summaryResultDigits34"].forEach((id) => {
+        document.getElementById(id).innerHTML = "";
+      });
     }
 
-    /* Fungsi untuk Cari 4D (Tetap Sebelumnya dengan penyesuaian max digit unik) */
+    function buildCoverage(lines, positions) {
+      const coverage = {};
+      positions.forEach((p) => {
+        coverage[p] = Array.from({ length: 10 }, () => new Set());
+      });
+
+      lines.forEach((line, index) => {
+        positions.forEach((p) => {
+          coverage[p][parseInt(line[p], 10)].add(index);
+        });
+      });
+
+      return coverage;
+    }
+
+    function searchBestPairs({ lines, positions, maxOptions = 3, maxUniqueDigits = 10 }) {
+      const coverage = buildCoverage(lines, positions);
+      const allChosenPairs = [];
+      const initialUncovered = new Set(lines.map((_, i) => i));
+
+      function recursiveSearch(uncovered, currentPairs, selectedDigits) {
+        if (selectedDigits.size > maxUniqueDigits || allChosenPairs.length >= maxOptions) return;
+
+        if (uncovered.size === 0) {
+          allChosenPairs.push([...currentPairs]);
+          return;
+        }
+
+        let bestCover = 0;
+        let bestPairs = [];
+
+        positions.forEach((p) => {
+          for (let d = 0; d < 10; d++) {
+            const canCover = new Set([...coverage[p][d]].filter((x) => uncovered.has(x)));
+            if (canCover.size > bestCover) {
+              bestCover = canCover.size;
+              bestPairs = [{ pos: p, digit: d }];
+            } else if (canCover.size === bestCover && canCover.size > 0) {
+              bestPairs.push({ pos: p, digit: d });
+            }
+          }
+        });
+
+        if (bestCover === 0) {
+          allChosenPairs.push([...currentPairs]);
+          return;
+        }
+
+        for (const pair of bestPairs) {
+          const newSelectedDigits = new Set(selectedDigits);
+          newSelectedDigits.add(pair.digit);
+          if (newSelectedDigits.size > maxUniqueDigits) continue;
+
+          const newUncovered = new Set(uncovered);
+          coverage[pair.pos][pair.digit].forEach((idx) => newUncovered.delete(idx));
+
+          currentPairs.push(pair);
+          recursiveSearch(newUncovered, currentPairs, newSelectedDigits);
+          currentPairs.pop();
+
+          if (allChosenPairs.length >= maxOptions) break;
+        }
+      }
+
+      recursiveSearch(initialUncovered, [], new Set());
+      return allChosenPairs;
+    }
+
+    function pairsToSets(pairsList) {
+      return pairsList.map((pairs) => {
+        const S = [new Set(), new Set(), new Set(), new Set()];
+        pairs.forEach((pair) => S[pair.pos].add(pair.digit));
+        return S;
+      });
+    }
+
+    function renderCombinationSummary(allChosenPairs, targetId, positions) {
+      const summary = {};
+      positions.forEach((p) => { summary[POS_LABELS[p]] = {}; });
+
+      allChosenPairs.forEach((pairs) => {
+        pairs.forEach(({ pos, digit }) => {
+          const key = POS_LABELS[pos];
+          summary[key][digit] = (summary[key][digit] || 0) + 1;
+        });
+      });
+
+      const html = Object.keys(summary).map((category) => {
+        const digits = Object.keys(summary[category]).sort((a, b) => a - b).join("");
+        return `<p>${category} = ${digits}</p>`;
+      }).join("");
+
+      document.getElementById(targetId).innerHTML = html || "<p>Tidak ada rangkuman.</p>";
+    }
+
+    function renderCombinationResults(allChosenPairs, lines, targetId, positions, uncoveredLabel) {
+      const SList = pairsToSets(allChosenPairs);
+      let resultHTML = "<div>";
+
+      SList.forEach((S, index) => {
+        resultHTML += `<h3>Opsi ${index + 1}</h3><ul>`;
+
+        positions.forEach((p) => {
+          const digits = Array.from(S[p]).sort((a, b) => a - b).join("");
+          resultHTML += `<li>${POS_LABELS[p]} = ${digits}</li>`;
+        });
+
+        resultHTML += "</ul>";
+
+        const uncovered = [];
+        lines.forEach((line) => {
+          let covered = false;
+          positions.forEach((p) => {
+            if (S[p].has(parseInt(line[p], 10))) covered = true;
+          });
+          if (!covered) uncovered.push(line);
+        });
+
+        if (uncovered.length > 0) {
+          resultHTML += `<p>${uncoveredLabel}</p><ul>`;
+          uncovered.forEach((item) => { resultHTML += `<li>${item}</li>`; });
+          resultHTML += `</ul><p>Total Tidak Tercover: ${uncovered.length}</p>`;
+        } else {
+          resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
+        }
+
+        resultHTML += "<hr>";
+      });
+
+      resultHTML += "</div>";
+      document.getElementById(targetId).innerHTML = resultHTML;
+    }
+
     function findAngkaKunci() {
-        const textArea = document.getElementById("inputData").value;
-        // Pisahkan baris dan filter yang valid (4-digit angka)
-        let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
-        
-        if (lines.length === 0) {
-            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
-            document.getElementById("summaryResult").innerHTML = "";
-            return;
-        }
+      const lines = document.getElementById("inputData").value.split("\n").map((x) => x.trim()).filter(isValid4D);
+      if (lines.length === 0) {
+        document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+        document.getElementById("summaryResult").innerHTML = "";
+        return;
+      }
 
-        // Ambil batas maksimum digit unik dari dropdown
-        let maxUniqueDigits = parseInt(document.getElementById("maxUniqueDigits").value, 10);
-        if (isNaN(maxUniqueDigits) || maxUniqueDigits < 6 || maxUniqueDigits > 9) {
-            alert("Batas maksimum digit unik harus antara 6 hingga 9.");
-            return;
-        }
+      const maxUniqueDigits = parseInt(document.getElementById("maxUniqueDigits").value, 10);
+      if (Number.isNaN(maxUniqueDigits) || maxUniqueDigits < 6 || maxUniqueDigits > 9) {
+        alert("Batas maksimum digit unik harus antara 6 hingga 9.");
+        return;
+      }
 
-        // Inisialisasi coverage[pos][digit] = set of line indices
-        let coverage = [];
-        for (let p = 0; p < 4; p++) {
-            coverage[p] = [];
-            for (let d = 0; d < 10; d++) {
-                coverage[p][d] = new Set();
-            }
-        }
+      const allChosenPairs = searchBestPairs({
+        lines,
+        positions: [0, 1, 2, 3],
+        maxOptions: 3,
+        maxUniqueDigits
+      });
 
-        // Mengisi coverage
-        lines.forEach((line, index) => {
-            for (let p = 0; p < 4; p++) {
-                let digit = parseInt(line[p], 10);
-                coverage[p][digit].add(index);
-            }
-        });
+      if (allChosenPairs.length === 0) {
+        document.getElementById("result").innerHTML = `<p style='color:red;'>Tidak ada kombinasi yang memenuhi batas ${maxUniqueDigits} unik digit.</p>`;
+        document.getElementById("summaryResult").innerHTML = "";
+        return;
+      }
 
-        // Parameter pencarian
-        let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
-        let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
-
-        // Fungsi rekursif untuk mencari kombinasi dengan batas unik digit
-        function recursiveSearch(uncovered, currentPairs, selectedDigits) {
-            // Jika sudah mencapai batas unik digit atau mencapai batas opsi
-            if (selectedDigits.size > maxUniqueDigits || allChosenPairs.length >= maxOptions) {
-                return;
-            }
-            if (uncovered.size === 0) {
-                allChosenPairs.push([...currentPairs]);
-                return;
-            }
-
-            // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
-            let bestCover = 0;
-            let bestPairs = [];
-
-            for (let p = 0; p < 4; p++) {
-                for (let d = 0; d < 10; d++) {
-                    let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
-                    if (canCover.size > bestCover) {
-                        bestCover = canCover.size;
-                        bestPairs = [{ pos: p, digit: d }];
-                    } else if (canCover.size === bestCover && canCover.size > 0) {
-                        bestPairs.push({ pos: p, digit: d });
-                    }
-                }
-            }
-
-            // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
-            if (bestCover === 0) {
-                allChosenPairs.push([...currentPairs]);
-                return;
-            }
-
-            // Coba semua pasangan terbaik
-            for (let pair of bestPairs) {
-                let newSelectedDigits = new Set(selectedDigits);
-                newSelectedDigits.add(pair.digit);
-                if (newSelectedDigits.size > maxUniqueDigits) {
-                    continue; // Lewati jika melebihi batas
-                }
-
-                let newUncovered = new Set(uncovered);
-                coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
-
-                currentPairs.push(pair);
-                recursiveSearch(newUncovered, currentPairs, newSelectedDigits);
-                currentPairs.pop();
-
-                if (allChosenPairs.length >= maxOptions) {
-                    break;
-                }
-            }
-        }
-
-        // Inisialisasi set baris yang belum tercakup
-        let initialUncovered = new Set();
-        for (let i = 0; i < lines.length; i++) {
-            initialUncovered.add(i);
-        }
-
-        // Mulai pencarian kombinasi
-        recursiveSearch(initialUncovered, [], new Set());
-
-        if (allChosenPairs.length === 0) {
-            document.getElementById("result").innerHTML = "<p style='color:red;'>Tidak ada kombinasi yang memenuhi batas " + maxUniqueDigits + " unik digit.</p>";
-            document.getElementById("summaryResult").innerHTML = "";
-            return;
-        }
-
-        // Tampilkan semua kombinasi yang ditemukan
-        displayAllCombinations(allChosenPairs, lines, maxUniqueDigits);
+      renderCombinationResults(allChosenPairs, lines, "result", [0, 1, 2, 3], "Angka yang tidak tercover adalah:");
+      renderCombinationSummary(allChosenPairs, "summaryResult", [0, 1, 2, 3]);
     }
 
-    function displayAllCombinations(allChosenPairs, lines, maxUniqueDigits) {
-        let SList = [];
-
-        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
-        allChosenPairs.forEach(pairs => {
-            let S = [new Set(), new Set(), new Set(), new Set()];
-            pairs.forEach(pair => {
-                S[pair.pos].add(pair.digit);
-            });
-            SList.push(S);
-        });
-
-        // Mulai membangun HTML untuk hasil
-        let resultHTML = "<div>";
-
-        SList.forEach((S, index) => {
-            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
-            resultHTML += "<ul>";
-            // Untuk setiap posisi, tambahkan digit saja tanpa jumlah kemunculannya
-            for (let p = 0; p < 4; p++) {
-                let posLabel = "";
-                switch(p){
-                    case 0: posLabel = "As"; break;
-                    case 1: posLabel = "Cop"; break;
-                    case 2: posLabel = "Kep"; break;
-                    case 3: posLabel = "Ekor"; break;
-                }
-                let digits = Array.from(S[p]).sort((a, b) => a - b).join("");
-                resultHTML += `<li>${posLabel} = ${digits || ""}</li>`;
-            }
-            resultHTML += "</ul>";
-
-            // Cek baris yang tercakup oleh kombinasi ini
-            let covered = [];
-            let uncovered = [];
-            lines.forEach(line => {
-                let isCovered = false;
-                for (let p = 0; p < 4; p++) { // Memeriksa semua digit
-                    let digit = parseInt(line[p], 10);
-                    if (S[p].has(digit)) {
-                        isCovered = true;
-                        break;
-                    }
-                }
-                if (isCovered) {
-                    covered.push(line);
-                } else {
-                    uncovered.push(line);
-                }
-            });
-
-            // Hapus bagian yang menampilkan "covered" dan hanya tampilkan "uncovered"
-            if (uncovered.length > 0) {
-                resultHTML += "<p>Angka yang tidak tercover adalah:</p>";
-                resultHTML += "<ul>";
-                uncovered.forEach(x => {
-                    resultHTML += `<li>${x}</li>`;
-                });
-                resultHTML += "</ul>";
-                resultHTML += `<p>Total Angka Tidak Tercover: ${uncovered.length}</p>`;
-            } else {
-                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
-            }
-
-            resultHTML += "<hr>";
-        });
-
-        resultHTML += "</div>";
-
-        // Tampilkan hasil di div#result
-        document.getElementById("result").innerHTML = resultHTML;
-
-        /* =================== Rangkuman Opsi Cari 4D =================== */
-        // Mengumpulkan semua digit per kategori dari semua opsi
-        let summary = {
-            As: {},
-            Cop: {},
-            Kep: {},
-            Ekor: {}
-        };
-
-        allChosenPairs.forEach(pairs => {
-            pairs.forEach(pair => {
-                let pos = pair.pos;
-                let digit = pair.digit;
-                let category = "";
-                switch(pos){
-                    case 0: category = "As"; break;
-                    case 1: category = "Cop"; break;
-                    case 2: category = "Kep"; break;
-                    case 3: category = "Ekor"; break;
-                }
-                if (!summary[category][digit]) {
-                    summary[category][digit] = 0;
-                }
-                // Hitung jumlah kemunculan digit dalam semua opsi
-                summary[category][digit]++;
-            });
-        });
-
-        // Menyiapkan rangkuman
-        let summaryHTML = "<div>";
-
-        for (let category in summary) {
-            let categoryCounts = summary[category];
-            if (Object.keys(categoryCounts).length === 0) {
-                summaryHTML += `<p>${category} = </p>`;
-                continue;
-            }
-            // Mengambil semua digit tanpa jumlah kemunculan
-            let digits = Object.keys(categoryCounts)
-                               .sort((a, b) => a - b) // Sort digits numerik
-                               .join("");
-            summaryHTML += `<p>${category} = ${digits}</p>`;
-        }
-
-        summaryHTML += "</div>";
-
-        // Tampilkan rangkuman di div#summaryResult
-        document.getElementById("summaryResult").innerHTML = summaryHTML;
-    }
-
-    function displayAllCombinations34(allChosenPairs, lines) {
-        let SList = [];
-
-        // Konversi pasangan (pos, digit) menjadi himpunan digit per posisi
-        allChosenPairs.forEach(pairs => {
-            let S = [new Set(), new Set(), new Set(), new Set()];
-            pairs.forEach(pair => {
-                S[pair.pos].add(pair.digit);
-            });
-            SList.push(S);
-        });
-
-        // Mulai membangun HTML untuk hasil
-        let resultHTML = "<div>";
-
-        SList.forEach((S, index) => {
-            resultHTML += `<h3>Opsi ${index + 1}</h3>`;
-            resultHTML += "<ul>";
-            // Untuk setiap posisi, tambahkan digit saja tanpa jumlah kemunculannya
-            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-                let posLabel = "";
-                switch(p){
-                    case 2: posLabel = "Kep"; break;
-                    case 3: posLabel = "Ekor"; break;
-                }
-                let digits = Array.from(S[p]).sort((a, b) => a - b).join("");
-                resultHTML += `<li>${posLabel} = ${digits || ""}</li>`;
-            }
-            resultHTML += "</ul>";
-
-            // Cek baris yang tidak tercakup oleh kombinasi ini
-            let notCovered = [];
-            lines.forEach(line => {
-                let covered = false;
-                for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-                    let digit = parseInt(line[p], 10);
-                    if (S[p].has(digit)) {
-                        covered = true;
-                        break;
-                    }
-                }
-                if (!covered) {
-                    notCovered.push(line);
-                }
-            });
-
-            if (notCovered.length > 0) {
-                resultHTML += "<p>Baris berikut tidak ter-cover:</p>";
-                resultHTML += "<ul>";
-                notCovered.forEach(x => {
-                    resultHTML += `<li>${x}</li>`;
-                });
-                resultHTML += "</ul>";
-                resultHTML += `<p>Total Baris Tidak Tercover: ${notCovered.length}</p>`;
-            } else {
-                resultHTML += "<p style='color:green;'>Semua baris tercakup oleh himpunan digit di atas.</p>";
-            }
-
-            resultHTML += "<hr>";
-        });
-
-        resultHTML += "</div>";
-
-        // Tampilkan hasil di div#resultDigits34
-        document.getElementById("resultDigits34").innerHTML = resultHTML;
-
-        /* =================== Rangkuman Opsi Cari 2D =================== */
-        // Mengumpulkan semua digit per kategori dari semua opsi
-        let summary = {
-            Kep: {},
-            Ekor: {}
-        };
-
-        allChosenPairs.forEach(pairs => {
-            pairs.forEach(pair => {
-                let pos = pair.pos;
-                let digit = pair.digit;
-                let category = "";
-                switch(pos){
-                    case 2: category = "Kep"; break;
-                    case 3: category = "Ekor"; break;
-                }
-                if (!summary[category][digit]) {
-                    summary[category][digit] = 0;
-                }
-                // Hitung jumlah kemunculan digit dalam semua opsi
-                summary[category][digit]++;
-            });
-        });
-
-        // Menyiapkan rangkuman
-        let summaryHTML = "<div>";
-
-        for (let category in summary) {
-            let categoryCounts = summary[category];
-            if (Object.keys(categoryCounts).length === 0) {
-                summaryHTML += `<p>${category} = </p>`;
-                continue;
-            }
-            // Mengambil semua digit tanpa jumlah kemunculan
-            let digits = Object.keys(categoryCounts)
-                               .sort((a, b) => a - b) // Sort digits numerik
-                               .join("");
-            summaryHTML += `<p>${category} = ${digits}</p>`;
-        }
-
-        summaryHTML += "</div>";
-
-        // Tampilkan rangkuman di div#summaryResultDigits34
-        document.getElementById("summaryResultDigits34").innerHTML = summaryHTML;
-    }
-
-    /* Fungsi baru untuk memproses hanya digit ketiga dan keempat */
     function findAngkaKunci34() {
-        const textArea = document.getElementById("inputData").value;
-        // Pisahkan baris dan filter yang valid (4-digit angka)
-        let lines = textArea.split("\n").map(x => x.trim()).filter(x => x.length === 4 && /^\d{4}$/.test(x));
-        
-        if (lines.length === 0) {
-            document.getElementById("resultDigits34").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
-            document.getElementById("summaryResultDigits34").innerHTML = "";
-            return;
-        }
+      const lines = document.getElementById("inputData").value.split("\n").map((x) => x.trim()).filter(isValid4D);
+      if (lines.length === 0) {
+        document.getElementById("resultDigits34").innerHTML = "<p style='color:red;'>Tidak ada data valid (4-digit)!</p>";
+        document.getElementById("summaryResultDigits34").innerHTML = "";
+        return;
+      }
 
-        // Inisialisasi coverage[pos][digit] = set of line indices
-        let coverage = [];
-        for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-            coverage[p] = [];
-            for (let d = 0; d < 10; d++) {
-                coverage[p][d] = new Set();
-            }
-        }
+      const allChosenPairs = searchBestPairs({
+        lines,
+        positions: [2, 3],
+        maxOptions: 3,
+        maxUniqueDigits: 10
+      });
 
-        // Mengisi coverage
-        lines.forEach((line, index) => {
-            for (let p = 2; p < 4; p++) {
-                let digit = parseInt(line[p], 10);
-                coverage[p][digit].add(index);
-            }
-        });
-
-        // Parameter pencarian
-        let maxOptions = 3; // Maksimal jumlah kombinasi yang ingin ditemukan
-        let allChosenPairs = []; // Menyimpan semua kombinasi yang ditemukan
-
-        // Fungsi rekursif untuk mencari kombinasi
-        function recursiveSearch(uncovered, currentPairs, depth) {
-            // Jika semua baris tercakup atau sudah mencapai batas opsi
-            if (uncovered.size === 0 || allChosenPairs.length >= maxOptions) {
-                allChosenPairs.push([...currentPairs]);
-                return;
-            }
-
-            // Temukan pasangan (pos, digit) yang menutupi paling banyak baris yang belum tercakup
-            let bestCover = 0;
-            let bestPairs = [];
-
-            for (let p = 2; p < 4; p++) { // hanya digit ketiga dan keempat
-                for (let d = 0; d < 10; d++) {
-                    let canCover = new Set([...coverage[p][d]].filter(x => uncovered.has(x)));
-                    if (canCover.size > bestCover) {
-                        bestCover = canCover.size;
-                        bestPairs = [{ pos: p, digit: d }];
-                    } else if (canCover.size === bestCover && canCover.size > 0) {
-                        bestPairs.push({ pos: p, digit: d });
-                    }
-                }
-            }
-
-            // Jika tidak ada lagi pasangan yang bisa menutupi, simpan kombinasi saat ini
-            if (bestCover === 0) {
-                allChosenPairs.push([...currentPairs]);
-                return;
-            }
-
-            // Coba semua pasangan terbaik
-            for (let pair of bestPairs) {
-                let newUncovered = new Set(uncovered);
-                coverage[pair.pos][pair.digit].forEach(idx => newUncovered.delete(idx));
-
-                currentPairs.push(pair);
-                recursiveSearch(newUncovered, currentPairs, depth + 1);
-                currentPairs.pop();
-
-                // Jika sudah mencapai batas opsi, hentikan pencarian lebih lanjut
-                if (allChosenPairs.length >= maxOptions) {
-                    break;
-                }
-            }
-        }
-
-        // Inisialisasi set baris yang belum tercakup
-        let initialUncovered = new Set();
-        for (let i = 0; i < lines.length; i++) {
-            initialUncovered.add(i);
-        }
-
-        // Mulai pencarian kombinasi
-        recursiveSearch(initialUncovered, [], 0);
-
-        // Tampilkan semua kombinasi yang ditemukan
-        displayAllCombinations34(allChosenPairs, lines);
+      renderCombinationResults(allChosenPairs, lines, "resultDigits34", [2, 3], "Baris berikut tidak ter-cover:");
+      renderCombinationSummary(allChosenPairs, "summaryResultDigits34", [2, 3]);
     }
 
-    /* ===================== AUTOMATE PROCESS ===================== */
     function automateProcess() {
-        // Mengambil rangkuman opsi (4D)
-        const summaryHTML = document.getElementById("summaryResult").innerText;
-        const summaryLines = summaryHTML.split("\n").map(line => line.trim()).filter(line => line !== "");
+      const summaryText = document.getElementById("summaryResult").innerText;
+      const summaryLines = summaryText.split("\n").map((line) => line.trim()).filter(Boolean);
+      const summaryData = {};
 
-        // Membuat objek untuk menyimpan kategori dan digitnya
-        let summaryData = {};
+      summaryLines.forEach((line) => {
+        const [category, digits] = line.split("=");
+        if (category && digits) summaryData[category.trim()] = digits.trim();
+      });
 
-        summaryLines.forEach(line => {
-            // Contoh format: "As = 1246"
-            let [category, digits] = line.split("=");
-            if (category && digits) {
-                summaryData[category.trim()] = digits.trim();
-            }
-        });
+      const mapping = {
+        As: { combId: "combA", risetId: "risetInput1", totalId: "risetTotal1" },
+        Cop: { combId: "combB", risetId: "risetInput2", totalId: "risetTotal2" },
+        Kep: { combId: "combC", risetId: "risetInput3", totalId: "risetTotal3" },
+        Ekor: { combId: "combD", risetId: "risetInput4", totalId: "risetTotal4" }
+      };
 
-        // Mendefinisikan urutan kategori yang akan diproses
-        const categories = ["As", "Cop", "Kep", "Ekor"];
+      ["As", "Cop", "Kep", "Ekor"].forEach((category) => {
+        if (!summaryData[category]) return;
+        const { combId, risetId, totalId } = mapping[category];
+        document.getElementById(combId).value = summaryData[category];
+        generateCombinerABCD();
+        document.getElementById(risetId).value = document.getElementById("combinerResult").value;
+        updateRisetCount(risetId, totalId);
+        document.getElementById(combId).value = "";
+      });
 
-        // Mapping kategori ke input di Page 4 dan CombineByTrbb di Page 3
-        const mapping = {
-            "As": { combId: "combA", risetId: "risetInput1" },
-            "Cop": { combId: "combB", risetId: "risetInput2" },
-            "Kep": { combId: "combC", risetId: "risetInput3" },
-            "Ekor": { combId: "combD", risetId: "risetInput4" }
-        };
-
-        categories.forEach(category => {
-            if (summaryData[category]) {
-                const combId = mapping[category].combId;
-                const risetId = mapping[category].risetId;
-
-                // Memasukkan digit ke PoltarByTrbb (Page 4)
-                document.getElementById(combId).value = summaryData[category];
-
-                // Generate kombinasi
-                generateCombinerABCD();
-
-                // Mengambil hasil generate
-                const combinerResult = document.getElementById("combinerResult").value;
-
-                // Memasukkan hasil ke CombineByTrbb (Page 3)
-                document.getElementById(risetId).value = combinerResult;
-
-                // Memperbarui total string
-                updateRisetCount(risetId, `risetTotal${risetId.slice(-1)}`);
-
-                // Mengosongkan input di PoltarByTrbb (Page 4) sebelum kategori berikutnya
-                document.getElementById(combId).value = "";
-            }
-        });
-
-        // Menggabungkan data di CombineByTrbb (Page 3)
-        combineRisetData();
-
-        // Memberikan feedback bahwa proses telah selesai
-        alert("Automate Process telah dijalankan dan data telah dimasukkan ke Page 3.");
+      combineRisetData();
+      alert("Automate Process telah dijalankan dan data telah dimasukkan ke Page 3.");
     }
 
-    /* ============== COMBINER ABCD (Page 4) ============== */
-    function parseDigitsNoComma(str){
-      let cleaned = str.trim();
-      if(!cleaned){
-        // default
-        return "1234567890";
-      }
-      // filter only 0..9
-      let allowed = "";
-      for(let ch of cleaned){
-        if(ch >= '0' && ch <= '9'){
-          allowed += ch;
-        }
-      }
-      if(!allowed) return "1234567890";
-      return allowed;
+    function parseDigitsNoComma(str) {
+      const cleaned = (str || "").trim();
+      if (!cleaned) return "1234567890";
+      const allowed = [...cleaned].filter((ch) => ch >= "0" && ch <= "9").join("");
+      return allowed || "1234567890";
     }
-    function getCombosABCD(aPool, bPool, cPool, dPool){
-      let results = [];
-      for(let aa of aPool){
-        for(let bb of bPool){
-          for(let cc of cPool){
-            for(let dd of dPool){
+
+    function getCombosABCD(aPool, bPool, cPool, dPool) {
+      const results = [];
+      for (const aa of aPool) {
+        for (const bb of bPool) {
+          for (const cc of cPool) {
+            for (const dd of dPool) {
               results.push(aa + bb + cc + dd);
             }
           }
@@ -2102,26 +1206,22 @@
       }
       return results;
     }
-    function generateCombinerABCD(){
-      const aVal = document.getElementById("combA").value;
-      const bVal = document.getElementById("combB").value;
-      const cVal = document.getElementById("combC").value;
-      const dVal = document.getElementById("combD").value;
 
-      const aPool = parseDigitsNoComma(aVal);
-      const bPool = parseDigitsNoComma(bVal);
-      const cPool = parseDigitsNoComma(cVal);
-      const dPool = parseDigitsNoComma(dVal);
-
+    function generateCombinerABCD() {
+      const aPool = parseDigitsNoComma(document.getElementById("combA").value);
+      const bPool = parseDigitsNoComma(document.getElementById("combB").value);
+      const cPool = parseDigitsNoComma(document.getElementById("combC").value);
+      const dPool = parseDigitsNoComma(document.getElementById("combD").value);
       const combos = getCombosABCD(aPool, bPool, cPool, dPool);
+
       document.getElementById("combinerResult").value = combos.join("*");
-      document.getElementById("combinerCount").textContent = "Total: " + combos.length;
+      document.getElementById("combinerCount").textContent = `Total: ${combos.length}`;
     }
 
-    /* Onload */
-    window.onload = function(){
-      // ...
-    }
+    window.onload = function () {
+      generatePriorityInputsMagic();
+      showPage("page1");
+    };
   </script>
 </body>
 </html>
